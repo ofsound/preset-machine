@@ -1,40 +1,41 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-const oscTotal = 512
+import AdjustmentSlider from './components/AdjustmentSlider.vue'
 
-const offsetArray = ref<number[]>([])
-const attacksArray = ref<number[]>([])
-const decaysArray = ref<number[]>([])
-const sustainsArray = ref<number[]>([])
-const holdsArray = ref<number[]>([])
-const releasesArray = ref<number[]>([])
+const oscTotal = 512
+const activeOsc = 8
+
+const offsets = ref<number[]>([])
+const attacks = ref<number[]>([])
+const decays = ref<number[]>([])
+const sustains = ref<number[]>([])
+const holds = ref<number[]>([])
+const releases = ref<number[]>([])
 
 for (let index = 0; index < oscTotal; index++) {
-  if (index % 2 === 0) {
-    offsetArray.value.push(index * 0.01)
-    attacksArray.value.push(index * 0.01)
-    decaysArray.value.push(index * 0.01)
-    sustainsArray.value.push(index * 0.01)
-    holdsArray.value.push(index * 0.01)
-    releasesArray.value.push(index * 0.01)
-  } else {
-    offsetArray.value.push(index * 0.05)
-    attacksArray.value.push(index * 0.05)
-    decaysArray.value.push(index * 0.05)
-    sustainsArray.value.push(index * 0.05)
-    holdsArray.value.push(index * 0.05)
-    releasesArray.value.push(index * 0.05)
-  }
+  offsets.value.push(0)
+  attacks.value.push(0)
+  decays.value.push(0)
+  sustains.value.push(0)
+  holds.value.push(0)
+  releases.value.push(0)
 }
+
+const activeOffsets = ref<number[]>(new Array(activeOsc).fill(0))
+const activeHolds = ref<number[]>(new Array(activeOsc).fill(1))
 </script>
 
 <template>
-  <div>"offsets": [{{ offsetArray.join(', ') }}],</div>
-  <div>"attacks": [{{ attacksArray.join(', ') }}],</div>
-  <div>"decays": [{{ decaysArray.join(', ') }}],</div>
-  <div>"sustains": [{{ sustainsArray.join(', ') }}],</div>
-  <div>"holds": [{{ holdsArray.join(', ') }}],</div>
-  <div>"releases": [{{ releasesArray.join(', ') }}],</div>
+  <div v-for="n in activeOsc" :key="n">
+    <AdjustmentSlider :offset="activeOffsets[n]" :hold="activeHolds[n]" />
+  </div>
+
+  <!-- <div>"offsets": [{{ offsets.join(', ') }}],</div> -->
+  <!-- <div>"attacks": [{{ attacks.join(', ') }}],</div>
+  <div>"decays": [{{ decays.join(', ') }}],</div>
+  <div>"sustains": [{{ sustains.join(', ') }}],</div> -->
+  <!-- <div>"holds": [{{ holds.join(', ') }}],</div> -->
+  <!-- <div>"releases": [{{ releases.join(', ') }}],</div> -->
 </template>
 
 <style scoped></style>
