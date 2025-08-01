@@ -1,13 +1,20 @@
 <script setup lang="ts">
-defineProps<{
-  offset: number
-  hold: number
-}>()
+const offset = defineModel('offset')
+const hold = defineModel('hold')
 </script>
 
 <template>
-  <div class="flex">
-    <div class="h-3/5 w-3/5">{{ offset }}</div>
-    <div class="h-3/5 w-3/5">{{ hold }}</div>
+  <div class="mb-4 flex">
+    <input type="text" v-model="offset" />
+    <input type="text" v-model="hold" />
+
+    <div class="segment bg-amber-400"></div>
   </div>
 </template>
+
+<style scoped>
+.segment {
+  margin-left: v-bind(offset * 10 + 'px');
+  width: v-bind(hold * 5 + 'px');
+}
+</style>

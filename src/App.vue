@@ -21,21 +21,19 @@ for (let index = 0; index < oscTotal; index++) {
   releases.value.push(0)
 }
 
-const activeOffsets = ref<number[]>(new Array(activeOsc).fill(0))
+const activeOffsets = ref<number[]>(new Array(activeOsc).fill(1))
 const activeHolds = ref<number[]>(new Array(activeOsc).fill(1))
 </script>
 
 <template>
   <div v-for="n in activeOsc" :key="n">
-    <AdjustmentSlider :offset="activeOffsets[n]" :hold="activeHolds[n]" />
+    <AdjustmentSlider v-model:offset="activeOffsets[n]" v-model:hold="activeHolds[n]" />
   </div>
 
-  <!-- <div>"offsets": [{{ offsets.join(', ') }}],</div> -->
-  <!-- <div>"attacks": [{{ attacks.join(', ') }}],</div>
-  <div>"decays": [{{ decays.join(', ') }}],</div>
-  <div>"sustains": [{{ sustains.join(', ') }}],</div> -->
-  <!-- <div>"holds": [{{ holds.join(', ') }}],</div> -->
-  <!-- <div>"releases": [{{ releases.join(', ') }}],</div> -->
+  <br />
+
+  <div>"offsets": [{{ activeOffsets.join(', ') }}],</div>
+  <div>"holds": [{{ activeHolds.join(', ') }}],</div>
 </template>
 
 <style scoped></style>
