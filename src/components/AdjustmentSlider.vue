@@ -1,44 +1,60 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
 const offset = defineModel<number>('offset', { default: 0 })
 const hold = defineModel<number>('hold', { default: 0 })
+const divisions = defineModel<number>('divisions', { default: 16 })
 
-const handleMouseDown = (event: MouseEvent) => {
-  const parentElement = document.getElementById('grid')!
-  const parentRect = parentElement.getBoundingClientRect()
-  const mouseXRelativeToParent = event.clientX - parentRect.left
-  offset.value = Math.floor(mouseXRelativeToParent / 50) * 10
-}
+const gridElement = ref<HTMLElement | null>(null)
 
-const handleMouseUp = (event: MouseEvent) => {
-  const parentElement = document.getElementById('grid')!
-  const parentRect = parentElement.getBoundingClientRect()
-  const mouseXRelativeToParent = event.clientX - parentRect.left
-  hold.value = Math.floor((mouseXRelativeToParent / 10 - offset.value) / 10) * 10
-}
+onMounted(() => {
+  if (gridElement.value) {
+    const handleMouseDown = (event: MouseEvent) => {
+      const parentLeft = gridElement.value?.getBoundingClientRect().left
+      const mouseXRelativeToParent = event.clientX - parentLeft!
+
+      hold.value = 0
+
+      if (gridElement.value?.offsetWidth) {
+        const roundToAmount = gridElement.value?.offsetWidth / 16
+        offset.value = Math.floor(mouseXRelativeToParent / roundToAmount) * roundToAmount
+      }
+    }
+
+    const handleMouseUp = (event: MouseEvent) => {
+      const parentLeft = gridElement.value?.getBoundingClientRect().left
+      const mouseXRelativeToParent = event.clientX - parentLeft!
+
+      if (gridElement.value?.offsetWidth) {
+        const roundToAmount = gridElement.value?.offsetWidth / 16
+        const dragLength = mouseXRelativeToParent - offset.value
+        hold.value = Math.ceil(dragLength / roundToAmount) * roundToAmount
+      }
+    }
+
+    gridElement.value.addEventListener('mousedown', handleMouseDown)
+    gridElement.value.addEventListener('mouseup', handleMouseUp)
+  }
+})
 </script>
 
 <template>
   <div class="relative">
-    <div
-      id="grid"
-      class="border-box flex border-1 border-gray-400"
-      @mousedown="handleMouseDown"
-      @mouseup="handleMouseUp"
-    >
-      <div v-for="n in 16" :key="n" class="h-[50px] w-[50px] even:bg-gray-300"></div>
+    <div ref="gridElement" class="border-box flex border-1 border-gray-300">
+      <div v-for="n in divisions" :key="n" class="grid-child even:bg-gray-100"></div>
+      <div class="segment absolute h-[calc(100%-2px)] bg-amber-400"></div>
     </div>
-    <div class="segment h-[50px] bg-amber-400"></div>
-
-    <!-- <input type="text" v-model="offset" />
-    <input type="text" v-model="hold" /> -->
   </div>
 </template>
 
 <style scoped>
 .segment {
-  margin-left: v-bind(offset * 10 + 'px');
-  width: v-bind(hold * 10 + 'px');
-  position: relative;
-  top: -51px;
+  margin-left: v-bind(offset + 'px');
+  width: v-bind(hold + 'px');
+}
+.grid-child {
+  height: auto;
+  aspect-ratio: 1;
+  width: v-bind((1 / divisions) * 100 + '%');
 }
 </style>
