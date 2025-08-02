@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import AdjustmentSlider from './components/AdjustmentSlider.vue'
 
 const oscTotal = 512
-const activeOsc = 8
+const activeOsc = 16
 
 const offsets = ref<number[]>([])
 const attacks = ref<number[]>([])
@@ -21,22 +21,32 @@ for (let index = 0; index < oscTotal; index++) {
   releases.value.push(0)
 }
 
-const activeOffsets = ref<number[]>(new Array(activeOsc).fill(0))
-const activeHolds = ref<number[]>(new Array(activeOsc).fill(1))
+const activeOffsets = ref<number[]>(new Array(oscTotal).fill(1))
+const activeHolds = ref<number[]>(new Array(oscTotal).fill(1))
+
+const correctedOffsets = computed(() => {
+  return activeOffsets.value.map((item) => item / 90) // Example mapping
+})
+
+const correctedHolds = computed(() => {
+  return activeHolds.value.map((item) => item / 90) // Example mapping
+})
 </script>
 
 <template>
-  <AdjustmentSlider
-    v-for="n in activeOsc"
-    :key="n"
-    v-model:offset="activeOffsets[n]"
-    v-model:hold="activeHolds[n]"
-  />
+  <div class="flex flex-col-reverse">
+    <AdjustmentSlider
+      v-for="n in activeOsc"
+      :key="n"
+      v-model:offset="activeOffsets[n]"
+      v-model:hold="activeHolds[n]"
+    />
+  </div>
 
   <br />
 
-  <div>"offsets": [{{ activeOffsets.join(', ') }}],</div>
-  <div>"holds": [{{ activeHolds.join(', ') }}],</div>
+  <div>"offsets": [{{ correctedOffsets.join(', ') }}],</div>
+  <div>"holds": [{{ correctedHolds.join(', ') }}],</div>
 </template>
 
 <style scoped></style>
