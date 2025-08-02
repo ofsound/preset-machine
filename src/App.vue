@@ -21,14 +21,17 @@ for (let index = 0; index < oscTotal; index++) {
   releases.value.push(0)
 }
 
-const activeOffsets = ref<number[]>(new Array(activeOsc).fill(1))
+const activeOffsets = ref<number[]>(new Array(activeOsc).fill(0))
 const activeHolds = ref<number[]>(new Array(activeOsc).fill(1))
 </script>
 
 <template>
-  <div v-for="n in activeOsc" :key="n">
-    <AdjustmentSlider v-model:offset="activeOffsets[n]" v-model:hold="activeHolds[n]" />
-  </div>
+  <AdjustmentSlider
+    v-for="n in activeOsc"
+    :key="n"
+    v-model:offset="activeOffsets[n]"
+    v-model:hold="activeHolds[n]"
+  />
 
   <br />
 
