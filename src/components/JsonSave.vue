@@ -27,7 +27,7 @@ const downloadJson = () => {
 
 <template>
   <button
-    class="ml-a mx-auto mb-2 block cursor-pointer rounded-md border-1 bg-green-400 px-4 py-1 text-sm text-white"
+    class="mb-4 block cursor-pointer rounded-md border-1 bg-green-400 px-4 py-1 text-sm text-white"
     @click="downloadJson"
   >
     Download {{ props.jsonData.name + '.json' }}

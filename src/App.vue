@@ -44,11 +44,37 @@ watch(
 
 <template>
   <div v-if="jsonData">
-    <JsonSave :jsonData="jsonData" />
+    <div class="mb-4 flex items-end justify-between">
+      <h1 class="mb-0 py-4 text-center text-3xl font-bold">
+        {{ jsonData.name }} : {{ jsonData.author }}
+      </h1>
+      <JsonSave :jsonData="jsonData" />
+    </div>
 
-    <h1 class="py-4 text-center text-2xl font-bold">{{ jsonData.name }} : {{ jsonData.author }}</h1>
+    <div class="flex rounded-sm bg-gray-200 p-4">
+      <div>
+        Harmonics:
+        <input class="max-w-14 rounded-sm bg-gray-300 p-1" type="number" v-model="harmonics" />
+      </div>
+      <div class="ml-4">
+        Tempo: <input class="max-w-14 rounded-sm bg-gray-300 p-1" type="number" v-model="tempo" />
+      </div>
+      <div class="ml-auto">
+        Hold Length:&nbsp;&nbsp;
+        <select class="bg-gray-3 rounded-sm bg-gray-300 p-1 text-black" v-model="toolOptionValue">
+          <option value="-1" disabled>Hold note value</option>
+          <option
+            v-for="toolOption in toolOptions"
+            :key="toolOption.value"
+            :value="toolOption.value"
+          >
+            {{ toolOption.text }}
+          </option>
+        </select>
+      </div>
+    </div>
 
-    <div class="mx-auto mt-4 mb-10 flex max-w-200 flex-col-reverse">
+    <div class="mx-auto mt-4 mb-10 flex flex-col-reverse">
       <AdjustmentSlider
         v-for="(n, i) in harmonics"
         :key="n"
@@ -57,23 +83,15 @@ watch(
         v-model:hold="activeHolds[i]"
       />
     </div>
-
-    <div class="flex rounded-sm bg-gray-200 p-4">
-      <div>Harmonics: <input type="text" v-model.number="harmonics" /></div>
-      <div>Tempo: <input type="text" v-model.number="tempo" /></div>
-      Tool:&nbsp;&nbsp;
-      <select class="bg-gray-200 text-black" v-model="toolOptionValue">
-        <option value="-1" disabled>Please select one</option>
-        <option v-for="toolOption in toolOptions" :key="toolOption.value" :value="toolOption.value">
-          {{ toolOption.text }}
-        </option>
-      </select>
-    </div>
   </div>
+
   <template v-else>
     <JsonDrop @jsonLoaded="handleJsonLoaded" />
   </template>
-  <footer class="mt-auto pt-3 pb-3 text-right">preset machine v.01</footer>
+  <footer class="mt-auto flex justify-between pt-3 pb-3 text-right text-xs">
+    <div class="italic">click row to choose an offset with selected hold length</div>
+    <div>preset machine v.01</div>
+  </footer>
 </template>
 
 <style scoped></style>
