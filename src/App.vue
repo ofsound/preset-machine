@@ -43,7 +43,7 @@ const options = ref([
   { text: 'drag', value: 1 },
 ])
 
-const jsonData = ref(null) // To store the parsed JSON data
+const jsonData = ref(null)
 
 const handleDrop = (event: DragEvent) => {
   const files = event.dataTransfer?.files
@@ -59,8 +59,6 @@ const handleDrop = (event: DragEvent) => {
               console.log('JSON data:', jsonData.value)
             }
           }
-
-          // You can now use jsonData.value in your component
         } catch (error) {
           console.error('Error parsing JSON:', error)
           alert('Invalid JSON file.')
@@ -81,25 +79,19 @@ watch(correctedOffsets, () => {
 })
 
 const downloadJson = () => {
-  // Convert the JSON object to a string
   const jsonString = JSON.stringify(jsonData.value, null, 2) // null, 2 for pretty-printing
 
-  // Create a Blob from the JSON string
   const blob = new Blob([jsonString], { type: 'application/json' })
 
-  // Create a URL for the Blob
   const url = URL.createObjectURL(blob)
 
-  // Create a temporary anchor element
   const link = document.createElement('a')
   link.href = url
-  link.download = 'preset.json' // Desired filename for the downloaded file
+  link.download = jsonData.value.name + '.json' // Desired filename for the downloaded file
 
-  // Programmatically click the link to trigger the download
-  document.body.appendChild(link) // Append to body to ensure it's in the DOM
+  document.body.appendChild(link)
   link.click()
 
-  // Clean up: remove the link and revoke the URL
   document.body.removeChild(link)
   URL.revokeObjectURL(url)
 }
@@ -108,8 +100,6 @@ const downloadJson = () => {
 <template>
   <div @dragover.prevent @drop.prevent="handleDrop" class="drop-zone">
     Drag and Drop JSON File Here
-    <br />
-    <br />
   </div>
 
   <button @click="downloadJson">Download JSON</button>
@@ -141,12 +131,12 @@ const downloadJson = () => {
   <br />
   <br />
 
-  <div>
-    {{ JSON.stringify(jsonData, null, 2) }}
-  </div>
+  <div>"offsets": [{{ correctedOffsets.join(', ') }}],</div>
+  <div>"holds": [{{ correctedHolds.join(', ') }}],</div>
 
-  <!-- <div>"offsets": [{{ correctedOffsets.join(', ') }}],</div>
-  <div>"holds": [{{ correctedHolds.join(', ') }}],</div> -->
+  <div>
+    <!-- {{ JSON.stringify(jsonData, null, 2) }} -->
+  </div>
 </template>
 
 <style scoped></style>
