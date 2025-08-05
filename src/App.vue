@@ -5,24 +5,8 @@ import AdjustmentSlider from './components/AdjustmentSlider.vue'
 const oscTotal = 8
 const activeOsc = 8
 
-const offsets = ref<number[]>([])
-const attacks = ref<number[]>([])
-const decays = ref<number[]>([])
-const sustains = ref<number[]>([])
-const holds = ref<number[]>([])
-const releases = ref<number[]>([])
-
 const selectedValue = ref<number>()
 const tempo = ref<number>(120)
-
-for (let index = 0; index < oscTotal; index++) {
-  offsets.value.push(0)
-  attacks.value.push(0)
-  decays.value.push(0)
-  sustains.value.push(0)
-  holds.value.push(0)
-  releases.value.push(0)
-}
 
 const activeOffsets = ref<number[]>(new Array(oscTotal).fill(1))
 const activeHolds = ref<number[]>(new Array(oscTotal).fill(1))
