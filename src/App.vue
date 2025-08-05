@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
+
 import AdjustmentSlider from './components/AdjustmentSlider.vue'
 import JsonDrop from './components/JsonDrop.vue'
 import JsonSave from './components/JsonSave.vue'
@@ -8,14 +9,14 @@ import type { SineMachinePreset } from './types/SineMachinePreset.ts'
 
 const jsonData = ref<SineMachinePreset | null>(null)
 
-const oscTotal = 8
-const activeOsc = 8
+const handleJsonLoaded = (data: SineMachinePreset) => {
+  jsonData.value = data
+}
 
-const selectedValue = ref<number>()
-const tempo = ref<number>(120)
+const activeOscTotal = 8
 
-const activeOffsets = ref<number[]>(new Array(oscTotal).fill(1))
-const activeHolds = ref<number[]>(new Array(oscTotal).fill(1))
+const activeOffsets = ref<number[]>(new Array(activeOscTotal).fill(null))
+const activeHolds = ref<number[]>(new Array(activeOscTotal).fill(null))
 
 const correctedOffsets = computed(() => {
   return activeOffsets.value.map((item) => item / 90)
@@ -24,6 +25,10 @@ const correctedOffsets = computed(() => {
 const correctedHolds = computed(() => {
   return activeHolds.value.map((item) => item / 90)
 })
+
+const selectedValue = ref<number>()
+
+const tempo = ref<number>(120)
 
 const options = ref([
   { text: '8th', value: 2 },
@@ -39,32 +44,30 @@ watch(correctedOffsets, () => {
     jsonData.value.holds.splice(0, 8, ...correctedHolds.value)
   }
 })
-
-const handleJsonLoaded = (data: SineMachinePreset) => {
-  console.log('JSON loaded in child component:', data)
-  jsonData.value = data
-}
 </script>
 
 <template>
   <JsonDrop @jsonLoaded="handleJsonLoaded" />
 
   <div v-if="jsonData">
-    <JsonSave :jsonData="jsonData" />
+    <div class="flex justify-center gap-4">
+      <h1 class="py-4 text-center text-2xl font-bold">
+        {{ jsonData.name }} : {{ jsonData.author }}
+      </h1>
+      <JsonSave :jsonData="jsonData" />
+    </div>
 
-    <div class="ml-a mr-a flex max-w-200 flex-col-reverse">
+    <div class="mx-a mb-10 flex max-w-200 flex-col-reverse">
       <AdjustmentSlider
-        v-for="n in activeOsc"
+        v-for="(n, i) in activeOscTotal"
         :key="n"
-        v-model:offset="activeOffsets[n]"
-        v-model:hold="activeHolds[n]"
+        v-model:offset="activeOffsets[i]"
+        v-model:hold="activeHolds[i]"
         v-model:value="selectedValue"
       />
     </div>
 
     <input type="text" v-model="tempo" />
-
-    <br />
 
     <select id="myDropdown" v-model="selectedValue">
       <option value="" disabled>Please select one</option>
@@ -72,16 +75,7 @@ const handleJsonLoaded = (data: SineMachinePreset) => {
         {{ option.text }}
       </option>
     </select>
-
-    <!-- {{ JSON.stringify(jsonData, null, 2) }} -->
-    {{ jsonData.name }}
-    {{ jsonData.author }}
   </div>
-
-  <!-- <div>"offsets": [{{ correctedOffsets.join(', ') }}],</div>
-  <div>"holds": [{{ correctedHolds.join(', ') }}],</div> -->
-
-  <div></div>
 </template>
 
 <style scoped></style>

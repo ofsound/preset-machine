@@ -6,15 +6,14 @@ const props = defineProps({
 })
 
 const downloadJson = () => {
-  const jsonString = JSON.stringify(props.jsonData, null, 2) // null, 2 for pretty-printing
-
+  const jsonString = JSON.stringify(props.jsonData, null, 2)
   const blob = new Blob([jsonString], { type: 'application/json' })
 
   const url = URL.createObjectURL(blob)
 
   const link = document.createElement('a')
   link.href = url
-  link.download = props.jsonData?.name + '.json' // Desired filename for the downloaded file
+  link.download = props.jsonData?.name + '.json'
 
   document.body.appendChild(link)
   link.click()
@@ -25,7 +24,7 @@ const downloadJson = () => {
 </script>
 
 <template>
-  <button @click="downloadJson">Download JSON</button>
+  <button class="underline" @click="downloadJson">Download JSON</button>
 </template>
 
 <style scoped></style>
