@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 import AdjustmentSlider from './components/AdjustmentSlider.vue'
 import JsonDrop from './components/JsonDrop.vue'
+import JsonSave from './components/JsonSave.vue'
+
+import type { SineMachinePreset } from './types/SineMachinePreset.ts'
+
+const jsonData = ref<SineMachinePreset | null>(null)
 
 const oscTotal = 8
 const activeOsc = 8
@@ -28,70 +33,55 @@ const options = ref([
   { text: 'drag', value: 1 },
 ])
 
-// const downloadJson = () => {
-//   const jsonString = JSON.stringify(jsonData.value, null, 2) // null, 2 for pretty-printing
+watch(correctedOffsets, () => {
+  if (jsonData.value) {
+    jsonData.value.offsets.splice(0, 8, ...correctedOffsets.value)
+    jsonData.value.holds.splice(0, 8, ...correctedHolds.value)
+  }
+})
 
-//   const blob = new Blob([jsonString], { type: 'application/json' })
-
-//   const url = URL.createObjectURL(blob)
-
-//   const link = document.createElement('a')
-//   link.href = url
-//   link.download = jsonData.value.name + '.json' // Desired filename for the downloaded file
-
-//   document.body.appendChild(link)
-//   link.click()
-
-//   document.body.removeChild(link)
-//   URL.revokeObjectURL(url)
-// }
-
-// watch(correctedOffsets, () => {
-//   if (jsonData.value) {
-//     jsonData.value.offsets.splice(0, 8, ...correctedOffsets.value)
-//     jsonData.value.holds.splice(0, 8, ...correctedHolds.value)
-//   }
-// })
+const handleJsonLoaded = (data: SineMachinePreset) => {
+  console.log('JSON loaded in child component:', data)
+  jsonData.value = data
+}
 </script>
 
 <template>
-  <JsonDrop />
+  <JsonDrop @jsonLoaded="handleJsonLoaded" />
 
-  <!-- <button @click="downloadJson">Download JSON</button> -->
+  <div v-if="jsonData">
+    <JsonSave :jsonData="jsonData" />
 
-  <div class="ml-a mr-a flex max-w-200 flex-col-reverse">
-    <AdjustmentSlider
-      v-for="n in activeOsc"
-      :key="n"
-      v-model:offset="activeOffsets[n]"
-      v-model:hold="activeHolds[n]"
-      v-model:value="selectedValue"
-    />
-  </div>
+    <div class="ml-a mr-a flex max-w-200 flex-col-reverse">
+      <AdjustmentSlider
+        v-for="n in activeOsc"
+        :key="n"
+        v-model:offset="activeOffsets[n]"
+        v-model:hold="activeHolds[n]"
+        v-model:value="selectedValue"
+      />
+    </div>
 
-  <input type="text" v-model="tempo" />
+    <input type="text" v-model="tempo" />
 
-  <br />
+    <br />
 
-  <select id="myDropdown" v-model="selectedValue">
-    <option value="" disabled>Please select one</option>
-    <option v-for="option in options" :key="option.value" :value="option.value">
-      {{ option.text }}
-    </option>
-  </select>
+    <select id="myDropdown" v-model="selectedValue">
+      <option value="" disabled>Please select one</option>
+      <option v-for="option in options" :key="option.value" :value="option.value">
+        {{ option.text }}
+      </option>
+    </select>
 
-  <br />
-
-  <br />
-  <br />
-  <br />
-
-  <div>"offsets": [{{ correctedOffsets.join(', ') }}],</div>
-  <div>"holds": [{{ correctedHolds.join(', ') }}],</div>
-
-  <div>
     <!-- {{ JSON.stringify(jsonData, null, 2) }} -->
+    {{ jsonData.name }}
+    {{ jsonData.author }}
   </div>
+
+  <!-- <div>"offsets": [{{ correctedOffsets.join(', ') }}],</div>
+  <div>"holds": [{{ correctedHolds.join(', ') }}],</div> -->
+
+  <div></div>
 </template>
 
 <style scoped></style>
