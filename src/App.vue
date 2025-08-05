@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, computed } from 'vue'
 import AdjustmentSlider from './components/AdjustmentSlider.vue'
+import JsonDrop from './components/JsonDrop.vue'
 
 const oscTotal = 8
 const activeOsc = 8
@@ -27,66 +28,36 @@ const options = ref([
   { text: 'drag', value: 1 },
 ])
 
-const jsonData = ref(null)
+// const downloadJson = () => {
+//   const jsonString = JSON.stringify(jsonData.value, null, 2) // null, 2 for pretty-printing
 
-const handleDrop = (event: DragEvent) => {
-  const files = event.dataTransfer?.files
-  if (files && files.length > 0) {
-    const file = files[0]
-    if (file.type === 'application/json') {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        try {
-          if (e.target) {
-            if (typeof e.target.result === 'string') {
-              jsonData.value = JSON.parse(e.target.result)
-              console.log('JSON data:', jsonData.value)
-            }
-          }
-        } catch (error) {
-          console.error('Error parsing JSON:', error)
-          alert('Invalid JSON file.')
-        }
-      }
-      reader.readAsText(file)
-    } else {
-      alert('Please drop a JSON file.')
-    }
-  }
-}
+//   const blob = new Blob([jsonString], { type: 'application/json' })
 
-watch(correctedOffsets, () => {
-  if (jsonData.value) {
-    jsonData.value.offsets.splice(0, 8, ...correctedOffsets.value)
-    jsonData.value.holds.splice(0, 8, ...correctedHolds.value)
-  }
-})
+//   const url = URL.createObjectURL(blob)
 
-const downloadJson = () => {
-  const jsonString = JSON.stringify(jsonData.value, null, 2) // null, 2 for pretty-printing
+//   const link = document.createElement('a')
+//   link.href = url
+//   link.download = jsonData.value.name + '.json' // Desired filename for the downloaded file
 
-  const blob = new Blob([jsonString], { type: 'application/json' })
+//   document.body.appendChild(link)
+//   link.click()
 
-  const url = URL.createObjectURL(blob)
+//   document.body.removeChild(link)
+//   URL.revokeObjectURL(url)
+// }
 
-  const link = document.createElement('a')
-  link.href = url
-  link.download = jsonData.value.name + '.json' // Desired filename for the downloaded file
-
-  document.body.appendChild(link)
-  link.click()
-
-  document.body.removeChild(link)
-  URL.revokeObjectURL(url)
-}
+// watch(correctedOffsets, () => {
+//   if (jsonData.value) {
+//     jsonData.value.offsets.splice(0, 8, ...correctedOffsets.value)
+//     jsonData.value.holds.splice(0, 8, ...correctedHolds.value)
+//   }
+// })
 </script>
 
 <template>
-  <div @dragover.prevent @drop.prevent="handleDrop" class="drop-zone">
-    Drag and Drop JSON File Here
-  </div>
+  <JsonDrop />
 
-  <button @click="downloadJson">Download JSON</button>
+  <!-- <button @click="downloadJson">Download JSON</button> -->
 
   <div class="ml-a mr-a flex max-w-200 flex-col-reverse">
     <AdjustmentSlider
