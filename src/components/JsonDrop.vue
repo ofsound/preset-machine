@@ -29,9 +29,9 @@ const handleDrop = (event: DragEvent) => {
   <div
     @dragover.prevent
     @drop.prevent="handleDrop"
-    class="rounded-sm border-1 border-dotted bg-gray-200 p-6 text-center italic"
+    class="flex h-full flex-col justify-center rounded-sm border-1 border-dotted bg-gray-200 p-6 text-center italic"
   >
-    Drag and Drop JSON File Here
+    <div>Drag and Drop a Sine Machine Preset .json</div>
   </div>
 </template>
 

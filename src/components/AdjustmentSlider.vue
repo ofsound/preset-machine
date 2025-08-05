@@ -21,19 +21,19 @@ onMounted(() => {
       }
     }
 
-    const handleMouseMove = (event: MouseEvent) => {
-      const parentLeft = gridElement.value?.getBoundingClientRect().left
-      const mouseXRelativeToParent = event.clientX - parentLeft!
+    // const handleMouseMove = (event: MouseEvent) => {
+    //   const parentLeft = gridElement.value?.getBoundingClientRect().left
+    //   const mouseXRelativeToParent = event.clientX - parentLeft!
 
-      if (gridElement.value?.offsetWidth) {
-        const roundToAmount = gridElement.value?.offsetWidth / 16
-        const dragLength = mouseXRelativeToParent - offset.value
-        hold.value = Math.ceil(dragLength / roundToAmount) * roundToAmount
-      }
-    }
+    //   if (gridElement.value?.offsetWidth) {
+    //     const roundToAmount = gridElement.value?.offsetWidth / 16
+    //     const dragLength = mouseXRelativeToParent - offset.value
+    //     hold.value = Math.ceil(dragLength / roundToAmount) * roundToAmount
+    //   }
+    // }
 
     gridElement.value.addEventListener('mousedown', handleMouseDown)
-    gridElement.value.addEventListener('mousemove', handleMouseMove)
+    // gridElement.value.addEventListener('mousemove', handleMouseMove)
   }
 })
 </script>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import type { SineMachinePreset } from '../types/SineMachinePreset.ts'
 
 interface MyComponentProps {
@@ -27,7 +26,12 @@ const downloadJson = () => {
 </script>
 
 <template>
-  <button class="underline" @click="downloadJson">Download JSON</button>
+  <button
+    class="ml-a mx-auto mb-2 block cursor-pointer rounded-md border-1 bg-green-400 px-4 py-1 text-sm text-white"
+    @click="downloadJson"
+  >
+    Download {{ props.jsonData.name + '.json' }}
+  </button>
 </template>
 
 <style scoped></style>
