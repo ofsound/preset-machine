@@ -4,6 +4,7 @@ import { ref, onMounted } from 'vue'
 const offset = defineModel<number>('offset', { default: 0 })
 const hold = defineModel<number>('hold', { default: 0 })
 const divisions = defineModel<number>('divisions', { default: 16 })
+const value = defineModel<number>('value', { default: 0 })
 
 const gridElement = ref<HTMLElement | null>(null)
 
@@ -13,15 +14,14 @@ onMounted(() => {
       const parentLeft = gridElement.value?.getBoundingClientRect().left
       const mouseXRelativeToParent = event.clientX - parentLeft!
 
-      hold.value = 0
-
       if (gridElement.value?.offsetWidth) {
         const roundToAmount = gridElement.value?.offsetWidth / 16
+        hold.value = value.value * roundToAmount
         offset.value = Math.floor(mouseXRelativeToParent / roundToAmount) * roundToAmount
       }
     }
 
-    const handleMouseUp = (event: MouseEvent) => {
+    const handleMouseMove = (event: MouseEvent) => {
       const parentLeft = gridElement.value?.getBoundingClientRect().left
       const mouseXRelativeToParent = event.clientX - parentLeft!
 
@@ -33,15 +33,22 @@ onMounted(() => {
     }
 
     gridElement.value.addEventListener('mousedown', handleMouseDown)
-    gridElement.value.addEventListener('mouseup', handleMouseUp)
+    gridElement.value.addEventListener('mousemove', handleMouseMove)
   }
 })
 </script>
 
 <template>
   <div class="relative">
-    <div ref="gridElement" class="border-box flex border-1 border-gray-300">
-      <div v-for="n in divisions" :key="n" class="grid-child even:bg-gray-100"></div>
+    <div
+      ref="gridElement"
+      class="border-box border-right-2 flex border-1 border-gray-300 [&>.grid-child:nth-child(4n)]:border-r-2 [&>.grid-child:nth-child(4n)]:border-gray-300"
+    >
+      <div
+        v-for="n in divisions"
+        :key="n"
+        class="grid-child nth-child(4n):border-2 :nth-child(4n):border-blue-400 even:bg-gray-100"
+      ></div>
       <div class="segment absolute h-[calc(100%-2px)] bg-amber-400"></div>
     </div>
   </div>
