@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import type { SineMachinePreset } from '../types/SineMachinePreset.ts'
 
-const props = defineProps({
-  jsonData: Object,
-})
+interface MyComponentProps {
+  jsonData: SineMachinePreset
+}
+
+const props = defineProps<MyComponentProps>()
 
 const downloadJson = () => {
   const jsonString = JSON.stringify(props.jsonData, null, 2)
@@ -13,7 +16,7 @@ const downloadJson = () => {
 
   const link = document.createElement('a')
   link.href = url
-  link.download = props.jsonData?.name + '.json'
+  link.download = props.jsonData.name + '.json'
 
   document.body.appendChild(link)
   link.click()

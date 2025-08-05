@@ -1,21 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
 const emit = defineEmits(['jsonLoaded'])
-const jsonData = ref(null)
 
 const handleDrop = (event: DragEvent) => {
-  const files = event.dataTransfer?.files
-  if (files && files.length > 0) {
-    const file = files[0]
+  if (event.dataTransfer) {
+    const file = event.dataTransfer.files[0]
     if (file.type === 'application/json') {
       const reader = new FileReader()
       reader.onload = (e) => {
         try {
           if (e.target) {
             if (typeof e.target.result === 'string') {
-              jsonData.value = JSON.parse(e.target.result)
-              emit('jsonLoaded', jsonData.value)
+              emit('jsonLoaded', JSON.parse(e.target.result))
             }
           }
         } catch (error) {

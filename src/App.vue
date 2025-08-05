@@ -15,9 +15,6 @@ const handleJsonLoaded = (data: SineMachinePreset) => {
 
 const activeOscTotal = 8
 
-const activeOffsets = ref<number[]>(new Array(activeOscTotal).fill(null))
-const activeHolds = ref<number[]>(new Array(activeOscTotal).fill(null))
-
 const tempo = ref<number>(120)
 
 const toolOptionValue = ref<number>()
@@ -28,6 +25,9 @@ const toolOptions = ref([
   { text: '1/2', value: 8 },
   { text: 'drag', value: 1 },
 ])
+
+const activeOffsets = ref<number[]>(new Array(activeOscTotal).fill(null))
+const activeHolds = ref<number[]>(new Array(activeOscTotal).fill(null))
 
 watch([activeOffsets, activeHolds], () => {
   if (jsonData.value) {
@@ -64,8 +64,8 @@ watch([activeOffsets, activeHolds], () => {
 
     <select id="myDropdown" v-model="toolOptionValue">
       <option value="" disabled>Please select one</option>
-      <option v-for="option in toolOptions" :key="option.value" :value="option.value">
-        {{ option.text }}
+      <option v-for="toolOption in toolOptions" :key="toolOption.value" :value="toolOption.value">
+        {{ toolOption.text }}
       </option>
     </select>
   </div>
