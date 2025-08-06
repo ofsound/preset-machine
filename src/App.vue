@@ -95,7 +95,7 @@ watch(
     <JsonDrop @jsonLoaded="handleJsonLoaded" />
   </template>
   <footer class="mt-auto flex justify-between pt-3 pb-3 text-right text-xs">
-    <div class="italic">click row to choose an offset with selected hold length</div>
+    <div class="italic">click (and drag) on row to choose an offset and hold length</div>
     <div>preset machine v.01</div>
   </footer>
 </template>
