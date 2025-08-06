@@ -24,14 +24,7 @@ onMounted(async () => {
         isMouseDown.value = true
         const roundAmount = gridElement.value.clientWidth / 16
         emit('roundAmount', roundAmount)
-
         hold.value = value.value * roundAmount
-        // console.log(roundAmount)
-        // console.log(value.value)
-
-        // console.log('hold should be:', value.value * roundAmount)
-        // console.log('hold is :', hold.value)
-
         offset.value = Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
       }
     }
@@ -61,7 +54,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="relative max-w-200 overflow-hidden">
+  <div class="relative max-w-200 cursor-pointer overflow-hidden select-none">
     <div
       ref="gridElement"
       class="border-box border-right-2 flex border-1 border-gray-300 [&>.grid-child:nth-child(4n)]:border-r-2 [&>.grid-child:nth-child(4n)]:border-gray-300"
