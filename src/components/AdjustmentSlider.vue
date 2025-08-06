@@ -49,6 +49,7 @@ onMounted(async () => {
     gridElement.value?.addEventListener('mousedown', handleMouseDown)
     gridElement.value?.addEventListener('mousemove', handleMouseMove)
     gridElement.value?.addEventListener('mouseup', handleMouseUp)
+    gridElement.value?.addEventListener('mouseleave', handleMouseUp)
   }
 })
 </script>
