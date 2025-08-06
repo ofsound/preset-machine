@@ -58,9 +58,11 @@ onMounted(() => {
       <div
         v-for="n in divisions"
         :key="n"
-        class="grid-child nth-child(4n):border-2 :nth-child(4n):border-blue-400 even:bg-gray-100"
+        class="grid-child nth-child(4n):border-2 :nth-child(4n):border-blue-400 cursor-pointer select-none even:bg-gray-100"
       ></div>
-      <div class="segment absolute h-[calc(100%-2px)] bg-amber-400"></div>
+      <div
+        class="segment absolute h-[calc(100%-2px)] cursor-pointer bg-amber-400 select-none"
+      ></div>
     </div>
   </div>
 </template>
