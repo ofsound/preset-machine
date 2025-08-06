@@ -5,23 +5,34 @@ const offset = defineModel<number>('offset', { default: 0 })
 const hold = defineModel<number>('hold', { default: 0 })
 const divisions = defineModel<number>('divisions', { default: 16 })
 const value = defineModel<number>('value', { default: 0 })
-const roundAmount = defineModel<number>('roundAmount', { default: 0 })
+// const roundAmount = defineModel<number>('roundAmount', { default: 0 })
+
+const emit = defineEmits(['roundAmount'])
 
 const gridElement = ref<HTMLElement | null>(null)
 
 const isMouseDown = ref<boolean>(false)
 
-onMounted(() => {
+onMounted(async () => {
   if (gridElement.value) {
-    const handleMouseDown = (event: MouseEvent) => {
+    const handleMouseDown = async (event: MouseEvent) => {
       const parentLeft = gridElement.value?.getBoundingClientRect().left
       const mouseXRelativeToParent = event.clientX - parentLeft!
 
-      if (gridElement.value?.offsetWidth) {
+      if (gridElement.value?.clientWidth) {
+        console.log(gridElement.value.clientWidth)
         isMouseDown.value = true
-        roundAmount.value = gridElement.value?.clientWidth / 16
-        hold.value = value.value * roundAmount.value
-        offset.value = Math.floor(mouseXRelativeToParent / roundAmount.value) * roundAmount.value
+        const roundAmount = gridElement.value.clientWidth / 16
+        emit('roundAmount', roundAmount)
+
+        hold.value = value.value * roundAmount
+        // console.log(roundAmount)
+        // console.log(value.value)
+
+        // console.log('hold should be:', value.value * roundAmount)
+        // console.log('hold is :', hold.value)
+
+        offset.value = Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
       }
     }
 
@@ -42,9 +53,9 @@ onMounted(() => {
       }
     }
 
-    gridElement.value.addEventListener('mousedown', handleMouseDown)
-    gridElement.value.addEventListener('mousemove', handleMouseMove)
-    gridElement.value.addEventListener('mouseup', handleMouseUp)
+    gridElement.value?.addEventListener('mousedown', handleMouseDown)
+    gridElement.value?.addEventListener('mousemove', handleMouseMove)
+    gridElement.value?.addEventListener('mouseup', handleMouseUp)
   }
 })
 </script>
@@ -58,11 +69,9 @@ onMounted(() => {
       <div
         v-for="n in divisions"
         :key="n"
-        class="grid-child nth-child(4n):border-2 :nth-child(4n):border-blue-400 cursor-pointer select-none even:bg-gray-100"
+        class="grid-child nth-child(4n):border-2 :nth-child(4n):border-blue-400 even:bg-gray-100"
       ></div>
-      <div
-        class="segment absolute h-[calc(100%-2px)] cursor-pointer bg-amber-400 select-none"
-      ></div>
+      <div class="segment absolute h-[calc(100%-2px)] bg-amber-400"></div>
     </div>
   </div>
 </template>

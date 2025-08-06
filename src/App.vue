@@ -13,6 +13,10 @@ const handleJsonLoaded = (data: SineMachinePreset) => {
   jsonData.value = data
 }
 
+const handleRoundAmount = (roundAmountEmitted: number) => {
+  roundAmount.value = roundAmountEmitted
+}
+
 const harmonics = ref<number>(8)
 const tempo = ref<number>(120)
 
@@ -25,8 +29,8 @@ const toolOptions = ref([
   { text: '1/2', value: 8 },
 ])
 
-const activeOffsets = ref<number[]>(new Array(harmonics.value).fill(null))
-const activeHolds = ref<number[]>(new Array(harmonics.value).fill(null))
+const activeOffsets = ref<number[]>(new Array(harmonics.value).fill(0))
+const activeHolds = ref<number[]>(new Array(harmonics.value).fill(0))
 const roundAmount = ref<number>(0)
 
 watch(
@@ -86,7 +90,7 @@ watch(
         :value="toolOptionValue"
         v-model:offset="activeOffsets[i]"
         v-model:hold="activeHolds[i]"
-        v-model:roundAmount="roundAmount"
+        @roundAmount="handleRoundAmount"
       />
     </div>
   </div>
