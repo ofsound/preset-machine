@@ -27,13 +27,18 @@ const toolOptions = ref([
 
 const activeOffsets = ref<number[]>(new Array(harmonics.value).fill(null))
 const activeHolds = ref<number[]>(new Array(harmonics.value).fill(null))
+const roundAmount = ref<number>(0)
 
 watch(
   [activeOffsets, activeHolds],
   () => {
     if (jsonData.value) {
-      const correctedOffsets = activeOffsets.value.map((item) => item / 90)
-      const correctedHolds = activeHolds.value.map((item) => item / 90)
+      const correctedOffsets = activeOffsets.value.map(
+        (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
+      )
+      const correctedHolds = activeHolds.value.map(
+        (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
+      )
       jsonData.value.offsets.splice(0, harmonics.value, ...correctedOffsets)
       jsonData.value.holds.splice(0, harmonics.value, ...correctedHolds)
     }
@@ -81,6 +86,7 @@ watch(
         :value="toolOptionValue"
         v-model:offset="activeOffsets[i]"
         v-model:hold="activeHolds[i]"
+        v-model:roundAmount="roundAmount"
       />
     </div>
   </div>

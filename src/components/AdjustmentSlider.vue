@@ -5,6 +5,7 @@ const offset = defineModel<number>('offset', { default: 0 })
 const hold = defineModel<number>('hold', { default: 0 })
 const divisions = defineModel<number>('divisions', { default: 16 })
 const value = defineModel<number>('value', { default: 0 })
+const roundAmount = defineModel<number>('roundAmount', { default: 0 })
 
 const gridElement = ref<HTMLElement | null>(null)
 
@@ -15,9 +16,9 @@ onMounted(() => {
       const mouseXRelativeToParent = event.clientX - parentLeft!
 
       if (gridElement.value?.offsetWidth) {
-        const roundToAmount = gridElement.value?.offsetWidth / 16
-        hold.value = value.value * roundToAmount
-        offset.value = Math.floor(mouseXRelativeToParent / roundToAmount) * roundToAmount
+        roundAmount.value = gridElement.value?.clientWidth / 16
+        hold.value = value.value * roundAmount.value
+        offset.value = Math.floor(mouseXRelativeToParent / roundAmount.value) * roundAmount.value
       }
     }
 
@@ -26,9 +27,9 @@ onMounted(() => {
     //   const mouseXRelativeToParent = event.clientX - parentLeft!
 
     //   if (gridElement.value?.offsetWidth) {
-    //     const roundToAmount = gridElement.value?.offsetWidth / 16
+    //     const roundAmount = gridElement.value?.offsetWidth / 16
     //     const dragLength = mouseXRelativeToParent - offset.value
-    //     hold.value = Math.ceil(dragLength / roundToAmount) * roundToAmount
+    //     hold.value = Math.ceil(dragLength / roundAmount) * roundAmount
     //   }
     // }
 
@@ -39,7 +40,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative max-w-200 overflow-hidden">
     <div
       ref="gridElement"
       class="border-box border-right-2 flex border-1 border-gray-300 [&>.grid-child:nth-child(4n)]:border-r-2 [&>.grid-child:nth-child(4n)]:border-gray-300"
