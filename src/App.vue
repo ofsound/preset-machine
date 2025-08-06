@@ -18,7 +18,7 @@ const tempo = ref<number>(120)
 
 const toolOptionValue = ref<number>(1)
 const toolOptions = ref([
-  { text: '1/16', value: 1 },
+  { text: '1/16 & drag', value: 1 },
   { text: '1/8', value: 2 },
   { text: 'Dotted 1/8', value: 3 },
   { text: '1/4', value: 4 },

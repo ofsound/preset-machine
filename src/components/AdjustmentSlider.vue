@@ -9,6 +9,8 @@ const roundAmount = defineModel<number>('roundAmount', { default: 0 })
 
 const gridElement = ref<HTMLElement | null>(null)
 
+const isMouseDown = ref<boolean>(false)
+
 onMounted(() => {
   if (gridElement.value) {
     const handleMouseDown = (event: MouseEvent) => {
@@ -16,25 +18,33 @@ onMounted(() => {
       const mouseXRelativeToParent = event.clientX - parentLeft!
 
       if (gridElement.value?.offsetWidth) {
+        isMouseDown.value = true
         roundAmount.value = gridElement.value?.clientWidth / 16
         hold.value = value.value * roundAmount.value
         offset.value = Math.floor(mouseXRelativeToParent / roundAmount.value) * roundAmount.value
       }
     }
 
-    // const handleMouseMove = (event: MouseEvent) => {
-    //   const parentLeft = gridElement.value?.getBoundingClientRect().left
-    //   const mouseXRelativeToParent = event.clientX - parentLeft!
+    const handleMouseUp = () => {
+      if (gridElement.value?.offsetWidth) {
+        isMouseDown.value = false
+      }
+    }
 
-    //   if (gridElement.value?.offsetWidth) {
-    //     const roundAmount = gridElement.value?.offsetWidth / 16
-    //     const dragLength = mouseXRelativeToParent - offset.value
-    //     hold.value = Math.ceil(dragLength / roundAmount) * roundAmount
-    //   }
-    // }
+    const handleMouseMove = (event: MouseEvent) => {
+      const parentLeft = gridElement.value?.getBoundingClientRect().left
+      const mouseXRelativeToParent = event.clientX - parentLeft!
+
+      if (gridElement.value?.offsetWidth && isMouseDown.value && value.value == 1) {
+        const roundAmount = gridElement.value?.offsetWidth / 16
+        const dragLength = mouseXRelativeToParent - offset.value
+        hold.value = Math.ceil(dragLength / roundAmount) * roundAmount
+      }
+    }
 
     gridElement.value.addEventListener('mousedown', handleMouseDown)
-    // gridElement.value.addEventListener('mousemove', handleMouseMove)
+    gridElement.value.addEventListener('mousemove', handleMouseMove)
+    gridElement.value.addEventListener('mouseup', handleMouseUp)
   }
 })
 </script>
