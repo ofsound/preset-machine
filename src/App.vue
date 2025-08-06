@@ -13,7 +13,7 @@ const handleJsonLoaded = (data: SineMachinePreset) => {
   jsonData.value = data
 }
 
-const harmonics = ref<number>(16)
+const harmonics = ref<number>(8)
 const tempo = ref<number>(120)
 
 const toolOptionValue = ref<number>(1)
