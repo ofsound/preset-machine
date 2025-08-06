@@ -6,8 +6,6 @@ Although, as the lead dev, I don't actually know exactly how this will work.
 
 Will you have to install other things, or is that on lock with package.json...
 
-[Online here](https://inpursuitofsound.com/)
-
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/)
