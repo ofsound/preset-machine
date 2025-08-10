@@ -5,7 +5,6 @@ const offset = defineModel<number>('offset', { default: 0 })
 const hold = defineModel<number>('hold', { default: 0 })
 const divisions = defineModel<number>('divisions', { default: 16 })
 const value = defineModel<number>('value', { default: 0 })
-// const roundAmount = defineModel<number>('roundAmount', { default: 0 })
 
 const emit = defineEmits(['roundAmount'])
 
