@@ -33,5 +33,3 @@ const downloadJson = () => {
     Download {{ props.jsonData.name + '.json' }}
   </button>
 </template>
-
-<style scoped></style>

@@ -34,5 +34,3 @@ const handleDrop = (event: DragEvent) => {
     <div>Drag and Drop a Sine Machine Preset .json</div>
   </div>
 </template>
-
-<style scoped></style>
