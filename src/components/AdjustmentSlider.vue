@@ -9,7 +9,6 @@ const divisions = defineModel<number>('divisions', { default: 16 })
 const value = defineModel<number>('value', { default: 0 })
 
 const gridElement = ref<HTMLElement | null>(null)
-
 const isMouseDown = ref<boolean>(false)
 
 onMounted(() => {

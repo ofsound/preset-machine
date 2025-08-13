@@ -6,13 +6,6 @@ import AdjustmentSlider from '@/components/AdjustmentSlider.vue'
 import { useState } from '@/composables/useState'
 const { preset } = useState()
 
-const handleRoundAmount = (roundAmountEmitted: number) => {
-  roundAmount.value = roundAmountEmitted
-}
-
-const harmonics = ref<number>(8)
-const tempo = ref<number>(120)
-
 const toolOptionValue = ref<number>(1)
 const toolOptions = ref([
   { text: '1/16 & drag', value: 1 },
@@ -21,6 +14,13 @@ const toolOptions = ref([
   { text: '1/4', value: 4 },
   { text: '1/2', value: 8 },
 ])
+
+const harmonics = ref<number>(8)
+const tempo = ref<number>(120)
+
+const handleRoundAmount = (roundAmountEmitted: number) => {
+  roundAmount.value = roundAmountEmitted
+}
 
 const activeOffsets = ref<number[]>(new Array(harmonics.value).fill(0))
 const activeHolds = ref<number[]>(new Array(harmonics.value).fill(0))
