@@ -69,6 +69,8 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+/* just put these as computed styles up above, right? */
+
 .segment {
   margin-left: v-bind(offset + 'px');
   width: v-bind(hold + 'px');

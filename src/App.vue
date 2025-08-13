@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 
 import AdjustmentSlider from './components/AdjustmentSlider.vue'
 import JsonDrop from './components/JsonDrop.vue'
 import JsonSave from './components/JsonSave.vue'
-
-import { v4 as uuidv4 } from 'uuid'
 
 import type { SineMachinePreset } from './types/SineMachinePreset.ts'
 
@@ -17,11 +16,25 @@ const handleRoundAmount = (roundAmountEmitted: number) => {
   roundAmount.value = roundAmountEmitted
 }
 
-const createUniqueBlankPreset = (): SineMachinePreset => {
-  const newUuid = uuidv4()
+const harmonics = ref<number>(8)
+const tempo = ref<number>(120)
 
+const toolOptionValue = ref<number>(1)
+const toolOptions = ref([
+  { text: '1/16 & drag', value: 1 },
+  { text: '1/8', value: 2 },
+  { text: 'Dotted 1/8', value: 3 },
+  { text: '1/4', value: 4 },
+  { text: '1/2', value: 8 },
+])
+
+const activeOffsets = ref<number[]>(new Array(harmonics.value).fill(0))
+const activeHolds = ref<number[]>(new Array(harmonics.value).fill(0))
+const roundAmount = ref<number>(0)
+
+const createUniqueBlankPreset = (): SineMachinePreset => {
   const sineMachinePreset: SineMachinePreset = {
-    uuid: newUuid,
+    uuid: uuidv4(),
     name: 'New Preset',
     author: 'BJM',
     description: '',
@@ -434,22 +447,6 @@ const createUniqueBlankPreset = (): SineMachinePreset => {
 
 const jsonData = ref<SineMachinePreset>(createUniqueBlankPreset())
 
-const harmonics = ref<number>(8)
-const tempo = ref<number>(120)
-
-const toolOptionValue = ref<number>(1)
-const toolOptions = ref([
-  { text: '1/16 & drag', value: 1 },
-  { text: '1/8', value: 2 },
-  { text: 'Dotted 1/8', value: 3 },
-  { text: '1/4', value: 4 },
-  { text: '1/2', value: 8 },
-])
-
-const activeOffsets = ref<number[]>(new Array(harmonics.value).fill(0))
-const activeHolds = ref<number[]>(new Array(harmonics.value).fill(0))
-const roundAmount = ref<number>(0)
-
 watch(
   [activeOffsets, activeHolds],
   () => {
@@ -522,5 +519,3 @@ watch(
     </footer>
   </div>
 </template>
-
-<style scoped></style>
