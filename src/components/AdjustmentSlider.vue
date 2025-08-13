@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+
+const emit = defineEmits(['roundAmount'])
 
 const offset = defineModel<number>('offset', { default: 0 })
 const hold = defineModel<number>('hold', { default: 0 })
 const divisions = defineModel<number>('divisions', { default: 16 })
 const value = defineModel<number>('value', { default: 0 })
-
-const emit = defineEmits(['roundAmount'])
 
 const gridElement = ref<HTMLElement | null>(null)
 
@@ -15,10 +15,9 @@ const isMouseDown = ref<boolean>(false)
 onMounted(() => {
   if (gridElement.value) {
     const handleMouseDown = (event: MouseEvent) => {
-      const parentLeft = gridElement.value?.getBoundingClientRect().left
-      const mouseXRelativeToParent = event.clientX - parentLeft!
-
       if (gridElement.value?.clientWidth) {
+        const parentLeft = gridElement.value.getBoundingClientRect().left
+        const mouseXRelativeToParent = event.clientX - parentLeft!
         isMouseDown.value = true
         const roundAmount = gridElement.value.clientWidth / 16
         emit('roundAmount', roundAmount)
@@ -34,20 +33,32 @@ onMounted(() => {
     }
 
     const handleMouseMove = (event: MouseEvent) => {
-      const parentLeft = gridElement.value?.getBoundingClientRect().left
-      const mouseXRelativeToParent = event.clientX - parentLeft!
-
       if (gridElement.value?.offsetWidth && isMouseDown.value && value.value == 1) {
+        const parentLeft = gridElement.value.getBoundingClientRect().left
+        const mouseXRelativeToParent = event.clientX - parentLeft!
         const roundAmount = gridElement.value?.offsetWidth / 16
         const dragLength = mouseXRelativeToParent - offset.value
         hold.value = Math.ceil(dragLength / roundAmount) * roundAmount
       }
     }
 
-    gridElement.value?.addEventListener('mousedown', handleMouseDown)
-    gridElement.value?.addEventListener('mousemove', handleMouseMove)
-    gridElement.value?.addEventListener('mouseup', handleMouseUp)
-    gridElement.value?.addEventListener('mouseleave', handleMouseUp)
+    gridElement.value.addEventListener('mousedown', handleMouseDown)
+    gridElement.value.addEventListener('mousemove', handleMouseMove)
+    gridElement.value.addEventListener('mouseup', handleMouseUp)
+    gridElement.value.addEventListener('mouseleave', handleMouseUp)
+  }
+})
+
+const segmentStyle = computed(() => {
+  return {
+    marginLeft: `${offset.value}px`,
+    width: `${hold.value}px`,
+  }
+})
+
+const gridChildStyle = computed(() => {
+  return {
+    width: `${(1 / divisions.value) * 100}%`,
   }
 })
 </script>
@@ -61,23 +72,10 @@ onMounted(() => {
       <div
         v-for="n in divisions"
         :key="n"
-        class="grid-child nth-child(4n):border-2 :nth-child(4n):border-blue-400 even:bg-gray-100"
+        class="nth-child(4n):border-2 :nth-child(4n):border-blue-400 aspect-square h-auto even:bg-gray-100"
+        :style="gridChildStyle"
       ></div>
-      <div class="segment absolute h-[calc(100%-2px)] bg-amber-400"></div>
+      <div class="absolute h-[calc(100%-2px)] bg-amber-400" :style="segmentStyle"></div>
     </div>
   </div>
 </template>
-
-<style scoped>
-/* just put these as computed styles up above, right? */
-
-.segment {
-  margin-left: v-bind(offset + 'px');
-  width: v-bind(hold + 'px');
-}
-.grid-child {
-  height: auto;
-  aspect-ratio: 1;
-  width: v-bind((1 / divisions) * 100 + '%');
-}
-</style>
