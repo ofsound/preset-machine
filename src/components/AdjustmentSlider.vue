@@ -12,9 +12,9 @@ const gridElement = ref<HTMLElement | null>(null)
 
 const isMouseDown = ref<boolean>(false)
 
-onMounted(async () => {
+onMounted(() => {
   if (gridElement.value) {
-    const handleMouseDown = async (event: MouseEvent) => {
+    const handleMouseDown = (event: MouseEvent) => {
       const parentLeft = gridElement.value?.getBoundingClientRect().left
       const mouseXRelativeToParent = event.clientX - parentLeft!
 
