@@ -19,7 +19,6 @@ onMounted(async () => {
       const mouseXRelativeToParent = event.clientX - parentLeft!
 
       if (gridElement.value?.clientWidth) {
-        console.log(gridElement.value.clientWidth)
         isMouseDown.value = true
         const roundAmount = gridElement.value.clientWidth / 16
         emit('roundAmount', roundAmount)

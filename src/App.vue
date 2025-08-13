@@ -2,18 +2,16 @@
 import { ref, watch } from 'vue'
 
 import AdjustmentSlider from './components/AdjustmentSlider.vue'
-// import JsonDrop from './components/JsonDrop.vue'
+import JsonDrop from './components/JsonDrop.vue'
 import JsonSave from './components/JsonSave.vue'
 
 import { v4 as uuidv4 } from 'uuid'
 
-// Generate a version 4 (random) UUID
-
 import type { SineMachinePreset } from './types/SineMachinePreset.ts'
 
-// const handleJsonLoaded = (data: SineMachinePreset) => {
-//   // jsonData.value = data
-// }
+const handleJsonLoaded = (data: SineMachinePreset) => {
+  jsonData.value = data
+}
 
 const handleRoundAmount = (roundAmountEmitted: number) => {
   roundAmount.value = roundAmountEmitted
@@ -21,12 +19,11 @@ const handleRoundAmount = (roundAmountEmitted: number) => {
 
 const createUniqueBlankPreset = (): SineMachinePreset => {
   const newUuid = uuidv4()
-  console.log(newUuid)
 
   const sineMachinePreset: SineMachinePreset = {
     uuid: newUuid,
-    name: 'BJM',
-    author: '',
+    name: 'New Preset',
+    author: 'BJM',
     description: '',
     version: '',
     derivedFrom: 'Preset Machine',
@@ -435,7 +432,7 @@ const createUniqueBlankPreset = (): SineMachinePreset => {
   return sineMachinePreset
 }
 
-const jsonData = ref<SineMachinePreset | null>(createUniqueBlankPreset())
+const jsonData = ref<SineMachinePreset>(createUniqueBlankPreset())
 
 const harmonics = ref<number>(8)
 const tempo = ref<number>(120)
@@ -517,7 +514,7 @@ watch(
     </div>
 
     <template v-else>
-      <!-- <JsonDrop @jsonLoaded="handleJsonLoaded" /> -->
+      <JsonDrop @jsonLoaded="handleJsonLoaded" />
     </template>
     <footer class="mt-auto flex justify-between pt-3 pb-3 text-right text-xs">
       <div class="italic">click (and drag) on row to choose an offset and hold length</div>
