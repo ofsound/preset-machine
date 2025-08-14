@@ -4,7 +4,7 @@ export interface SineMachinePreset {
   author: string;
   description: string;
   version: string;
-  derivedFrom: string;
+  // derivedFrom: string;
   gains: number[];
   offsets: number[];
   attacks: number[];
@@ -12,16 +12,16 @@ export interface SineMachinePreset {
   sustains: number[];
   holds: number[];
   releases: number[];
-  glideTimesInBlocks: number[];
-  filterTable: number[];
-  tremDepths: number[];
-  tremRatesSeconds: number[];
-  tremRatesBeats: number[];
-  tremOffsets: number[];
-  tremWavetable: number[];
-  pitchDepths: number[];
-  pitchRatesSeconds: number[];
-  pitchRatesBeats: number[];
-  pitchNoiseAmounts: number[];
-  parameters: { [key: string]: number };
+  // glideTimesInBlocks: number[];
+  // filterTable: number[];
+  // tremDepths: number[];
+  // tremRatesSeconds: number[];
+  // tremRatesBeats: number[];
+  // tremOffsets: number[];
+  // tremWavetable: number[];
+  // pitchDepths: number[];
+  // pitchRatesSeconds: number[];
+  // pitchRatesBeats: number[];
+  // pitchNoiseAmounts: number[];
+  // parameters: { [key: string]: number };
 }

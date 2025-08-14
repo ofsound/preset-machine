@@ -1,21 +1,57 @@
 <script setup lang="ts">
-import type { SineMachinePreset } from '../types/SineMachinePreset.ts'
+// import type { SineMachinePreset } from '../types/SineMachinePreset.ts'
 
-interface MyComponentProps {
-  jsonData: SineMachinePreset
-}
+import { usePreset } from '@/composables/usePreset'
 
-const props = defineProps<MyComponentProps>()
+const { preset } = usePreset()
+
+// interface MyComponentProps {
+//   jsonData: SineMachinePreset
+// }
+
+// const props = defineProps<MyComponentProps>()
 
 const downloadJson = () => {
-  const jsonString = JSON.stringify(props.jsonData, null, 2)
+  let numZeros = 512 - preset.offsets.length
+  let zerosToAdd = new Array(numZeros).fill(0)
+  preset.offsets = preset.offsets.concat(zerosToAdd)
+
+  numZeros = 512 - preset.gains.length
+  zerosToAdd = new Array(numZeros).fill(1)
+  preset.gains = preset.gains.concat(zerosToAdd)
+
+  numZeros = 512 - preset.holds.length
+  zerosToAdd = new Array(numZeros).fill(0)
+  preset.holds = preset.holds.concat(zerosToAdd)
+
+  numZeros = 512 - preset.attacks.length
+  zerosToAdd = new Array(numZeros).fill(0)
+  preset.attacks = preset.attacks.concat(zerosToAdd)
+
+  // console.log(preset.offsets.length)
+  numZeros = 512 - preset.decays.length
+  zerosToAdd = new Array(numZeros).fill(0)
+  preset.decays = preset.decays.concat(zerosToAdd)
+
+  numZeros = 512 - preset.releases.length
+  zerosToAdd = new Array(numZeros).fill(0)
+  preset.releases = preset.releases.concat(zerosToAdd)
+
+  numZeros = 512 - preset.sustains.length
+  zerosToAdd = new Array(numZeros).fill(0)
+  preset.sustains = preset.sustains.concat(zerosToAdd)
+
+  // console.log(preset.offsets.length)
+
+  const jsonString = JSON.stringify(preset, null, 2)
+
   const blob = new Blob([jsonString], { type: 'application/json' })
 
   const url = URL.createObjectURL(blob)
 
   const link = document.createElement('a')
   link.href = url
-  link.download = props.jsonData.name + '.json'
+  link.download = preset.name + '.json'
 
   document.body.appendChild(link)
   link.click()
@@ -30,6 +66,6 @@ const downloadJson = () => {
     class="mb-4 block cursor-pointer rounded-md border-1 bg-green-400 px-4 py-1 text-sm text-white"
     @click="downloadJson"
   >
-    Download {{ props.jsonData.name + '.json' }}
+    Download {{ '.json' }}
   </button>
 </template>

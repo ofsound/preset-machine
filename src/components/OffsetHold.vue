@@ -3,8 +3,8 @@ import { ref, watch } from 'vue'
 
 import AdjustmentSlider from '@/components/AdjustmentSlider.vue'
 
-import { useState } from '@/composables/useState'
-const { preset } = useState()
+import { usePreset } from '@/composables/usePreset'
+const { preset } = usePreset()
 
 const toolOptionValue = ref<number>(1)
 const toolOptions = ref([
@@ -15,15 +15,15 @@ const toolOptions = ref([
   { text: '1/2', value: 8 },
 ])
 
-const harmonics = ref<number>(8)
+const numHarmonics = ref<number>(8)
 const tempo = ref<number>(120)
 
 const handleRoundAmount = (roundAmountEmitted: number) => {
   roundAmount.value = roundAmountEmitted
 }
 
-const activeOffsets = ref<number[]>(new Array(harmonics.value).fill(0))
-const activeHolds = ref<number[]>(new Array(harmonics.value).fill(0))
+const activeOffsets = ref<number[]>(new Array(numHarmonics.value).fill(0))
+const activeHolds = ref<number[]>(new Array(numHarmonics.value).fill(0))
 const roundAmount = ref<number>(0)
 
 watch(
@@ -36,8 +36,9 @@ watch(
       const correctedHolds = activeHolds.value.map(
         (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
       )
-      preset.offsets.splice(0, harmonics.value, ...correctedOffsets)
-      preset.holds.splice(0, harmonics.value, ...correctedHolds)
+
+      preset.offsets.splice(0, numHarmonics.value, ...correctedOffsets)
+      preset.holds.splice(0, numHarmonics.value, ...correctedHolds)
     }
   },
   { deep: true },
@@ -49,7 +50,7 @@ watch(
     <div class="flex rounded-sm bg-gray-200 p-4">
       <div>
         Harmonics:
-        <input class="max-w-14 rounded-sm bg-gray-300 p-1" type="number" v-model="harmonics" />
+        <input class="max-w-14 rounded-sm bg-gray-300 p-1" type="number" v-model="numHarmonics" />
       </div>
       <div class="ml-4">
         Tempo: <input class="max-w-14 rounded-sm bg-gray-300 p-1" type="number" v-model="tempo" />
@@ -70,7 +71,7 @@ watch(
     </div>
     <div class="mx-auto mt-4 mb-10 flex flex-col-reverse">
       <AdjustmentSlider
-        v-for="(n, i) in harmonics"
+        v-for="(n, i) in numHarmonics"
         :key="n"
         :value="toolOptionValue"
         v-model:offset="activeOffsets[i]"
