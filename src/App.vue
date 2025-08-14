@@ -3,21 +3,17 @@ import JsonSave from '@/components/JsonSave.vue'
 import OffsetHold from '@/components/OffsetHold.vue'
 import FreeformDraw from '@/components/FreeformDraw.vue'
 
-import { usePreset } from '@/composables/usePreset'
+import { useStore } from '@/stores/store'
 
-import { useCounterStore } from '@/stores/counter'
-
-// access the `store` variable anywhere in the component ✨
-const store = useCounterStore()
-console.log(store.name)
-
-const { preset } = usePreset()
+const store = useStore()
 </script>
 
 <template>
   <div>
     <div class="mb-4 flex items-end justify-between">
-      <h1 class="py-4 text-center text-3xl font-bold">{{ preset.name }} : {{ preset.author }}</h1>
+      <h1 class="py-4 text-center text-3xl font-bold">
+        {{ store.preset.name }} : {{ store.preset.author }}
+      </h1>
       <JsonSave />
     </div>
 

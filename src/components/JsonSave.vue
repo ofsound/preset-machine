@@ -1,38 +1,9 @@
 <script setup lang="ts">
-import { usePreset } from '@/composables/usePreset'
-
-const { preset } = usePreset()
+import { useStore } from '@/stores/store'
+const store = useStore()
 
 const downloadJson = () => {
-  let numZeros = 512 - preset.offsets.length
-  let zerosToAdd = new Array(numZeros).fill(0)
-  preset.offsets = preset.offsets.concat(zerosToAdd)
-
-  numZeros = 512 - preset.gains.length
-  zerosToAdd = new Array(numZeros).fill(1)
-  preset.gains = preset.gains.concat(zerosToAdd)
-
-  numZeros = 512 - preset.holds.length
-  zerosToAdd = new Array(numZeros).fill(0)
-  preset.holds = preset.holds.concat(zerosToAdd)
-
-  numZeros = 512 - preset.attacks.length
-  zerosToAdd = new Array(numZeros).fill(0)
-  preset.attacks = preset.attacks.concat(zerosToAdd)
-
-  numZeros = 512 - preset.decays.length
-  zerosToAdd = new Array(numZeros).fill(0)
-  preset.decays = preset.decays.concat(zerosToAdd)
-
-  numZeros = 512 - preset.releases.length
-  zerosToAdd = new Array(numZeros).fill(0)
-  preset.releases = preset.releases.concat(zerosToAdd)
-
-  numZeros = 512 - preset.sustains.length
-  zerosToAdd = new Array(numZeros).fill(0)
-  preset.sustains = preset.sustains.concat(zerosToAdd)
-
-  const jsonString = JSON.stringify(preset, null, 2)
+  const jsonString = JSON.stringify(store.preset, null, 2)
 
   const blob = new Blob([jsonString], { type: 'application/json' })
 
@@ -40,7 +11,7 @@ const downloadJson = () => {
 
   const link = document.createElement('a')
   link.href = url
-  link.download = preset.name + '.json'
+  link.download = store.preset.name + '.json'
 
   document.body.appendChild(link)
   link.click()

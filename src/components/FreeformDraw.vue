@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { usePreset } from '@/composables/usePreset'
-const { preset } = usePreset()
+import { useStore } from '@/stores/store'
+const store = useStore()
 </script>
 
 <template>
-  <div class="hidden">{{ preset }}</div>
+  <div class="hidden">{{ store.preset }}</div>
 </template>

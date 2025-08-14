@@ -3,8 +3,8 @@ import { ref, watch } from 'vue'
 
 import AdjustmentSlider from '@/components/AdjustmentSlider.vue'
 
-import { usePreset } from '@/composables/usePreset'
-const { preset } = usePreset()
+import { useStore } from '@/stores/store'
+const store = useStore()
 
 const toolOptionValue = ref<number>(1)
 const toolOptions = ref([
@@ -29,16 +29,27 @@ const roundAmount = ref<number>(0)
 watch(
   [activeOffsets, activeHolds],
   () => {
-    if (preset) {
+    if (store.preset) {
       const correctedOffsets = activeOffsets.value.map(
         (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
       )
       const correctedHolds = activeHolds.value.map(
         (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
       )
+      // const correctedAttacks = activeOffsets.value.map(
+      //   (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
+      // )
+      // const correctedReleases = activeOffsets.value.map(
+      //   (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
+      // )
 
-      preset.offsets.splice(0, numHarmonics.value, ...correctedOffsets)
-      preset.holds.splice(0, numHarmonics.value, ...correctedHolds)
+      store.preset.offsets.splice(0, numHarmonics.value, ...correctedOffsets)
+      store.preset.holds.splice(0, numHarmonics.value, ...correctedHolds)
+      // store.preset.attacks.splice(0, numHarmonics.value, ...correctedAttacks)
+      // store.preset.releases.splice(0, numHarmonics.value, ...correctedHolds)
+      // store.preset.decays.splice(0, numHarmonics.value, ...correctedReleases)
+      // store.preset.sustains.splice(0, numHarmonics.value, ...correctedReleases)
+      // store.preset.gains.splice(0, numHarmonics.value, ...correctedHolds)
     }
   },
   { deep: true },
