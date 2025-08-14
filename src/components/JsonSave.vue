@@ -1,15 +1,7 @@
 <script setup lang="ts">
-// import type { SineMachinePreset } from '../types/SineMachinePreset.ts'
-
 import { usePreset } from '@/composables/usePreset'
 
 const { preset } = usePreset()
-
-// interface MyComponentProps {
-//   jsonData: SineMachinePreset
-// }
-
-// const props = defineProps<MyComponentProps>()
 
 const downloadJson = () => {
   let numZeros = 512 - preset.offsets.length
@@ -28,7 +20,6 @@ const downloadJson = () => {
   zerosToAdd = new Array(numZeros).fill(0)
   preset.attacks = preset.attacks.concat(zerosToAdd)
 
-  // console.log(preset.offsets.length)
   numZeros = 512 - preset.decays.length
   zerosToAdd = new Array(numZeros).fill(0)
   preset.decays = preset.decays.concat(zerosToAdd)
@@ -40,8 +31,6 @@ const downloadJson = () => {
   numZeros = 512 - preset.sustains.length
   zerosToAdd = new Array(numZeros).fill(0)
   preset.sustains = preset.sustains.concat(zerosToAdd)
-
-  // console.log(preset.offsets.length)
 
   const jsonString = JSON.stringify(preset, null, 2)
 
