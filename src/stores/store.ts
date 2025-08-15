@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useStore = defineStore('counter', () => {
+export const useStore = defineStore('store', () => {
 
   const preset = ref({
     uuid: uuidv4(),

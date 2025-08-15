@@ -53,11 +53,6 @@ watch(
 
       store.preset.offsets.splice(0, numHarmonics.value, ...correctedOffsets)
       store.preset.holds.splice(0, numHarmonics.value, ...correctedHolds)
-      // store.preset.attacks.splice(0, numHarmonics.value, ...correctedAttacks)
-      // store.preset.releases.splice(0, numHarmonics.value, ...correctedReleases)
-      // store.preset.decays.splice(0, numHarmonics.value, ...correctedDecays)
-      // store.preset.sustains.splice(0, numHarmonics.value, ...correctedSustains)
-      // store.preset.gains.splice(0, numHarmonics.value, ...correctedGains)
     }
   },
   { deep: true },

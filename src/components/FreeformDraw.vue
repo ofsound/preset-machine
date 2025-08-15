@@ -1,8 +1,75 @@
 <script setup lang="ts">
-import { useStore } from '@/stores/store'
-const store = useStore()
+// import { useStore } from '@/stores/store'
+import { ref, onMounted } from 'vue'
+import DrawSlider from './DrawSlider.vue'
+// const store = useStore()
+
+const props = defineProps({
+  segment: {
+    type: Array<number>,
+    default: new Array(512).fill(0),
+  },
+})
+
+const numHarmonics = ref<number>(36)
+const tempo = ref<number>(120)
+
+const handleRoundAmount = (roundAmountEmitted: number) => {
+  roundAmount.value = roundAmountEmitted
+}
+
+const activeOffsets = ref<number[]>([...props.segment])
+const roundAmount = ref<number>(0)
+
+// watch(
+//   [activeOffsets],
+//   () => {
+//     if (store.preset) {
+//       if (activeOffsets.value) {
+//         const correctedOffsets = activeOffsets.value.map(
+//           (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
+//         )
+
+//         // store.preset.offsets.splice(0, numHarmonics.value, ...correctedOffsets)
+//         // console.log(correctedOffsets)
+//       }
+//     }
+//   },
+//   { deep: true },
+// )
+
+const drawElement = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if (drawElement.value) {
+    const handleMouseLeave = () => {
+      if (activeOffsets.value) {
+        const correctedOffsets = activeOffsets.value.map(
+          (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
+        )
+        const propsArray: number[] = props.segment
+
+        propsArray.splice(0, numHarmonics.value, ...correctedOffsets)
+
+        // .splice
+        // console.log(correctedOffsets)
+      }
+    }
+
+    drawElement.value.addEventListener('mouseleave', handleMouseLeave)
+  }
+})
 </script>
 
 <template>
-  <div class="hidden">{{ store.preset }}</div>
+  <div class="w-full">
+    <div class="mx-auto mt-4 mb-10 flex flex-col-reverse" ref="drawElement">
+      <DrawSlider
+        v-for="(n, i) in numHarmonics"
+        :key="n"
+        v-model:offset="activeOffsets[i]"
+        @roundAmount="handleRoundAmount"
+      />
+    </div>
+  </div>
 </template>
