@@ -14,7 +14,7 @@ export const useStore = defineStore('counter', () => {
     version: '',
     gains: new Array(512).fill(1),
     offsets: new Array(512).fill(0),
-    attacks: new Array(512).fill(0),
+    attacks: new Array(512).fill(.006),
     decays: new Array(512).fill(0),
     sustains: new Array(512).fill(0),
     holds: new Array(512).fill(0),

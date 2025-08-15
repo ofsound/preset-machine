@@ -43,21 +43,16 @@ watch(
   ],
   () => {
     if (store.preset) {
-      const correctedOffsets = activeOffsets.value.map(
+      const correctedSustains = activeOffsets.value.map(
         (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
       )
 
-      const correctedHolds = activeHolds.value.map(
+      const correctedReleases = activeHolds.value.map(
         (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
       )
 
-      store.preset.offsets.splice(0, numHarmonics.value, ...correctedOffsets)
-      store.preset.holds.splice(0, numHarmonics.value, ...correctedHolds)
-      // store.preset.attacks.splice(0, numHarmonics.value, ...correctedAttacks)
-      // store.preset.releases.splice(0, numHarmonics.value, ...correctedReleases)
-      // store.preset.decays.splice(0, numHarmonics.value, ...correctedDecays)
-      // store.preset.sustains.splice(0, numHarmonics.value, ...correctedSustains)
-      // store.preset.gains.splice(0, numHarmonics.value, ...correctedGains)
+      store.preset.sustains.splice(0, numHarmonics.value, ...correctedSustains)
+      store.preset.releases.splice(0, numHarmonics.value, ...correctedReleases)
     }
   },
   { deep: true },

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import JsonSave from '@/components/JsonSave.vue'
 import OffsetHold from '@/components/OffsetHold.vue'
+import AttackDecay from '@/components/AttackDecay.vue'
+import SustainRelease from '@/components/SustainRelease.vue'
 import FreeformDraw from '@/components/FreeformDraw.vue'
 
 import { useStore } from '@/stores/store'
@@ -18,7 +20,10 @@ const store = useStore()
     </div>
 
     <FreeformDraw />
+
     <OffsetHold />
+    <AttackDecay />
+    <SustainRelease />
 
     <footer class="mt-auto flex justify-between pt-3 pb-3 text-right text-xs">
       <div class="italic">click (and drag) on row to choose an offset and hold length</div>
