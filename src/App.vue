@@ -35,7 +35,7 @@ const store = useStore()
 
     <footer class="mt-auto flex justify-between pt-3 pb-3 text-right text-xs">
       <div class="italic">click (and drag) on row to choose an offset and hold length</div>
-      <div>preset machine v.02</div>
+      <div>preset machine v0.0.3</div>
     </footer>
   </div>
 </template>
