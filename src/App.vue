@@ -6,6 +6,7 @@ import JsonSave from '@/components/JsonSave.vue'
 import FreeformDraw from '@/components/FreeformDraw.vue'
 
 import { useStore } from '@/stores/store'
+import PageTwo from './components/PageTwo.vue'
 
 const store = useStore()
 </script>
@@ -27,6 +28,10 @@ const store = useStore()
       <FreeformDraw :segment="store.preset.sustains" />
       <FreeformDraw :segment="store.preset.holds" />
       <FreeformDraw :segment="store.preset.releases" />
+    </div>
+
+    <div>
+      <PageTwo />
     </div>
 
     <!-- <OffsetHold />
