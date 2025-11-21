@@ -35,10 +35,10 @@ const releaseWidth = computed(() => {
 
 <template>
   <div class="flex">
-    <div style="background-color: red; height: 10px" :style="{ width: offsetWidth }"></div>
-    <div style="background-color: blue; height: 10px" :style="{ width: attackWidth }"></div>
-    <div style="background-color: green; height: 10px" :style="{ width: decayWidth }"></div>
-    <div style="background-color: yellow; height: 10px" :style="{ width: holdWidth }"></div>
-    <div style="background-color: purple; height: 10px" :style="{ width: releaseWidth }"></div>
+    <div style="background-color: red; height: 5px" :style="{ width: offsetWidth }"></div>
+    <div style="background-color: blue; height: 5px" :style="{ width: attackWidth }"></div>
+    <div style="background-color: green; height: 5px" :style="{ width: decayWidth }"></div>
+    <div style="background-color: yellow; height: 5px" :style="{ width: holdWidth }"></div>
+    <div style="background-color: purple; height: 5px" :style="{ width: releaseWidth }"></div>
   </div>
 </template>

@@ -27,7 +27,7 @@ const componentMap: { [key: string]: Component } = {
 </script>
 
 <template>
-  <div>
+  <div class="flex h-full w-full flex-col">
     <div class="mb-4 flex items-end justify-between">
       <h1 class="py-4 text-center text-3xl font-bold">
         {{ store.preset.name }} : {{ store.preset.author }}
@@ -39,7 +39,7 @@ const componentMap: { [key: string]: Component } = {
 
     <MenuSystem v-model:modules="modules" v-model:visibleComponentID="visibleComponentID" />
 
-    <div>
+    <div class="flex-1">
       <component
         v-show="visibleComponentID === item.id"
         v-for="item in modules"
@@ -48,9 +48,9 @@ const componentMap: { [key: string]: Component } = {
       ></component>
     </div>
 
-    <footer class="mt-auto flex justify-between pt-3 pb-3 text-right text-xs">
+    <footer class="mt-auto flex justify-between bg-neutral-100 p-3 text-right text-xs">
       <div class="hidden italic">click (and drag) on row to choose an offset and hold length</div>
-      <div>preset machine v0.0.3</div>
+      <div class="ml-auto">preset machine v0.0.3</div>
     </footer>
   </div>
 </template>
