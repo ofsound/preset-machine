@@ -1,8 +1,6 @@
 <script setup lang="ts">
-// import { useStore } from '@/stores/store'
 import { ref, onMounted } from 'vue'
 import DrawSlider from './DrawSlider.vue'
-// const store = useStore()
 
 const props = defineProps({
   segment: {
@@ -21,23 +19,6 @@ const handleRoundAmount = (roundAmountEmitted: number) => {
 const activeOffsets = ref<number[]>([...props.segment])
 const roundAmount = ref<number>(0)
 
-// watch(
-//   [activeOffsets],
-//   () => {
-//     if (store.preset) {
-//       if (activeOffsets.value) {
-//         const correctedOffsets = activeOffsets.value.map(
-//           (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
-//         )
-
-//         // store.preset.offsets.splice(0, numHarmonics.value, ...correctedOffsets)
-//         // console.log(correctedOffsets)
-//       }
-//     }
-//   },
-//   { deep: true },
-// )
-
 const drawElement = ref<HTMLElement | null>(null)
 
 onMounted(() => {
@@ -50,9 +31,6 @@ onMounted(() => {
         const propsArray: number[] = props.segment
 
         propsArray.splice(0, numHarmonics.value, ...correctedOffsets)
-
-        // .splice
-        // console.log(correctedOffsets)
       }
     }
 

@@ -4,7 +4,7 @@ const emit = defineEmits(['jsonLoaded'])
 const handleDrop = (event: DragEvent) => {
   if (event.dataTransfer) {
     const file = event.dataTransfer.files[0]
-    if (file.type === 'application/json') {
+    if (file && file.type === 'application/json') {
       const reader = new FileReader()
       reader.onload = (e) => {
         try {
@@ -29,7 +29,7 @@ const handleDrop = (event: DragEvent) => {
   <div
     @dragover.prevent
     @drop.prevent="handleDrop"
-    class="flex h-full flex-col justify-center rounded-sm border-1 border-dotted bg-gray-200 p-6 text-center italic"
+    class="flex h-full flex-col justify-center rounded-sm border border-dotted bg-gray-200 p-6 text-center italic"
   >
     <div>Drag and Drop a Sine Machine Preset .json</div>
   </div>
