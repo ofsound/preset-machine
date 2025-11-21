@@ -4,7 +4,8 @@ import JsonSave from '@/components/JsonSave.vue'
 import { useStore } from '@/stores/store'
 const store = useStore()
 
-import PageTwo from './components/PageTwo.vue'
+import PageTwo from '@/components/PageTwo.vue'
+import MenuSystem from '@/components/MenuSystem.vue'
 import OffsetHoldModule from '@/components/OffsetHoldModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
@@ -21,14 +22,16 @@ import RandomizeModule from '@/components/RandomizeModule.vue'
 
     <PageTwo />
 
-    <OffsetHoldModule />
+    <MenuSystem />
 
-    <FreeformModule />
-
-    <RandomizeModule />
+    <div class="hidden">
+      <OffsetHoldModule />
+      <FreeformModule />
+      <RandomizeModule />
+    </div>
 
     <footer class="mt-auto flex justify-between pt-3 pb-3 text-right text-xs">
-      <!-- <div class="italic">click (and drag) on row to choose an offset and hold length</div> -->
+      <div class="hidden italic">click (and drag) on row to choose an offset and hold length</div>
       <div>preset machine v0.0.3</div>
     </footer>
   </div>

@@ -10,8 +10,6 @@ const props = defineProps({
 
 const activeOffsets = ref<number[]>([...props.segment])
 
-console.log(activeOffsets.value)
-
 const randomize = () => {
   activeOffsets.value.forEach((element, index, array) => {
     array[index] = Math.floor(Math.random() * 10) + 1
@@ -20,6 +18,8 @@ const randomize = () => {
   const propsArray: number[] = props.segment
 
   propsArray.splice(0, 36, ...activeOffsets.value)
+  // this is probably wrong, bad practice, sneakily changing values
+  // the whole point of the pinia store is that i have direct access
 }
 </script>
 
