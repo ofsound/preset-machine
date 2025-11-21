@@ -66,7 +66,7 @@ const gridChildStyle = computed(() => {
   <div class="relative max-w-200 cursor-pointer overflow-hidden select-none">
     <div
       ref="gridElement"
-      class="border-box border-right-2 flex border-1 border-gray-300 [&>.grid-child:nth-child(4n)]:border-r-2 [&>.grid-child:nth-child(4n)]:border-gray-300"
+      class="border-box border-right-2 flex border border-gray-300 [&>.grid-child:nth-child(4n)]:border-r-2 [&>.grid-child:nth-child(4n)]:border-gray-300"
     >
       <div
         v-for="n in divisions"
