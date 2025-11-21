@@ -1,18 +1,13 @@
 <script setup lang="ts">
+import type { ModuleIdentifier } from '@/types/Module.ts'
+
 import { v4 as uuidv4 } from 'uuid'
 
 import MenuItem from '@/components/MenuItem.vue'
 
-interface ModuleIdentifier {
-  id: string
-  type: string
-}
-
 const modules = defineModel<ModuleIdentifier[]>('modules', { default: [] })
 
 const visibleComponentID = defineModel<string>('visibleComponentID', { default: '' })
-
-// const offset = defineModel<number>('offset', { default: 0 })
 
 const addOffset = () => {
   modules.value.push({ type: 'OffsetModule', id: uuidv4() })

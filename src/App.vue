@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, type Component } from 'vue'
+import type { ModuleIdentifier } from '@/types/Module.ts'
 
 import JsonSave from '@/components/JsonSave.vue'
 
@@ -11,12 +12,7 @@ import OffsetModule from '@/components/OffsetModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
 
-import { type Component } from 'vue'
-
-interface ModuleIdentifier {
-  id: string
-  type: string
-}
+import {} from 'vue'
 
 const visibleComponentID = ref<string>('')
 

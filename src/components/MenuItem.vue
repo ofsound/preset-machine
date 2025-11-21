@@ -1,13 +1,10 @@
 <script setup lang="ts">
+import type { ModuleIdentifier } from '@/types/Module.ts'
+
 const props = defineProps<{
   type: string
   id: string
 }>()
-
-interface ModuleIdentifier {
-  id: string
-  type: string
-}
 
 const modules = defineModel<ModuleIdentifier[]>('modules', { default: [] })
 const visibleComponentID = defineModel<string>('visibleComponentID', { default: '' })
