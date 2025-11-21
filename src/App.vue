@@ -1,14 +1,33 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 import JsonSave from '@/components/JsonSave.vue'
 
 import { useStore } from '@/stores/store'
-const store = useStore()
 
 import PageTwo from '@/components/PageTwo.vue'
 import MenuSystem from '@/components/MenuSystem.vue'
-import OffsetHoldModule from '@/components/OffsetHoldModule.vue'
+import OffsetModule from '@/components/OffsetModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
+
+import { type Component } from 'vue'
+
+interface ModuleIdentifier {
+  id: string
+  type: string
+}
+
+const visibleComponentID = ref<string>('')
+
+const store = useStore()
+const modules = ref<ModuleIdentifier[]>([])
+
+const componentMap: { [key: string]: Component } = {
+  OffsetModule,
+  FreeformModule,
+  RandomizeModule,
+}
 </script>
 
 <template>
@@ -22,12 +41,15 @@ import RandomizeModule from '@/components/RandomizeModule.vue'
 
     <PageTwo />
 
-    <MenuSystem />
+    <MenuSystem v-model:modules="modules" v-model:visibleComponentID="visibleComponentID" />
 
-    <div class="hidden">
-      <OffsetHoldModule />
-      <FreeformModule />
-      <RandomizeModule />
+    <div>
+      <component
+        v-show="visibleComponentID === item.id"
+        v-for="item in modules"
+        :key="item.id"
+        :is="componentMap[item.type]"
+      ></component>
     </div>
 
     <footer class="mt-auto flex justify-between pt-3 pb-3 text-right text-xs">

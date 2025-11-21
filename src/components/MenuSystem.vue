@@ -1,32 +1,48 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 
 import MenuItem from '@/components/MenuItem.vue'
 
-const moduleArray = ref<string[]>([])
+interface ModuleIdentifier {
+  id: string
+  type: string
+}
+
+const modules = defineModel<ModuleIdentifier[]>('modules', { default: [] })
+
+const visibleComponentID = defineModel<string>('visibleComponentID', { default: '' })
+
+// const offset = defineModel<number>('offset', { default: 0 })
 
 const addOffset = () => {
-  moduleArray.value.push('offset')
+  modules.value.push({ type: 'OffsetModule', id: uuidv4() })
 }
 
 const addFreeform = () => {
-  moduleArray.value.push('freeform')
+  modules.value.push({ type: 'FreeformModule', id: uuidv4() })
 }
 
 const addRandomize = () => {
-  moduleArray.value.push('randomize')
+  modules.value.push({ type: 'RandomizeModule', id: uuidv4() })
 }
 </script>
 
 <template>
   <div class="bg-slate-300 py-4">
-    <div class="mb-3 flex justify-center gap-2">
-      <button @click="addOffset" class="border px-2 py-1">Offset/Hold ꜜ</button>
+    <div class="mb-5 flex justify-center gap-2">
+      <button @click="addOffset" class="border px-2 py-1">Offset ꜜ</button>
       <button @click="addFreeform" class="border px-2 py-1">Freeform ꜜ</button>
       <button @click="addRandomize" class="border px-2 py-1">Randomize ꜜ</button>
     </div>
     <div class="flex justify-center gap-2">
-      <MenuItem v-for="(item, index) in moduleArray" :key="index" :type="item" />
+      <MenuItem
+        v-for="item in modules"
+        v-model:visibleComponentID="visibleComponentID"
+        v-model:modules="modules"
+        :key="item.id"
+        :id="item.id"
+        :type="item.type"
+      />
     </div>
   </div>
 </template>
