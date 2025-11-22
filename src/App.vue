@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, type Component } from 'vue'
-import type { ModuleIdentifier } from '@/types/Module.ts'
+import { type Component } from 'vue'
+
+import { useStore } from '@/stores/store'
 
 import AppHeader from '@/components/AppHeader.vue'
 
@@ -10,9 +11,7 @@ import OffsetModule from '@/components/OffsetModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
 
-const visibleComponentID = ref<string>('')
-
-const modules = ref<ModuleIdentifier[]>([])
+const store = useStore()
 
 const componentMap: { [key: string]: Component } = {
   OffsetModule,
@@ -25,13 +24,13 @@ const componentMap: { [key: string]: Component } = {
   <div class="flex h-full w-full flex-col">
     <AppHeader />
     <PageTwo />
-    <MenuSystem v-model:modules="modules" v-model:visibleComponentID="visibleComponentID" />
+    <MenuSystem />
 
     <div class="flex-1 bg-slate-800 p-5">
       <div class="h-full rounded-lg bg-neutral-50 p-8">
         <component
-          v-show="visibleComponentID === item.id"
-          v-for="item in modules"
+          v-show="store.visibleComponentID === item.id"
+          v-for="item in store.modules"
           :key="item.id"
           :is="componentMap[item.type]"
         ></component>

@@ -23,7 +23,7 @@ const downloadJson = () => {
 
 <template>
   <button
-    class="block cursor-pointer rounded-md bg-green-400 px-4 py-1 text-sm font-semibold tracking-wide text-white text-shadow-xs"
+    class="block cursor-pointer rounded-md bg-green-400 px-4 py-1 text-sm font-semibold tracking-wide text-white text-shadow-xs hover:text-shadow-lg"
     @click="downloadJson"
   >
     Download .json

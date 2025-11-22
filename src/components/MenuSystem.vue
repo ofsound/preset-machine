@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import type { ModuleIdentifier } from '@/types/Module.ts'
+import { useStore } from '@/stores/store'
 
 import MenuSystemModuleItem from '@/components/MenuSystemModuleItem.vue'
 
 import MenuSystemAddModuleButton from '@/components/MenuSystemAddModuleButton.vue'
 
-const modules = defineModel<ModuleIdentifier[]>('modules', { default: [] })
-
-const visibleComponentID = defineModel<string>('visibleComponentID', { default: '' })
+const store = useStore()
 
 const componentTypeArray = ['OffsetModule', 'FreeformModule', 'RandomizeModule']
 </script>
@@ -19,16 +17,13 @@ const componentTypeArray = ['OffsetModule', 'FreeformModule', 'RandomizeModule']
         v-for="(item, index) in componentTypeArray"
         :type="item"
         :key="index"
-        v-model:modules="modules"
       />
     </div>
     <div
       class="crosshatch-background mx-4 flex min-h-16 justify-center gap-4 rounded-full border border-gray-400 bg-slate-100 pt-4 pb-3"
     >
       <MenuSystemModuleItem
-        v-for="item in modules"
-        v-model:modules="modules"
-        v-model:visibleComponentID="visibleComponentID"
+        v-for="item in store.modules"
         :key="item.id"
         :id="item.id"
         :type="item.type"

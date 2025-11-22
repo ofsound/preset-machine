@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import type { ModuleIdentifier } from '@/types/Module.ts'
+import { useStore } from '@/stores/store'
+const store = useStore()
 
 const props = defineProps<{
   type: string
   id: string
 }>()
 
-const modules = defineModel<ModuleIdentifier[]>('modules', { default: [] })
-const visibleComponentID = defineModel<string>('visibleComponentID', { default: '' })
-
 const openModule = () => {
-  visibleComponentID.value = props.id
+  store.visibleComponentID = props.id
 }
 
 const deleteModule = () => {
-  for (let index = 0; index < modules.value.length; index++) {
-    if (modules.value[index]!.id === props.id) {
-      modules.value.splice(index, 1)
+  for (let index = 0; index < store.modules.length; index++) {
+    if (store.modules[index]!.id === props.id) {
+      store.modules.splice(index, 1)
     }
   }
 }
@@ -26,7 +24,7 @@ const deleteModule = () => {
   <div class="relative flex gap-1 last:[&>div]:hidden">
     <button
       @click="openModule"
-      :class="{ 'bg-teal-400': visibleComponentID === id }"
+      :class="{ 'bg-teal-400': store.visibleComponentID === id }"
       class="rounded-sm border bg-slate-100 px-2 py-1 font-semibold tracking-wider shadow-md"
     >
       {{ type }}
