@@ -7,6 +7,9 @@ const props = defineProps({
     type: Array<number>,
     default: new Array(512).fill(0),
   },
+  label: {
+    type: String,
+  },
 })
 
 const numHarmonics = ref<number>(36)
@@ -41,6 +44,7 @@ onMounted(() => {
 
 <template>
   <div class="w-full">
+    <div>{{ label }}</div>
     <div class="mx-auto mt-4 mb-10 flex flex-col-reverse" ref="drawElement">
       <DrawSlider
         v-for="(n, i) in numHarmonics"

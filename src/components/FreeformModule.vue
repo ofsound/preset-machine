@@ -6,11 +6,11 @@ const store = useStore()
 </script>
 
 <template>
-  <div class="flex">
-    <FreeformDraw :segment="store.preset.offsets" />
-    <FreeformDraw :segment="store.preset.attacks" />
-    <FreeformDraw :segment="store.preset.decays" />
-    <FreeformDraw :segment="store.preset.holds" />
-    <FreeformDraw :segment="store.preset.releases" />
+  <div>
+    <FreeformDraw label="Offset" :segment="store.preset.offsets" />
+    <FreeformDraw label="Attack" :segment="store.preset.attacks" />
+    <FreeformDraw label="Decay" :segment="store.preset.decays" />
+    <FreeformDraw label="Holds" :segment="store.preset.holds" />
+    <FreeformDraw label="Release" :segment="store.preset.releases" />
   </div>
 </template>

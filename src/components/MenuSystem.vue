@@ -1,33 +1,26 @@
 <script setup lang="ts">
 import type { ModuleIdentifier } from '@/types/Module.ts'
 
-import { v4 as uuidv4 } from 'uuid'
-
 import MenuSystemModuleItem from '@/components/MenuSystemModuleItem.vue'
+
+import MenuSystemAddModuleButton from '@/components/MenuSystemAddModuleButton.vue'
 
 const modules = defineModel<ModuleIdentifier[]>('modules', { default: [] })
 
 const visibleComponentID = defineModel<string>('visibleComponentID', { default: '' })
 
-const addOffset = () => {
-  modules.value.push({ type: 'OffsetModule', id: uuidv4() })
-}
-
-const addFreeform = () => {
-  modules.value.push({ type: 'FreeformModule', id: uuidv4() })
-}
-
-const addRandomize = () => {
-  modules.value.push({ type: 'RandomizeModule', id: uuidv4() })
-}
+const componentTypeArray = ['OffsetModule', 'FreeformModule', 'RandomizeModule']
 </script>
 
 <template>
   <div class="border-y-2 bg-slate-300 py-4">
     <div class="mb-3 flex justify-center gap-2">
-      <button @click="addOffset" class="rounded-sm border px-1">Offset ꜜ</button>
-      <button @click="addFreeform" class="rounded-sm border px-2 py-1">Freeform ꜜ</button>
-      <button @click="addRandomize" class="rounded-sm border px-2 py-1">Randomize ꜜ</button>
+      <MenuSystemAddModuleButton
+        v-for="(item, index) in componentTypeArray"
+        :type="item"
+        :key="index"
+        v-model:modules="modules"
+      />
     </div>
     <div class="flex justify-center gap-4 bg-white py-3">
       <MenuSystemModuleItem
