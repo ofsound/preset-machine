@@ -23,8 +23,14 @@ const deleteModule = () => {
 </script>
 
 <template>
-  <div class="flex">
-    <div @click="openModule" class="rounded-sm border bg-slate-100 px-2 py-1">{{ type }}</div>
-    <div @click="deleteModule">×</div>
+  <div class="flex gap-1">
+    <button
+      @click="openModule"
+      :class="{ 'bg-teal-400': visibleComponentID === id }"
+      class="rounded-sm border bg-slate-100 px-2 py-1"
+    >
+      {{ type }}
+    </button>
+    <button @click="deleteModule" class="ml-1 h-max border bg-slate-100 px-1">×</button>
   </div>
 </template>

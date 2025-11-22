@@ -23,17 +23,17 @@ const addRandomize = () => {
 </script>
 
 <template>
-  <div class="border-y-2 bg-slate-300 py-2">
-    <div class="mb-5 flex justify-center gap-2">
-      <button @click="addOffset" class="border px-2 py-1">Offset ꜜ</button>
-      <button @click="addFreeform" class="border px-2 py-1">Freeform ꜜ</button>
-      <button @click="addRandomize" class="border px-2 py-1">Randomize ꜜ</button>
+  <div class="border-y-2 bg-slate-300 py-4">
+    <div class="mb-3 flex justify-center gap-2">
+      <button @click="addOffset" class="rounded-sm border px-1">Offset ꜜ</button>
+      <button @click="addFreeform" class="rounded-sm border px-2 py-1">Freeform ꜜ</button>
+      <button @click="addRandomize" class="rounded-sm border px-2 py-1">Randomize ꜜ</button>
     </div>
-    <div class="flex justify-center gap-2">
+    <div class="flex justify-center gap-4">
       <MenuSystemModuleItem
         v-for="item in modules"
-        v-model:visibleComponentID="visibleComponentID"
         v-model:modules="modules"
+        v-model:visibleComponentID="visibleComponentID"
         :key="item.id"
         :id="item.id"
         :type="item.type"
