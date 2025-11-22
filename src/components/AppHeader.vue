@@ -7,23 +7,25 @@ const store = useStore()
 </script>
 
 <template>
-  <div class="mb-4 flex items-end justify-between">
-    <h1 class="py-4 text-center text-3xl font-bold">
+  <div class="flex p-4">
+    <div class="mr-auto flex gap-4">
       <input
         type="text"
         id="preset-name"
         name="preset-name"
         v-model="store.preset.name"
-        class="border p-1 font-bold"
+        placeholder="Preset Name"
+        class="rounded-md bg-neutral-100 px-3 py-1 text-xl font-semibold"
       />
       <input
         type="text"
         id="preset-author"
         name="preset-author"
         v-model="store.preset.author"
-        class="border p-1 font-bold"
+        placeholder="Preset Author"
+        class="rounded-md bg-neutral-100 px-3 py-1 text-xl font-semibold"
       />
-    </h1>
+    </div>
     <JsonSave />
   </div>
 </template>

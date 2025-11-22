@@ -32,6 +32,6 @@ const deleteModule = () => {
       {{ type }}
     </button>
     <button @click="deleteModule" class="ml-1 h-max border bg-slate-100 px-1">×</button>
-    <div class="ml-2">➡︎</div>
+    <div class="relative top-1 mx-2 text-xl text-slate-600">➡︎</div>
   </div>
 </template>
