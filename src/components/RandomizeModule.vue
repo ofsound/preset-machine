@@ -9,11 +9,11 @@ const store = useStore()
 <template>
   <div>
     <h1 class="mb-2">Randomize Envelopes</h1>
-    <RandomizeEnv :segment="store.preset.offsets" />
-    <RandomizeEnv :segment="store.preset.attacks" />
-    <RandomizeEnv :segment="store.preset.decays" />
-    <RandomizeEnv :segment="store.preset.holds" />
-    <RandomizeEnv :segment="store.preset.releases" />
+    <RandomizeEnv label="Offset" :segment="store.preset.offsets" />
+    <RandomizeEnv label="Attack" :segment="store.preset.attacks" />
+    <RandomizeEnv label="Decay" :segment="store.preset.decays" />
+    <RandomizeEnv label="Hold" :segment="store.preset.holds" />
+    <RandomizeEnv label="Release" :segment="store.preset.releases" />
   </div>
 </template>
 

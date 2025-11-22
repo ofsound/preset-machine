@@ -29,7 +29,7 @@ const addRandomize = () => {
       <button @click="addFreeform" class="rounded-sm border px-2 py-1">Freeform ꜜ</button>
       <button @click="addRandomize" class="rounded-sm border px-2 py-1">Randomize ꜜ</button>
     </div>
-    <div class="flex justify-center gap-4">
+    <div class="flex justify-center gap-4 bg-white py-3">
       <MenuSystemModuleItem
         v-for="item in modules"
         v-model:modules="modules"
