@@ -1,6 +1,6 @@
 
 import { v4 as uuidv4 } from 'uuid'
-import type { ModuleIdentifier } from '@/types/Module.ts'
+import type { ModuleIdentifier } from '@/types.ts'
 
 import { ref } from 'vue'
 import { defineStore } from 'pinia'

@@ -3,8 +3,8 @@ import { useStore } from '@/stores/store'
 const store = useStore()
 
 const props = defineProps<{
-  type: string
   id: string
+  label: string
 }>()
 
 const openModule = () => {
@@ -27,7 +27,7 @@ const deleteModule = () => {
       :class="{ 'bg-teal-400': store.visibleComponentID === id }"
       class="rounded-sm border bg-slate-100 px-2 py-1 font-semibold tracking-wider shadow-md"
     >
-      {{ type }}
+      {{ label }}
     </button>
     <button
       @click="deleteModule"

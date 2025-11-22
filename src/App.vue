@@ -1,30 +1,32 @@
 <script setup lang="ts">
-import { type Component } from 'vue'
+import { toRaw } from 'vue'
+
+import type { ComponentObject } from '@/types.ts'
 
 import { useStore } from '@/stores/store'
+const store = useStore()
 
 import AppHeader from '@/components/AppHeader.vue'
 
 import PageTwo from '@/components/PageTwo.vue'
 import MenuSystem from '@/components/MenuSystem.vue'
+
 import OffsetModule from '@/components/OffsetModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
 
-const store = useStore()
-
-const componentMap: { [key: string]: Component } = {
-  OffsetModule,
-  FreeformModule,
-  RandomizeModule,
-}
+const componentObjects: ComponentObject[] = [
+  { component: OffsetModule, componentLabel: 'Offset' },
+  { component: FreeformModule, componentLabel: 'Freeform' },
+  { component: RandomizeModule, componentLabel: 'Randomize' },
+]
 </script>
 
 <template>
   <div class="flex h-full w-full flex-col">
     <AppHeader />
     <PageTwo />
-    <MenuSystem />
+    <MenuSystem :componentObjects="componentObjects" />
 
     <div class="flex-1 bg-slate-800 p-5">
       <div class="h-full rounded-lg bg-neutral-50 p-8">
@@ -32,7 +34,7 @@ const componentMap: { [key: string]: Component } = {
           v-show="store.visibleComponentID === item.id"
           v-for="item in store.modules"
           :key="item.id"
-          :is="componentMap[item.componentName]"
+          :is="toRaw(item.component)"
         ></component>
       </div>
     </div>

@@ -1,21 +1,38 @@
 <script setup lang="ts">
 import { useStore } from '@/stores/store'
 
+import { toRaw, type Component } from 'vue'
+import type { ComponentObject } from '@/types.ts'
+
 import MenuSystemModuleItem from '@/components/MenuSystemModuleItem.vue'
 
 import MenuSystemAddModuleButton from '@/components/MenuSystemAddModuleButton.vue'
 
 const store = useStore()
 
-const componentNames = ['OffsetModule', 'FreeformModule', 'RandomizeModule']
+const props = defineProps<{
+  componentObjects: ComponentObject[]
+}>()
+
+function getLabel(component: Component): string {
+  let returnString = ''
+
+  props.componentObjects.forEach((componentObject) => {
+    if (componentObject.component === toRaw(component)) {
+      returnString = componentObject.componentLabel
+    }
+  })
+
+  return returnString
+}
 </script>
 
 <template>
   <div class="border-y-2 bg-slate-300 py-4">
     <div class="mb-3 flex justify-center gap-2">
       <MenuSystemAddModuleButton
-        v-for="(item, index) in componentNames"
-        :componentName="item"
+        v-for="(item, index) in componentObjects"
+        :componentObject="item"
         :key="index"
       />
     </div>
@@ -26,7 +43,7 @@ const componentNames = ['OffsetModule', 'FreeformModule', 'RandomizeModule']
         v-for="item in store.modules"
         :key="item.id"
         :id="item.id"
-        :type="item.componentName"
+        :label="getLabel(item.component)"
       />
     </div>
   </div>
