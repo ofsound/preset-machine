@@ -22,7 +22,7 @@ const componentTypeArray = ['OffsetModule', 'FreeformModule', 'RandomizeModule']
         v-model:modules="modules"
       />
     </div>
-    <div class="flex justify-center gap-4 bg-white py-3">
+    <div class="mx-4 flex justify-center gap-4 rounded-full border border-dashed bg-white py-3">
       <MenuSystemModuleItem
         v-for="item in modules"
         v-model:modules="modules"

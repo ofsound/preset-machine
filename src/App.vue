@@ -2,9 +2,7 @@
 import { ref, type Component } from 'vue'
 import type { ModuleIdentifier } from '@/types/Module.ts'
 
-import JsonSave from '@/components/JsonSave.vue'
-
-import { useStore } from '@/stores/store'
+import AppHeader from '@/components/AppHeader.vue'
 
 import PageTwo from '@/components/PageTwo.vue'
 import MenuSystem from '@/components/MenuSystem.vue'
@@ -12,11 +10,8 @@ import OffsetModule from '@/components/OffsetModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
 
-import {} from 'vue'
-
 const visibleComponentID = ref<string>('')
 
-const store = useStore()
 const modules = ref<ModuleIdentifier[]>([])
 
 const componentMap: { [key: string]: Component } = {
@@ -28,15 +23,8 @@ const componentMap: { [key: string]: Component } = {
 
 <template>
   <div class="flex h-full w-full flex-col">
-    <div class="mb-4 flex items-end justify-between">
-      <h1 class="py-4 text-center text-3xl font-bold">
-        {{ store.preset.name }} : {{ store.preset.author }}
-      </h1>
-      <JsonSave />
-    </div>
-
+    <AppHeader />
     <PageTwo />
-
     <MenuSystem v-model:modules="modules" v-model:visibleComponentID="visibleComponentID" />
 
     <div class="flex-1">
