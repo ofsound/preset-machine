@@ -8,7 +8,6 @@ const store = useStore()
 
 <template>
   <div>
-    <h1 class="mb-2">Randomize Envelopes</h1>
     <RandomizeEnv label="Offset" :segment="store.preset.offsets" />
     <RandomizeEnv label="Attack" :segment="store.preset.attacks" />
     <RandomizeEnv label="Decay" :segment="store.preset.decays" />

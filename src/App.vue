@@ -27,13 +27,15 @@ const componentMap: { [key: string]: Component } = {
     <PageTwo />
     <MenuSystem v-model:modules="modules" v-model:visibleComponentID="visibleComponentID" />
 
-    <div class="flex-1">
-      <component
-        v-show="visibleComponentID === item.id"
-        v-for="item in modules"
-        :key="item.id"
-        :is="componentMap[item.type]"
-      ></component>
+    <div class="flex-1 bg-slate-800 p-5">
+      <div class="h-full rounded-lg bg-neutral-50 p-8">
+        <component
+          v-show="visibleComponentID === item.id"
+          v-for="item in modules"
+          :key="item.id"
+          :is="componentMap[item.type]"
+        ></component>
+      </div>
     </div>
 
     <footer class="mt-auto flex justify-between bg-neutral-100 p-3 text-right text-xs">

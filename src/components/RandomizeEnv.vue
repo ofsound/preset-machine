@@ -44,8 +44,8 @@ const randomize = () => {
 </script>
 
 <template>
-  <div class="w-full">
-    <div>{{ label }}</div>
+  <div class="mb-3 w-full">
+    <div class="mb-1 font-semibold">{{ label }}</div>
     <div class="flex gap-2">
       <input class="w-10 bg-slate-200" type="number" id="lowerLimit" v-model="lowerLimit" />
       <input class="w-10 bg-slate-200" type="number" id="upperLimit" v-model="upperLimit" />
