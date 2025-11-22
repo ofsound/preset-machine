@@ -32,7 +32,7 @@ const componentMap: { [key: string]: Component } = {
           v-show="store.visibleComponentID === item.id"
           v-for="item in store.modules"
           :key="item.id"
-          :is="componentMap[item.type]"
+          :is="componentMap[item.componentName]"
         ></component>
       </div>
     </div>

@@ -1,4 +1,4 @@
 export interface ModuleIdentifier {
   id: string
-  type: string
+  componentName: string
 }

@@ -7,15 +7,15 @@ import MenuSystemAddModuleButton from '@/components/MenuSystemAddModuleButton.vu
 
 const store = useStore()
 
-const componentTypeArray = ['OffsetModule', 'FreeformModule', 'RandomizeModule']
+const componentNames = ['OffsetModule', 'FreeformModule', 'RandomizeModule']
 </script>
 
 <template>
   <div class="border-y-2 bg-slate-300 py-4">
     <div class="mb-3 flex justify-center gap-2">
       <MenuSystemAddModuleButton
-        v-for="(item, index) in componentTypeArray"
-        :type="item"
+        v-for="(item, index) in componentNames"
+        :componentName="item"
         :key="index"
       />
     </div>
@@ -26,7 +26,7 @@ const componentTypeArray = ['OffsetModule', 'FreeformModule', 'RandomizeModule']
         v-for="item in store.modules"
         :key="item.id"
         :id="item.id"
-        :type="item.type"
+        :type="item.componentName"
       />
     </div>
   </div>
