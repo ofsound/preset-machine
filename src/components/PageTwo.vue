@@ -3,7 +3,7 @@ import PageTwoRow from '@/components/PageTwoRow.vue'
 </script>
 
 <template>
-  <div>
+  <div class="bg-gray-800">
     <PageTwoRow v-for="n in 36" :key="n" :index="n" />
   </div>
 </template>
