@@ -28,7 +28,7 @@ function getLabel(component: Component): string {
 </script>
 
 <template>
-  <div class="border-y-2 bg-slate-300 py-4">
+  <div class="border-y-2 bg-linear-to-t from-slate-300 to-stone-200 py-4">
     <div class="mb-3 flex justify-center gap-2">
       <MenuSystemAddModuleButton
         v-for="(item, index) in componentObjects"
