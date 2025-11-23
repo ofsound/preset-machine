@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import { useStore } from '@/stores/store'
+import { usePreset } from '@/composable/usePreset.ts'
+const { preset } = usePreset()
 
 import RandomizeEnv from '@/components/RandomizeEnv.vue'
 
-const store = useStore()
-
 const envSegments = [
-  { label: 'Offset', envSegment: store.preset.offsets },
-  { label: 'Attack', envSegment: store.preset.attacks },
-  { label: 'Decay', envSegment: store.preset.decays },
-  { label: 'Hold', envSegment: store.preset.holds },
-  { label: 'Release', envSegment: store.preset.releases },
+  { label: 'Offset', envSegment: preset.offsets },
+  { label: 'Attack', envSegment: preset.attacks },
+  { label: 'Decay', envSegment: preset.decays },
+  { label: 'Hold', envSegment: preset.holds },
+  { label: 'Release', envSegment: preset.releases },
 ]
 
 const updateEnvSegmentArray = (index: number, updatedArray: number[]) => {
   if (envSegments[index]) {
-    envSegments[index].envSegment = updatedArray
+    envSegments[index].envSegment.forEach((element, i) => {
+      envSegments[index]!.envSegment[i] = updatedArray[i]
+    })
   }
 }
 </script>
@@ -32,5 +33,3 @@ const updateEnvSegmentArray = (index: number, updatedArray: number[]) => {
     />
   </div>
 </template>
-
-<!-- Maybe that should be an array here rather than listing out RandomizeEnv -->
