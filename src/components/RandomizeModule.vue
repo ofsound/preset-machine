@@ -2,7 +2,7 @@
 import { usePreset } from '@/composable/usePreset.ts'
 const { preset } = usePreset()
 
-import RandomizeEnv from '@/components/RandomizeEnv.vue'
+import RandomizeEnvelope from '@/components/RandomizeEnvelope.vue'
 
 const envSegments = [
   { label: 'Offset', envSegment: preset.offsets },
@@ -23,7 +23,7 @@ const updateEnvSegmentArray = (index: number, updatedArray: number[]) => {
 
 <template>
   <div>
-    <RandomizeEnv
+    <RandomizeEnvelope
       v-for="(item, index) in envSegments"
       :key="index"
       :index="index"
