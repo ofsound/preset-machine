@@ -4,20 +4,11 @@ import { computed } from 'vue'
 import { usePreset } from '@/composable/usePreset.ts'
 const { preset } = usePreset()
 
-// import { storeToRefs } from 'pinia'
-// import { useStore } from '@/stores/store'
-
-// const store = useStore()
-
 const props = defineProps<{
   index: number
 }>()
 
-// const { preset } = storeToRefs(store)
-
 const offsetWidth = computed(() => {
-  console.log(preset.offsets)
-
   return preset.offsets[props.index] * 100 + 'px'
 })
 
