@@ -1,11 +1,11 @@
 import { type Component } from 'vue'
 
-export interface ModuleIdentifier {
-  id: string
+export interface ModuleObject {
   component: Component
+  id: string
 }
 
 export interface ComponentObject {
   component: Component
-  componentLabel: string
+  label: string
 }

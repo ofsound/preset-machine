@@ -19,7 +19,7 @@ function getLabel(component: Component): string {
 
   props.componentObjects.forEach((componentObject) => {
     if (componentObject.component === toRaw(component)) {
-      returnString = componentObject.componentLabel
+      returnString = componentObject.label
     }
   })
 

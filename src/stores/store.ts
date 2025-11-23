@@ -1,13 +1,13 @@
 
 import { v4 as uuidv4 } from 'uuid'
-import type { ModuleIdentifier } from '@/types.ts'
+import type { ModuleObject } from '@/types.ts'
 
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useStore = defineStore('store', () => {
 
-  const modules = ref<ModuleIdentifier[]>([])
+  const modules = ref<ModuleObject[]>([])
 
   const visibleComponentID = ref<string>('')
 

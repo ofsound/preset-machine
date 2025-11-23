@@ -16,9 +16,9 @@ import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
 
 const componentObjects: ComponentObject[] = [
-  { component: OffsetModule, componentLabel: 'Offset' },
-  { component: FreeformModule, componentLabel: 'Freeform' },
-  { component: RandomizeModule, componentLabel: 'Randomize' },
+  { component: OffsetModule, label: 'Offset' },
+  { component: FreeformModule, label: 'Freeform' },
+  { component: RandomizeModule, label: 'Randomize' },
 ]
 </script>
 
@@ -39,9 +39,15 @@ const componentObjects: ComponentObject[] = [
       </div>
     </div>
 
-    <footer class="mt-auto flex justify-between bg-neutral-100 p-3 text-right text-xs">
-      <div class="hidden italic">click (and drag) on row to choose an offset and hold length</div>
-      <div class="ml-auto font-semibold tracking-wide">preset machine v0.0.3</div>
+    <footer
+      class="mt-auto flex justify-between bg-neutral-100 p-3 text-right text-xs"
+    >
+      <div class="hidden italic">
+        click (and drag) on row to choose an offset and hold length
+      </div>
+      <div class="ml-auto font-semibold tracking-wide">
+        preset machine v0.0.3
+      </div>
     </footer>
   </div>
 </template>
