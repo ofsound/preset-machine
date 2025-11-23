@@ -25,13 +25,13 @@ const deleteModule = () => {
     <button
       @click="openModule"
       :class="{ 'bg-teal-400': store.visibleComponentID === id }"
-      class="rounded-sm border bg-slate-100 px-2 py-1 font-semibold tracking-wider shadow-md"
+      class="cursor-pointer rounded-sm border bg-slate-100 px-2 py-1 font-semibold tracking-wider shadow-md"
     >
       {{ label }}
     </button>
     <button
       @click="deleteModule"
-      class="absolute -top-2.5 -left-2.5 block aspect-square h-5 w-5 rounded-full border border-black bg-white text-sm font-black"
+      class="absolute -top-2.5 -left-2.5 block aspect-square h-5 w-5 cursor-pointer rounded-full border border-black bg-white text-sm font-black"
     >
       <div class="relative -top-px">×</div>
     </button>
