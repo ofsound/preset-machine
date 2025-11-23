@@ -2,7 +2,6 @@
 import { usePreset } from '@/composable/usePreset.ts'
 const { preset } = usePreset()
 
-// import FreeformDraw from '@/components/FreeformDraw.vue'
 import FreeformEnvelope from '@/components/FreeformEnvelope.vue'
 
 const envSegments = [
@@ -14,8 +13,6 @@ const envSegments = [
 ]
 
 const updateEnvSegmentArray = (index: number, updatedArray: number[]) => {
-  console.log('*')
-
   if (envSegments[index]) {
     envSegments[index].envSegment.forEach((element, i) => {
       envSegments[index]!.envSegment[i] = updatedArray[i]
@@ -34,13 +31,5 @@ const updateEnvSegmentArray = (index: number, updatedArray: number[]) => {
       :label="item.label"
       @updateEnvSegmentArray="updateEnvSegmentArray(index, $event)"
     />
-    <!-- <FreeformDraw
-      v-for="(item, index) in envSegments"
-      :key="index"
-      :index="index"
-      :envSegment="item.envSegment"
-      :label="item.label"
-      :updateEnvSegmentArray="updateEnvSegmentArray"
-    /> -->
   </div>
 </template>

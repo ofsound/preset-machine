@@ -12,23 +12,6 @@ const gridElement = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   if (gridElement.value) {
-    // const handleMouseDown = (event: MouseEvent) => {
-    //   if (gridElement.value?.clientWidth) {
-    //     const parentLeft = gridElement.value.getBoundingClientRect().left
-    //     const mouseXRelativeToParent = event.clientX - parentLeft!
-    //     isMouseDown.value = true
-    //     const roundAmount = gridElement.value.clientWidth / 16
-    //     emit('roundAmount', roundAmount)
-    //     offset.value = Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
-    //   }
-    // }
-
-    // const handleMouseUp = () => {
-    //   if (gridElement.value?.offsetWidth) {
-    //     isMouseDown.value = false
-    //   }
-    // }
-
     const handleMouseEnter = (event: MouseEvent) => {
       if (gridElement.value?.clientWidth) {
         const parentLeft = gridElement.value.getBoundingClientRect().left
