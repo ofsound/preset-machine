@@ -3,6 +3,7 @@ import { usePreset } from '@/composable/usePreset.ts'
 const { preset } = usePreset()
 
 import FreeformEnvelope from '@/components/FreeformEnvelope.vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 const envSegments = [
   { label: 'Offset', envSegment: preset.offsets },
@@ -19,11 +20,30 @@ const updateEnvSegmentArray = (index: number, updatedArray: number[]) => {
     })
   }
 }
+
+const lastKeyPressed = ref('2')
+const allowedKeys = ['1', '2', '3', '4', '5']
+
+const handleKeydown = (event: KeyboardEvent) => {
+  if (allowedKeys.includes(event.key)) {
+    lastKeyPressed.value = event.key
+  }
+}
+
+// To capture globally across the entire application:
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex" @keydown="handleKeydown">
     <FreeformEnvelope
+      v-show="parseInt(lastKeyPressed) === index + 1"
       v-for="(item, index) in envSegments"
       :key="index"
       :index="index"
