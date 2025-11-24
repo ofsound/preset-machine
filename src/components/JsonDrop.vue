@@ -32,7 +32,7 @@ const handleDrop = (event: DragEvent) => {
   <div
     @dragover.prevent
     @drop.prevent="handleDrop"
-    class="flex flex-col justify-center rounded-sm border border-dotted bg-gray-200 p-6 text-center italic"
+    class="mx-auto flex w-max flex-col justify-center rounded-sm border bg-gray-200 p-6 text-center italic"
   >
     <div class="mx-auto w-max rounded-md border border-dashed px-4 py-2">
       Drag and Drop a Sine Machine Preset .json
