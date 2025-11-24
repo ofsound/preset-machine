@@ -3,8 +3,8 @@ import { ref, watch } from 'vue'
 
 import AdjustmentSlider from '@/components/AdjustmentSlider.vue'
 
-import { useStore } from '@/stores/store'
-const store = useStore()
+// import { useStore } from '@/stores/store'
+// const store = useStore()
 
 const toolOptionValue = ref<number>(1)
 const toolOptions = ref([
@@ -42,18 +42,16 @@ watch(
     activeGains,
   ],
   () => {
-    if (store.preset) {
-      const correctedOffsets = activeOffsets.value.map(
-        (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
-      )
-
-      const correctedHolds = activeHolds.value.map(
-        (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
-      )
-
-      store.preset.offsets.splice(0, numHarmonics.value, ...correctedOffsets)
-      store.preset.holds.splice(0, numHarmonics.value, ...correctedHolds)
-    }
+    // if (store.preset) {
+    //   const correctedOffsets = activeOffsets.value.map(
+    //     (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
+    //   )
+    //   const correctedHolds = activeHolds.value.map(
+    //     (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
+    //   )
+    //   store.preset.offsets.splice(0, numHarmonics.value, ...correctedOffsets)
+    //   store.preset.holds.splice(0, numHarmonics.value, ...correctedHolds)
+    // }
   },
   { deep: true },
 )
@@ -64,14 +62,26 @@ watch(
     <div class="flex rounded-sm bg-gray-200 p-4">
       <div>
         Harmonics:
-        <input class="max-w-14 rounded-sm bg-gray-300 p-1" type="number" v-model="numHarmonics" />
+        <input
+          class="max-w-14 rounded-sm bg-gray-300 p-1"
+          type="number"
+          v-model="numHarmonics"
+        />
       </div>
       <div class="ml-4">
-        Tempo: <input class="max-w-14 rounded-sm bg-gray-300 p-1" type="number" v-model="tempo" />
+        Tempo:
+        <input
+          class="max-w-14 rounded-sm bg-gray-300 p-1"
+          type="number"
+          v-model="tempo"
+        />
       </div>
       <div class="ml-auto">
         Hold Length:&nbsp;&nbsp;
-        <select class="bg-gray-3 rounded-sm bg-gray-300 p-1 text-black" v-model="toolOptionValue">
+        <select
+          class="bg-gray-3 rounded-sm bg-gray-300 p-1 text-black"
+          v-model="toolOptionValue"
+        >
           <option value="-1" disabled>Hold note value</option>
           <option
             v-for="toolOption in toolOptions"

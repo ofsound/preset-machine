@@ -2,6 +2,8 @@
 import { usePreset } from '@/composable/usePreset.ts'
 const { preset } = usePreset()
 
+const emit = defineEmits(['jsonLoaded'])
+
 const handleDrop = (event: DragEvent) => {
   if (event.dataTransfer) {
     const file = event.dataTransfer.files[0]
@@ -12,7 +14,8 @@ const handleDrop = (event: DragEvent) => {
           if (e.target) {
             if (typeof e.target.result === 'string') {
               Object.assign(preset, JSON.parse(e.target.result))
-              // still not sure this is working, why
+              emit('jsonLoaded')
+              // still not sure this isn't working, why
               // would i need the watch in Preset Inspector
             }
           }
@@ -32,10 +35,12 @@ const handleDrop = (event: DragEvent) => {
   <div
     @dragover.prevent
     @drop.prevent="handleDrop"
-    class="mx-auto flex w-max flex-col justify-center rounded-sm border bg-gray-200 p-6 text-center italic"
+    class="mx-auto flex h-30 w-110 flex-col justify-center rounded-sm border bg-gray-200 p-6 text-center italic"
   >
-    <div class="mx-auto w-max rounded-md border border-dashed px-4 py-2">
-      Drag and Drop a Sine Machine Preset .json
+    <div
+      class="mx-auto w-max rounded-md border border-dashed px-4 py-2 font-semibold"
+    >
+      Drag and Drop Sine Machine Preset .json
     </div>
   </div>
 </template>

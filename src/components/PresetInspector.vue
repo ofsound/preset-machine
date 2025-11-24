@@ -107,7 +107,9 @@ watch(preset, () => {
         <pre class="text-xs">{{ preset.parameters }}</pre>
       </div>
 
-      <div v-if="dataLink === 'pitchMapping'">{{ preset.pitchMapping }}</div>
+      <div v-if="dataLink === 'pitchMapping'">
+        {{ preset.pitchMapping.join(', ') }}
+      </div>
       <div v-if="dataLink === 'glideTimesInBlocks'">
         {{ preset.glideTimesInBlocks }}
       </div>

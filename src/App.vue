@@ -16,7 +16,6 @@ import MenuSystem from '@/components/MenuSystem.vue'
 import OffsetModule from '@/components/OffsetModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
-// import JsonDrop from '@/components/JsonDrop.vue'
 import PresetInspector from '@/components/PresetInspector.vue'
 
 const componentObjects: ComponentObject[] = [
@@ -24,21 +23,29 @@ const componentObjects: ComponentObject[] = [
   { component: FreeformModule, label: 'Freeform' },
   { component: RandomizeModule, label: 'Randomize' },
 ]
-
 const isWelcome = ref(true)
+const isInspector = ref(false)
+
+const closeWelcome = () => {
+  isWelcome.value = false
+}
+
+const toggleInspector = () => {
+  isInspector.value = !isInspector.value
+}
 </script>
 
 <template>
   <div class="flex h-full w-full flex-col">
-    <WelcomeScreen v-if="isWelcome" />
+    <WelcomeScreen v-if="isWelcome" @closeWelcome="closeWelcome" />
 
     <template v-if="!isWelcome">
-      <div v-if="false">
+      <AppHeader @toggleInspector="toggleInspector" />
+      <div v-if="isInspector">
         <PresetInspector />
       </div>
 
-      <div v-if="true">
-        <AppHeader />
+      <div v-if="!isInspector">
         <PageTwo />
         <MenuSystem :componentObjects="componentObjects" />
 

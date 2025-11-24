@@ -3,6 +3,8 @@ import { usePreset } from '@/composable/usePreset.ts'
 const { preset } = usePreset()
 
 import JsonSave from '@/components/JsonSave.vue'
+
+defineEmits(['toggleInspector'])
 </script>
 
 <template>
@@ -25,7 +27,15 @@ import JsonSave from '@/components/JsonSave.vue'
         class="rounded-md bg-neutral-100 px-3 py-1 text-xl font-semibold tracking-wide"
       />
     </div>
+    <div class="flex gap-2">
+      <button
+        class="block cursor-pointer rounded-md bg-neutral-600 px-4 py-1 text-sm font-semibold tracking-wide text-white text-shadow-xs hover:text-shadow-lg"
+        @click="$emit('toggleInspector')"
+      >
+        Toggle Inspector
+      </button>
 
-    <JsonSave />
+      <JsonSave />
+    </div>
   </div>
 </template>
