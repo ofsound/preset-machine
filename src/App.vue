@@ -15,6 +15,7 @@ import OffsetModule from '@/components/OffsetModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
 import JsonDrop from '@/components/JsonDrop.vue'
+import PresetInspector from '@/components/PresetInspector.vue'
 
 const componentObjects: ComponentObject[] = [
   { component: OffsetModule, label: 'Offset' },
@@ -26,18 +27,22 @@ const componentObjects: ComponentObject[] = [
 <template>
   <div class="flex h-full w-full flex-col">
     <JsonDrop />
-    <AppHeader />
-    <PageTwo />
-    <MenuSystem :componentObjects="componentObjects" />
+    <PresetInspector />
 
-    <div class="flex-1 bg-slate-800 p-5">
-      <div class="h-full rounded-lg bg-neutral-50 px-8 py-5">
-        <component
-          v-show="store.visibleComponentID === item.id"
-          v-for="item in store.modules"
-          :key="item.id"
-          :is="toRaw(item.component)"
-        ></component>
+    <div v-if="false">
+      <AppHeader />
+      <PageTwo />
+      <MenuSystem :componentObjects="componentObjects" />
+
+      <div class="flex-1 bg-slate-800 p-5">
+        <div class="h-full rounded-lg bg-neutral-50 px-8 py-5">
+          <component
+            v-show="store.visibleComponentID === item.id"
+            v-for="item in store.modules"
+            :key="item.id"
+            :is="toRaw(item.component)"
+          ></component>
+        </div>
       </div>
     </div>
 
