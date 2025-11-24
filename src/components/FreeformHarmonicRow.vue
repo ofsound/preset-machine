@@ -17,6 +17,26 @@ const handleMouseDown = () => {
 const handleMouseUp = () => {
   isMouseDown.value = false
 }
+
+const handleMouseClick = (event: MouseEvent) => {
+  if (gridElement.value?.clientWidth) {
+    if (isMouseDown.value) {
+      const parentLeft = gridElement.value.getBoundingClientRect().left
+
+      const mouseXRelativeToParent = event.clientX - parentLeft
+
+      // const roundAmount = gridElement.value.clientWidth / 16
+      // emit('roundAmount', roundAmount)
+      // rowWidth.value =
+      //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
+
+      rowWidth.value = mouseXRelativeToParent
+
+      emit('rowValue', mouseXRelativeToParent)
+    }
+  }
+}
+
 const handleMouseEnter = (event: MouseEvent) => {
   if (gridElement.value?.clientWidth) {
     if (isMouseDown.value) {
@@ -40,6 +60,8 @@ onMounted(() => {
   window.addEventListener('mousedown', handleMouseDown)
   window.addEventListener('mouseup', handleMouseUp)
   gridElement.value!.addEventListener('mouseenter', handleMouseEnter)
+  gridElement.value!.addEventListener('click', handleMouseClick)
+  gridElement.value!.addEventListener('mousemove', handleMouseClick)
 })
 
 const segmentStyle = computed(() => {
