@@ -9,21 +9,44 @@ const divisions = defineModel<number>('divisions', { default: 8 })
 
 const gridElement = ref<HTMLElement | null>(null)
 
-onMounted(() => {
-  if (gridElement.value) {
-    const handleMouseEnter = (event: MouseEvent) => {
-      if (gridElement.value?.clientWidth) {
-        const parentLeft = gridElement.value.getBoundingClientRect().left
-        const mouseXRelativeToParent = event.clientX - parentLeft!
-        // const roundAmount = gridElement.value.clientWidth / 16
-        // emit('roundAmount', roundAmount)
-        // offset.value =
-        //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
-        offset.value = mouseXRelativeToParent
+const isMouseDown = ref<boolean>(false)
 
-        emit('rowValue', mouseXRelativeToParent)
-      }
+const handleMouseDown = () => {
+  console.log('down')
+
+  isMouseDown.value = true
+}
+
+const handleMouseUp = () => {
+  console.log('up')
+
+  isMouseDown.value = false
+}
+const handleMouseEnter = (event: MouseEvent) => {
+  if (gridElement.value?.clientWidth) {
+    if (isMouseDown.value) {
+      const parentLeft = gridElement.value.getBoundingClientRect().left
+
+      const mouseXRelativeToParent = event.clientX - parentLeft
+      // const roundAmount = gridElement.value.clientWidth / 16
+      // emit('roundAmount', roundAmount)
+      // offset.value =
+      //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
+
+      console.log(isMouseDown.value)
+
+      offset.value = mouseXRelativeToParent
+
+      emit('rowValue', mouseXRelativeToParent)
     }
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('mousedown', handleMouseDown)
+  window.addEventListener('mouseup', handleMouseUp)
+
+  if (gridElement.value) {
     gridElement.value.addEventListener('mouseenter', handleMouseEnter)
   }
 })
