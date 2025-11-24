@@ -14,6 +14,7 @@ import MenuSystem from '@/components/MenuSystem.vue'
 import OffsetModule from '@/components/OffsetModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
+import JsonDrop from '@/components/JsonDrop.vue'
 
 const componentObjects: ComponentObject[] = [
   { component: OffsetModule, label: 'Offset' },
@@ -24,6 +25,7 @@ const componentObjects: ComponentObject[] = [
 
 <template>
   <div class="flex h-full w-full flex-col">
+    <JsonDrop />
     <AppHeader />
     <PageTwo />
     <MenuSystem :componentObjects="componentObjects" />

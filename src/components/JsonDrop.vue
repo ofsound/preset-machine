@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { usePreset } from '@/composable/usePreset.ts'
+const { preset } = usePreset()
+
 const emit = defineEmits(['jsonLoaded'])
 
 const handleDrop = (event: DragEvent) => {
@@ -11,6 +14,7 @@ const handleDrop = (event: DragEvent) => {
           if (e.target) {
             if (typeof e.target.result === 'string') {
               emit('jsonLoaded', JSON.parse(e.target.result))
+              Object.assign(preset, JSON.parse(e.target.result))
             }
           }
         } catch (error) {
@@ -29,8 +33,10 @@ const handleDrop = (event: DragEvent) => {
   <div
     @dragover.prevent
     @drop.prevent="handleDrop"
-    class="flex h-full flex-col justify-center rounded-sm border border-dotted bg-gray-200 p-6 text-center italic"
+    class="flex flex-col justify-center rounded-sm border border-dotted bg-gray-200 p-6 text-center italic"
   >
-    <div>Drag and Drop a Sine Machine Preset .json</div>
+    <div class="mx-auto w-max rounded-md border border-dashed px-4 py-2">
+      Drag and Drop a Sine Machine Preset .json
+    </div>
   </div>
 </template>

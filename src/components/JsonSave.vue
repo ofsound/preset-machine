@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useStore } from '@/stores/store'
-const store = useStore()
+import { usePreset } from '@/composable/usePreset.ts'
+const { preset } = usePreset()
 
 const downloadJson = () => {
-  const jsonString = JSON.stringify(store.preset, null, 2)
+  const jsonString = JSON.stringify(preset, null, 2)
 
   const blob = new Blob([jsonString], { type: 'application/json' })
 
@@ -11,7 +11,7 @@ const downloadJson = () => {
 
   const link = document.createElement('a')
   link.href = url
-  link.download = store.preset.name + '.json'
+  link.download = preset.name + '.json'
 
   document.body.appendChild(link)
   link.click()

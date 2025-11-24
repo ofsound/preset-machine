@@ -119,7 +119,7 @@ const gridChildStyle = computed(() => {
     <div ref="resetElement" class="absolute -left-6 h-full w-6"></div>
     <div
       ref="gridElement"
-      class="border-box border-right-2 flex border border-gray-300"
+      class="border-box border-right-2 flex border border-gray-300 hover:brightness-110"
     >
       <div
         v-for="n in divisions"

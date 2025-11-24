@@ -15,7 +15,7 @@ defineEmits(['menuButtonClicked'])
       v-for="(item, index) in envelopeSegments"
       :key="index"
       @click="$emit('menuButtonClicked', item)"
-      class="pointer-cursor rounded-sm border px-3 py-px text-sm font-semibold tracking-wide"
+      class="cursor-pointer rounded-sm border bg-sky-50 px-3 py-px text-sm font-semibold tracking-wide"
       :class="{
         'bg-slate-300': lastMenuButtonClickedLabel === item.label,
       }"
