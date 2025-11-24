@@ -17,12 +17,11 @@ const envelopeSegments: EnvelopeLabelAndSegment[] = [
 ]
 
 const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
-  if (envelopeSegments[index]) {
-    envelopeSegments[index].envelopeSegment.forEach((element, i) => {
-      if (updatedArray[i])
-        envelopeSegments[index]!.envelopeSegment[i] = updatedArray[i]
-    })
-  }
+  envelopeSegments[index]!.envelopeSegment.splice(
+    0,
+    updatedArray.length,
+    ...updatedArray,
+  )
 }
 
 const lastMenuButtonClickedLabel = ref('Offset')
