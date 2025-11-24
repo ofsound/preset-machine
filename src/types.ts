@@ -9,3 +9,8 @@ export interface ComponentObject {
   component: Component
   label: string
 }
+
+export interface EnvelopeLabelAndSegment {
+  envelopeSegment: number[]
+  label: string
+}

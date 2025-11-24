@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useStore } from '@/stores/store'
-
 import { v4 as uuidv4 } from 'uuid'
+
+import { useStore } from '@/stores/store'
+const store = useStore()
 
 import type { ComponentObject } from '@/types.ts'
 
@@ -9,13 +10,14 @@ const props = defineProps<{
   componentObject: ComponentObject
 }>()
 
-const store = useStore()
-
 const addComponentToModules = () => {
+  const idForNewComponent = uuidv4()
+
   store.modules.push({
     component: props.componentObject.component,
-    id: uuidv4(),
+    id: idForNewComponent,
   })
+  store.visibleComponentID = idForNewComponent
 }
 </script>
 
