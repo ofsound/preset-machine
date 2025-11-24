@@ -4,17 +4,30 @@ import JsonDrop from './JsonDrop.vue'
 defineEmits(['closeWelcome'])
 </script>
 <template>
-  <div class="flex h-full flex-col gap-1 *:flex-1">
-    <div class="flex flex-col justify-center bg-neutral-300">
-      <JsonDrop @jsonLoaded="$emit('closeWelcome')" />
-    </div>
-    <div class="flex flex-col justify-center bg-stone-400">
-      <button
-        @click="$emit('closeWelcome')"
-        class="mx-auto flex h-30 w-110 cursor-pointer flex-col justify-center rounded-sm border bg-gray-200 p-6 text-center font-semibold italic hover:bg-white"
+  <div
+    class="flex h-full flex-col justify-center bg-linear-to-tl from-slate-300 via-rose-100 to-purple-300 px-10"
+  >
+    <h1
+      class="mx-auto -mt-16 mb-12 text-5xl font-bold text-shadow-blue-800/20 text-shadow-md"
+    >
+      PRESET MACHINE
+    </h1>
+    <div
+      class="mx-auto flex h-70 w-190 overflow-hidden rounded-md shadow-lg *:flex-1"
+    >
+      <div
+        class="flex flex-col justify-center border-r border-slate-300 bg-gray-300/60"
       >
-        <div class="mx-auto">Create New Sine Machine Preset</div>
-      </button>
+        <JsonDrop @jsonLoaded="$emit('closeWelcome')" />
+      </div>
+      <div class="flex flex-col justify-center bg-neutral-300/60">
+        <button
+          @click="$emit('closeWelcome')"
+          class="mx-auto flex h-30 w-60 cursor-pointer flex-col justify-center rounded-sm border border-slate-400 bg-gray-50 p-6 text-center font-semibold italic inset-shadow-sm inset-shadow-slate-400/40 hover:bg-white"
+        >
+          <div class="mx-auto">Create New<br />Blank Preset</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>

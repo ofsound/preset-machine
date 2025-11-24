@@ -79,7 +79,7 @@ watch(preset, () => {
             'mb-2': item === 'Meta',
             'mt-2 mb-2': item === 'Parameters',
           }"
-          class="px-1 hover:underline"
+          class="cursor-pointer px-1 hover:underline"
         >
           {{ item }}
         </button>
