@@ -2,20 +2,20 @@
 import { usePreset } from '@/composable/usePreset.ts'
 const { preset } = usePreset()
 
-import RandomizeEnvelope from '@/components/RandomizeEnvelope.vue'
+import RandomizeEnvelopeSegment from '@/components/RandomizeEnvelopeSegment.vue'
 
-const envSegments = [
-  { label: 'Offset', envSegment: preset.offsets },
-  { label: 'Attack', envSegment: preset.attacks },
-  { label: 'Decay', envSegment: preset.decays },
-  { label: 'Hold', envSegment: preset.holds },
-  { label: 'Release', envSegment: preset.releases },
+const envelopeSegments = [
+  { label: 'Offset', envelopeSegment: preset.offsets },
+  { label: 'Attack', envelopeSegment: preset.attacks },
+  { label: 'Decay', envelopeSegment: preset.decays },
+  { label: 'Hold', envelopeSegment: preset.holds },
+  { label: 'Release', envelopeSegment: preset.releases },
 ]
 
-const updateEnvSegmentArray = (index: number, updatedArray: number[]) => {
-  if (envSegments[index]) {
-    envSegments[index].envSegment.forEach((element, i) => {
-      envSegments[index]!.envSegment[i] = updatedArray[i]
+const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
+  if (envelopeSegments[index]) {
+    envelopeSegments[index].envelopeSegment.forEach((element, i) => {
+      envelopeSegments[index]!.envelopeSegment[i] = updatedArray[i]
     })
   }
 }
@@ -23,13 +23,13 @@ const updateEnvSegmentArray = (index: number, updatedArray: number[]) => {
 
 <template>
   <div>
-    <RandomizeEnvelope
-      v-for="(item, index) in envSegments"
+    <RandomizeEnvelopeSegment
+      v-for="(item, index) in envelopeSegments"
       :key="index"
       :index="index"
-      :envSegment="item.envSegment"
+      :envelopeSegment="item.envelopeSegment"
       :label="item.label"
-      :updateEnvSegmentArray="updateEnvSegmentArray"
+      :updateEnvelopeSegmentArray="updateEnvelopeSegmentArray"
     />
   </div>
 </template>

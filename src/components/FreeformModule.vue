@@ -5,23 +5,23 @@ const { preset } = usePreset()
 import FreeformEnvelope from '@/components/FreeformEnvelope.vue'
 import { onMounted, onUnmounted, ref } from 'vue'
 
-const envSegments = [
-  { label: 'Offset', envSegment: preset.offsets },
-  { label: 'Attack', envSegment: preset.attacks },
-  { label: 'Decay', envSegment: preset.decays },
-  { label: 'Hold', envSegment: preset.holds },
-  { label: 'Release', envSegment: preset.releases },
+const envelopeSegments = [
+  { label: 'Offset', envelopeSegment: preset.offsets },
+  { label: 'Attack', envelopeSegment: preset.attacks },
+  { label: 'Decay', envelopeSegment: preset.decays },
+  { label: 'Hold', envelopeSegment: preset.holds },
+  { label: 'Release', envelopeSegment: preset.releases },
 ]
 
-const updateEnvSegmentArray = (index: number, updatedArray: number[]) => {
-  if (envSegments[index]) {
-    envSegments[index].envSegment.forEach((element, i) => {
-      envSegments[index]!.envSegment[i] = updatedArray[i]
+const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
+  if (envelopeSegments[index]) {
+    envelopeSegments[index].envelopeSegment.forEach((element, i) => {
+      envelopeSegments[index]!.envelopeSegment[i] = updatedArray[i]
     })
   }
 }
 
-const lastKeyPressed = ref('2')
+const lastKeyPressed = ref('1')
 const allowedKeys = ['1', '2', '3', '4', '5']
 
 const handleKeydown = (event: KeyboardEvent) => {
@@ -30,7 +30,6 @@ const handleKeydown = (event: KeyboardEvent) => {
   }
 }
 
-// To capture globally across the entire application:
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
 })
@@ -44,12 +43,12 @@ onUnmounted(() => {
   <div class="flex" @keydown="handleKeydown">
     <FreeformEnvelope
       v-show="parseInt(lastKeyPressed) === index + 1"
-      v-for="(item, index) in envSegments"
+      v-for="(item, index) in envelopeSegments"
       :key="index"
       :index="index"
-      :envSegment="item.envSegment"
+      :envelopeSegment="item.envelopeSegment"
       :label="item.label"
-      @updateEnvSegmentArray="updateEnvSegmentArray(index, $event)"
+      @updateEnvelopeSegmentArray="updateEnvelopeSegmentArray(index, $event)"
     />
   </div>
 </template>

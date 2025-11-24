@@ -2,7 +2,7 @@
 import FreeformDrawSlider from '@/components/FreeformDrawSlider.vue'
 
 const props = defineProps({
-  envSegment: {
+  envelopeSegment: {
     type: Array<number>,
     default: new Array(512).fill(0),
   },
@@ -11,13 +11,13 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['updateEnvSegmentArray'])
+const emit = defineEmits(['updateEnvelopeSegmentArray'])
 
-const activeEnvSegmentValues: number[] = [...props.envSegment]
+const activeEnvSegmentValues: number[] = [...props.envelopeSegment]
 
 const handleRowValue = (index: number, rowValue: number) => {
   activeEnvSegmentValues[index] = rowValue
-  emit('updateEnvSegmentArray', activeEnvSegmentValues)
+  emit('updateEnvelopeSegmentArray', activeEnvSegmentValues)
 }
 </script>
 

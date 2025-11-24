@@ -5,14 +5,14 @@ const props = defineProps({
   index: {
     type: Number,
   },
-  envSegment: {
+  envelopeSegment: {
     type: Array<number>,
     default: new Array(512).fill(0),
   },
   label: {
     type: String,
   },
-  updateEnvSegmentArray: {
+  updateEnvelopeSegmentArray: {
     type: Function,
     required: true,
   },
@@ -21,7 +21,7 @@ const props = defineProps({
 const lowerLimit = ref(0)
 const upperLimit = ref(0)
 
-const activeEnvSegmentValues: number[] = [...props.envSegment]
+const activeEnvSegmentValues: number[] = [...props.envelopeSegment]
 
 const randomize = () => {
   activeEnvSegmentValues.forEach((element, index, array) => {
@@ -43,7 +43,7 @@ const randomize = () => {
     }
   })
 
-  props.updateEnvSegmentArray(props.index, activeEnvSegmentValues)
+  props.updateEnvelopeSegmentArray(props.index, activeEnvSegmentValues)
 }
 </script>
 
