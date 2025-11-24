@@ -6,9 +6,6 @@ const props = defineProps({
     type: Array<number>,
     default: new Array(512).fill(0),
   },
-  label: {
-    type: String,
-  },
 })
 
 const emit = defineEmits(['updateEnvelopeSegmentArray'])
@@ -23,7 +20,6 @@ const handleRowValue = (index: number, rowValue: number) => {
 
 <template>
   <div class="mb-3 w-full">
-    <div class="mb-1 font-semibold">{{ label }}</div>
     <FreeformDrawSlider
       v-for="(item, index) in 36"
       :key="index"

@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 import { usePreset } from '@/composable/usePreset.ts'
 const { preset } = usePreset()
 
 import FreeformModuleMenu from '@/components/FreeformModuleMenu.vue'
-import FreeformEnvelope from '@/components/FreeformEnvelope.vue'
-import { onMounted, onUnmounted, ref } from 'vue'
+import FreeformEnvelopeSegment from '@/components/FreeformEnvelopeSegment.vue'
 import type { EnvelopeLabelAndSegment } from '@/types'
 
 const envelopeSegments: EnvelopeLabelAndSegment[] = [
@@ -24,29 +25,11 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
   }
 }
 
-const lastKeyPressed = ref('1')
-
 const lastMenuButtonClickedLabel = ref('Offset')
-
-const allowedKeys = ['1', '2', '3', '4', '5']
-
-const handleKeydown = (event: KeyboardEvent) => {
-  if (allowedKeys.includes(event.key)) {
-    lastKeyPressed.value = event.key
-  }
-}
 
 const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
   lastMenuButtonClickedLabel.value = item.label
 }
-
-onMounted(() => {
-  window.addEventListener('keydown', handleKeydown)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeydown)
-})
 </script>
 
 <template>
@@ -54,15 +37,15 @@ onUnmounted(() => {
     <FreeformModuleMenu
       :envelopeSegments="envelopeSegments"
       @menuButtonClicked="menuButtonClicked"
+      :lastMenuButtonClickedLabel="lastMenuButtonClickedLabel"
     />
-    <div class="flex">
-      <FreeformEnvelope
+    <div class="mt-4 flex">
+      <FreeformEnvelopeSegment
         v-for="(item, index) in envelopeSegments"
         v-show="lastMenuButtonClickedLabel === item.label"
         :key="index"
         :index="index"
         :envelopeSegment="item.envelopeSegment"
-        :label="item.label"
         @updateEnvelopeSegmentArray="updateEnvelopeSegmentArray(index, $event)"
       />
     </div>

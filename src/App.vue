@@ -29,7 +29,7 @@ const componentObjects: ComponentObject[] = [
     <MenuSystem :componentObjects="componentObjects" />
 
     <div class="flex-1 bg-slate-800 p-5">
-      <div class="h-full rounded-lg bg-neutral-50 p-8">
+      <div class="h-full rounded-lg bg-neutral-50 px-8 py-5">
         <component
           v-show="store.visibleComponentID === item.id"
           v-for="item in store.modules"
