@@ -3,23 +3,18 @@ import { ref, onMounted, computed } from 'vue'
 
 const emit = defineEmits(['rowValue'])
 
-const offset = defineModel<number>('offset', { default: 0 })
-
-const divisions = defineModel<number>('divisions', { default: 8 })
+const rowWidth = ref(0)
+const divisions = ref(8)
 
 const gridElement = ref<HTMLElement | null>(null)
 
 const isMouseDown = ref<boolean>(false)
 
 const handleMouseDown = () => {
-  console.log('down')
-
   isMouseDown.value = true
 }
 
 const handleMouseUp = () => {
-  console.log('up')
-
   isMouseDown.value = false
 }
 const handleMouseEnter = (event: MouseEvent) => {
@@ -28,14 +23,13 @@ const handleMouseEnter = (event: MouseEvent) => {
       const parentLeft = gridElement.value.getBoundingClientRect().left
 
       const mouseXRelativeToParent = event.clientX - parentLeft
+
       // const roundAmount = gridElement.value.clientWidth / 16
       // emit('roundAmount', roundAmount)
-      // offset.value =
+      // rowWidth.value =
       //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
 
-      console.log(isMouseDown.value)
-
-      offset.value = mouseXRelativeToParent
+      rowWidth.value = mouseXRelativeToParent
 
       emit('rowValue', mouseXRelativeToParent)
     }
@@ -45,16 +39,12 @@ const handleMouseEnter = (event: MouseEvent) => {
 onMounted(() => {
   window.addEventListener('mousedown', handleMouseDown)
   window.addEventListener('mouseup', handleMouseUp)
-
-  if (gridElement.value) {
-    gridElement.value.addEventListener('mouseenter', handleMouseEnter)
-  }
+  gridElement.value!.addEventListener('mouseenter', handleMouseEnter)
 })
 
 const segmentStyle = computed(() => {
   return {
-    marginLeft: `${offset.value}px`,
-    width: `${10}px`,
+    width: `${rowWidth.value}px`,
   }
 })
 

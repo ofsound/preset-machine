@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FreeformDrawSlider from '@/components/FreeformDrawSlider.vue'
+import FreeformHarmonicRow from '@/components/FreeformHarmonicRow.vue'
 
 const props = defineProps({
   envelopeSegment: {
@@ -20,7 +20,7 @@ const handleRowValue = (index: number, rowValue: number) => {
 
 <template>
   <div class="mb-3 w-full">
-    <FreeformDrawSlider
+    <FreeformHarmonicRow
       v-for="(item, index) in 36"
       :key="index"
       :index="index"
