@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 const openModule = () => {
-  store.visibleComponentID = props.id
+  store.visibleModuleID = props.id
 }
 
 const deleteModule = () => {
@@ -24,7 +24,7 @@ const deleteModule = () => {
   <div class="relative flex gap-1 last:[&>div]:hidden">
     <button
       @click="openModule"
-      :class="{ 'bg-teal-400': store.visibleComponentID === id }"
+      :class="{ 'bg-teal-400': store.visibleModuleID === id }"
       class="cursor-pointer rounded-sm border bg-slate-100 px-2 py-1 font-semibold tracking-wider shadow-md hover:brightness-120"
     >
       {{ label }}

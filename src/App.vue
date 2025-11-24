@@ -27,9 +27,12 @@ const componentObjects: ComponentObject[] = [
 <template>
   <div class="flex h-full w-full flex-col">
     <JsonDrop />
-    <PresetInspector />
 
     <div v-if="false">
+      <PresetInspector />
+    </div>
+
+    <div v-if="true">
       <AppHeader />
       <PageTwo />
       <MenuSystem :componentObjects="componentObjects" />
@@ -37,7 +40,7 @@ const componentObjects: ComponentObject[] = [
       <div class="flex-1 bg-slate-800 p-5">
         <div class="h-full rounded-lg bg-neutral-50 px-8 py-5">
           <component
-            v-show="store.visibleComponentID === item.id"
+            v-show="store.visibleModuleID === item.id"
             v-for="item in store.modules"
             :key="item.id"
             :is="toRaw(item.component)"

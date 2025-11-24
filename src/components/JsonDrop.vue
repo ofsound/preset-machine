@@ -2,8 +2,6 @@
 import { usePreset } from '@/composable/usePreset.ts'
 const { preset } = usePreset()
 
-const emit = defineEmits(['jsonLoaded'])
-
 const handleDrop = (event: DragEvent) => {
   if (event.dataTransfer) {
     const file = event.dataTransfer.files[0]
@@ -13,8 +11,9 @@ const handleDrop = (event: DragEvent) => {
         try {
           if (e.target) {
             if (typeof e.target.result === 'string') {
-              emit('jsonLoaded', JSON.parse(e.target.result))
               Object.assign(preset, JSON.parse(e.target.result))
+              // still not sure this is working, why
+              // would i need the watch in Preset Inspector
             }
           }
         } catch (error) {

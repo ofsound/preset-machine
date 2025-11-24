@@ -68,7 +68,7 @@ watch(preset, () => {
 <template>
   <div class="mx-4 my-8 flex gap-4">
     <div class="h-max min-w-54 bg-slate-100 p-2">
-      <div class="mb-3 font-semibold">Preset Inspector</div>
+      <div class="mb-3 px-1 font-semibold">Preset Inspector</div>
       <div class="flex flex-col items-start">
         <button
           v-for="item in buttonObjects"
@@ -79,7 +79,7 @@ watch(preset, () => {
             'mb-2': item === 'Meta',
             'mt-2 mb-2': item === 'Parameters',
           }"
-          class="px-2 hover:underline"
+          class="px-1 hover:underline"
         >
           {{ item }}
         </button>

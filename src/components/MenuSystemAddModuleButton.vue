@@ -17,7 +17,7 @@ const addComponentToModules = () => {
     component: props.componentObject.component,
     id: idForNewComponent,
   })
-  store.visibleComponentID = idForNewComponent
+  store.visibleModuleID = idForNewComponent
 }
 </script>
 
