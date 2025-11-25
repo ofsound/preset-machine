@@ -35,10 +35,10 @@ const handleDrop = (event: DragEvent) => {
   <div
     @dragover.prevent
     @drop.prevent="handleDrop"
-    class="mx-auto flex h-30 w-60 cursor-pointer flex-col justify-center rounded-sm border border-slate-400 bg-gray-50 p-6 text-center font-semibold italic inset-shadow-sm inset-shadow-slate-400/40 hover:bg-white"
+    class="mx-auto flex h-30 w-60 cursor-pointer flex-col justify-center rounded-sm border border-slate-300 bg-gray-50 p-6 text-center font-semibold italic inset-shadow-sm inset-shadow-slate-400/40 hover:bg-white"
   >
     <div
-      class="mx-auto rounded-md border border-dashed px-4 py-2 font-semibold"
+      class="mx-auto rounded-md border-2 border-dashed border-gray-300 px-4 py-2 font-semibold"
     >
       Drag and Drop Preset .json
     </div>

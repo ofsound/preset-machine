@@ -13,17 +13,17 @@ defineEmits(['closeWelcome'])
       PRESET MACHINE
     </h1>
     <div
-      class="mx-auto flex h-70 w-190 overflow-hidden rounded-md shadow-lg *:flex-1"
+      class="mx-auto flex h-70 w-190 overflow-hidden rounded-md border border-stone-300/80 shadow-lg *:flex-1"
     >
       <div
-        class="flex flex-col justify-center border-r border-slate-300 bg-gray-300/60"
+        class="flex flex-col justify-center border-r border-slate-300 bg-gray-300/45"
       >
         <JsonDrop @jsonLoaded="$emit('closeWelcome')" />
       </div>
-      <div class="flex flex-col justify-center bg-neutral-300/60">
+      <div class="flex flex-col justify-center bg-neutral-300/45">
         <button
           @click="$emit('closeWelcome')"
-          class="mx-auto flex h-30 w-60 cursor-pointer flex-col justify-center rounded-sm border border-slate-400 bg-gray-50 p-6 text-center font-semibold italic inset-shadow-sm inset-shadow-slate-400/40 hover:bg-white"
+          class="mx-auto flex h-30 w-60 cursor-pointer flex-col justify-center rounded-sm border border-slate-300 bg-gray-50 p-6 text-center font-semibold italic inset-shadow-sm inset-shadow-slate-400/40 hover:bg-white"
         >
           <div class="mx-auto">Create New<br />Blank Preset</div>
         </button>
