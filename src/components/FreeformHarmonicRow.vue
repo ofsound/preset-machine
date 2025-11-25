@@ -3,6 +3,10 @@ import { ref, onMounted, computed } from 'vue'
 
 const emit = defineEmits(['rowValue'])
 
+const props = defineProps<{
+  color: string
+}>()
+
 const rowWidth = ref(0)
 const divisions = ref(8)
 
@@ -100,6 +104,7 @@ onMounted(() => {
 const segmentStyle = computed(() => {
   return {
     width: `${rowWidth.value}px`,
+    backgroundColor: props.color,
   }
 })
 

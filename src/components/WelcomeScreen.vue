@@ -8,7 +8,7 @@ defineEmits(['closeWelcome'])
     class="flex h-full flex-col justify-center bg-linear-to-tl from-slate-300 via-rose-100 to-purple-300 px-10"
   >
     <h1
-      class="mx-auto -mt-16 mb-12 text-5xl font-bold text-shadow-blue-800/20 text-shadow-md"
+      class="mx-auto -mt-16 mb-12 text-5xl font-bold tracking-wider text-shadow-blue-800/20 text-shadow-md"
     >
       PRESET MACHINE
     </h1>

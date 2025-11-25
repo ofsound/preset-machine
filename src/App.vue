@@ -65,11 +65,8 @@ const toggleInspector = () => {
     <footer
       class="mt-auto flex justify-between bg-neutral-100 p-3 text-right text-xs"
     >
-      <div class="hidden italic">
-        click (and drag) on row to choose an offset and hold length
-      </div>
       <div class="ml-auto font-semibold tracking-wide">
-        preset machine v0.0.3
+        preset machine v0.0.4
       </div>
     </footer>
   </div>
