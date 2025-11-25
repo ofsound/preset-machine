@@ -19,7 +19,6 @@ const handleRowValue = (index: number, rowValue: number) => {
 
 const harmonicRowColors = [
   '#b82619',
-  '#b82619',
   '#bd2c1b',
   '#ce4a24',
   '#ce5125',
@@ -32,36 +31,35 @@ const harmonicRowColors = [
   '#d59339',
   '#d89e3f',
   '#daa844',
-  '#e28d18',
-  '#e29b1f',
-  '#e4a827',
-  '#e6b12c',
-  '#e3be35',
-  '#c4b44b',
-  '#a1a961',
-  '#849f77',
-  '#67978c',
-  '#3d8aa6',
-  '#2e7db7',
-  '#376db9',
-  '#415aba',
-  '#5a32bf',
-  '#6222c0',
-  '#681fbb',
-  '#721fa8',
-  '#7a209f',
-  '#7f2296',
-  '#84218d',
-  '#8b2384',
-  '#8f227b',
-  '#58004e',
+  '#dcb44a',
+  '#dfbf50',
+  '#bfb35c',
+  '#9da66e',
+  '#7c9984',
+  '#5d8d9a',
+  '#4480b2',
+  '#4471b2',
+  '#4561b2',
+  '#4852b4',
+  '#4e42b4',
+  '#5434b6',
+  '#5a25b7',
+  '#6124b1',
+  '#6525a9',
+  '#6a26a1',
+  '#6e2799',
+  '#732892',
+  '#782989',
+  '#7d2a82',
+  '#822b7a',
+  '#872d73',
 ]
 </script>
 
 <template>
   <div class="mb-3 w-full">
     <FreeformHarmonicRow
-      v-for="(item, index) in 36"
+      v-for="(item, index) in 35"
       :key="index"
       :color="harmonicRowColors[index]!"
       @rowValue="handleRowValue(index, $event)"
