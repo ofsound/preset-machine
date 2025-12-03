@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
-import AdjustmentSlider from '@/components/AdjustmentSlider.vue'
+import OffsetHoldRow from '@/components/OffsetHoldRow.vue'
 
-// import { useStore } from '@/stores/store'
-// const store = useStore()
+import { usePreset } from '@/composable/usePreset.ts'
+const { preset } = usePreset()
 
 const toolOptionValue = ref<number>(1)
+
 const toolOptions = ref([
   { text: '1/16 & drag', value: 1 },
   { text: '1/8', value: 2 },
@@ -15,46 +16,20 @@ const toolOptions = ref([
   { text: '1/2', value: 8 },
 ])
 
-const numHarmonics = ref<number>(36)
+const numHarmonics = ref<number>(8)
 const tempo = ref<number>(120)
 
-const handleRoundAmount = (roundAmountEmitted: number) => {
-  roundAmount.value = roundAmountEmitted
+const updateEnvelopeOffset = (index: number, offsetValue: number) => {
+  const updatedArray = [...preset.offsets]
+  updatedArray[index] = offsetValue / tempo.value
+  preset.offsets.splice(0, updatedArray.length, ...updatedArray)
 }
 
-const activeOffsets = ref<number[]>(new Array(numHarmonics.value).fill(0))
-const activeHolds = ref<number[]>(new Array(numHarmonics.value).fill(0))
-const activeAttacks = ref<number[]>(new Array(numHarmonics.value).fill(0))
-const activeReleases = ref<number[]>(new Array(numHarmonics.value).fill(0))
-const activeDecays = ref<number[]>(new Array(numHarmonics.value).fill(0))
-const activeSustains = ref<number[]>(new Array(numHarmonics.value).fill(0))
-const activeGains = ref<number[]>(new Array(numHarmonics.value).fill(1))
-const roundAmount = ref<number>(0)
-
-watch(
-  [
-    activeOffsets,
-    activeHolds,
-    activeAttacks,
-    activeReleases,
-    activeDecays,
-    activeSustains,
-    activeGains,
-  ],
-  () => {
-    // if (store.preset) {
-    //   const correctedOffsets = activeOffsets.value.map(
-    //     (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
-    //   )
-    //   const correctedHolds = activeHolds.value.map(
-    //     (item) => ((item / roundAmount.value) * (60 / tempo.value)) / 4,
-    //   )
-    //   store.preset.offsets.splice(0, numHarmonics.value, ...correctedOffsets)
-    //   store.preset.holds.splice(0, numHarmonics.value, ...correctedHolds)
-    // }
-  },
-  { deep: true },
-)
+const updateEnvelopeHold = (index: number, holdValue: number) => {
+  const updatedArray = [...preset.holds]
+  updatedArray[index] = holdValue / tempo.value
+  preset.holds.splice(0, updatedArray.length, ...updatedArray)
+}
 </script>
 
 <template>
@@ -94,13 +69,13 @@ watch(
       </div>
     </div>
     <div class="mx-auto mt-4 mb-10 flex flex-col-reverse">
-      <AdjustmentSlider
-        v-for="(n, i) in numHarmonics"
-        :key="n"
+      <OffsetHoldRow
+        v-for="(item, index) in numHarmonics"
+        :key="item"
         :value="toolOptionValue"
-        v-model:offset="activeOffsets[i]"
-        v-model:hold="activeHolds[i]"
-        @roundAmount="handleRoundAmount"
+        :index="index"
+        @updateEnvelopeOffset="updateEnvelopeOffset(index, $event)"
+        @updateEnvelopeHold="updateEnvelopeHold(index, $event)"
       />
     </div>
   </div>

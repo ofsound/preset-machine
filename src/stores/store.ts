@@ -48,5 +48,7 @@ export const useStore = defineStore('store', () => {
     '#872d73',
   ]
 
-  return { modules, visibleModuleID, harmonicRowColors }
+  const harmonicRowColorsReversed = harmonicRowColors.reverse()
+
+  return { modules, visibleModuleID, harmonicRowColors, harmonicRowColorsReversed }
 })

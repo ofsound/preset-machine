@@ -1,15 +1,23 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 
-const emit = defineEmits(['roundAmount'])
+import { useStore } from '@/stores/store'
+const store = useStore()
 
-const offset = defineModel<number>('offset', { default: 0 })
-const hold = defineModel<number>('hold', { default: 0 })
-const divisions = defineModel<number>('divisions', { default: 16 })
+const emit = defineEmits(['updateEnvelopeOffset', 'updateEnvelopeHold'])
+
+const offset = ref(0)
+const hold = ref(0)
+const divisions = ref(16)
+
 const value = defineModel<number>('value', { default: 0 })
 
 const gridElement = ref<HTMLElement | null>(null)
 const isMouseDown = ref<boolean>(false)
+
+const props = defineProps<{
+  index: number
+}>()
 
 onMounted(() => {
   if (gridElement.value) {
@@ -19,10 +27,12 @@ onMounted(() => {
         const mouseXRelativeToParent = event.clientX - parentLeft!
         isMouseDown.value = true
         const roundAmount = gridElement.value.clientWidth / 16
-        emit('roundAmount', roundAmount)
         hold.value = value.value * roundAmount
         offset.value =
           Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
+
+        emit('updateEnvelopeOffset', offset.value)
+        emit('updateEnvelopeHold', hold.value)
       }
     }
 
@@ -43,6 +53,7 @@ onMounted(() => {
         const roundAmount = gridElement.value?.offsetWidth / 16
         const dragLength = mouseXRelativeToParent - offset.value
         hold.value = Math.ceil(dragLength / roundAmount) * roundAmount
+        emit('updateEnvelopeHold', hold.value)
       }
     }
 
@@ -57,6 +68,7 @@ const segmentStyle = computed(() => {
   return {
     marginLeft: `${offset.value}px`,
     width: `${hold.value}px`,
+    backgroundColor: store.harmonicRowColorsReversed[props.index],
   }
 })
 
@@ -79,10 +91,7 @@ const gridChildStyle = computed(() => {
         class="nth-child(4n):border-2 :nth-child(4n):border-blue-400 aspect-square h-auto even:bg-gray-100"
         :style="gridChildStyle"
       ></div>
-      <div
-        class="absolute h-[calc(100%-2px)] bg-amber-400"
-        :style="segmentStyle"
-      ></div>
+      <div class="absolute h-[calc(100%-2px)]" :style="segmentStyle"></div>
     </div>
   </div>
 </template>

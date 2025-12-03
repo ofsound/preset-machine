@@ -6,12 +6,12 @@ const store = useStore()
 </script>
 
 <template>
-  <div class="bg-black">
+  <div class="flex flex-col-reverse bg-black">
     <PageTwoRow
-      v-for="n in 34"
-      :key="n"
-      :index="n"
-      :color="store.harmonicRowColors[n]!"
+      v-for="index in 34"
+      :key="index"
+      :index="index"
+      :color="store.harmonicRowColorsReversed[index]!"
     />
   </div>
 </template>

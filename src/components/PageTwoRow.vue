@@ -10,42 +10,30 @@ const props = defineProps<{
 }>()
 
 const offsetWidth = computed(() => {
-  return preset.offsets[props.index] * 0.5 + 'px'
+  return preset.offsets[props.index] * 100 + 'px'
 })
 
 const attackWidth = computed(() => {
-  return preset.attacks[props.index] * 0.5 + 'px'
+  return preset.attacks[props.index] * 100 + 'px'
 })
 
 const decayWidth = computed(() => {
-  return preset.decays[props.index] * 0.5 + 'px'
+  return preset.decays[props.index] * 100 + 'px'
 })
 
 const holdWidth = computed(() => {
-  return preset.holds[props.index] * 0.5 + 'px'
+  return preset.holds[props.index] * 100 + 'px'
 })
 
 const releaseWidth = computed(() => {
-  return preset.releases[props.index] * 0.5 + 'px'
+  return preset.releases[props.index] * 100 + 'px'
 })
-
-// const startPosition = ' 0%, '
-// const barWidth = ' ' + (0 + int * widthScale) + '%, '
-// var releaseWidth = ' ' + (releaseLength + int * widthScale) + '%)'
 
 const attackBackgroundString =
   'linear-gradient(to right,' + '#000' + ',' + props.color + ' 100%'
 
 const releaseBackgroundString =
   'linear-gradient(to right,' + props.color + ',' + '#000' + ' 100%'
-
-// background: linear-gradient(
-//   to right,
-//   #333333,
-//   #333333 50%,
-//   #eeeeee 75%,
-//   #333333 75%
-// );
 </script>
 
 <template>
