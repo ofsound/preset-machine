@@ -21,7 +21,8 @@ onMounted(() => {
         const roundAmount = gridElement.value.clientWidth / 16
         emit('roundAmount', roundAmount)
         hold.value = value.value * roundAmount
-        offset.value = Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
+        offset.value =
+          Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
       }
     }
 
@@ -32,7 +33,11 @@ onMounted(() => {
     }
 
     const handleMouseMove = (event: MouseEvent) => {
-      if (gridElement.value?.offsetWidth && isMouseDown.value && value.value == 1) {
+      if (
+        gridElement.value?.offsetWidth &&
+        isMouseDown.value &&
+        value.value == 1
+      ) {
         const parentLeft = gridElement.value.getBoundingClientRect().left
         const mouseXRelativeToParent = event.clientX - parentLeft!
         const roundAmount = gridElement.value?.offsetWidth / 16
@@ -74,7 +79,10 @@ const gridChildStyle = computed(() => {
         class="nth-child(4n):border-2 :nth-child(4n):border-blue-400 aspect-square h-auto even:bg-gray-100"
         :style="gridChildStyle"
       ></div>
-      <div class="absolute h-[calc(100%-2px)] bg-amber-400" :style="segmentStyle"></div>
+      <div
+        class="absolute h-[calc(100%-2px)] bg-amber-400"
+        :style="segmentStyle"
+      ></div>
     </div>
   </div>
 </template>
