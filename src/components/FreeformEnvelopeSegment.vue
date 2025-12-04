@@ -22,7 +22,7 @@ const handleRowValue = (index: number, rowValue: number) => {
 </script>
 
 <template>
-  <div class="mb-3 w-full">
+  <div class="mb-3 flex w-full flex-col-reverse">
     <FreeformHarmonicRow
       v-for="(item, index) in 35"
       :key="index"

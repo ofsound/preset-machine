@@ -132,10 +132,7 @@ const gridChildStyle = computed(() => {
         class="nth-child(4n):border-2 :nth-child(4n):border-blue-400 h-4"
         :style="gridChildStyle"
       ></div>
-      <div
-        class="absolute h-[calc(100%-2px)] bg-amber-400"
-        :style="segmentStyle"
-      ></div>
+      <div class="absolute h-[calc(100%-2px)]" :style="segmentStyle"></div>
     </div>
   </div>
 </template>

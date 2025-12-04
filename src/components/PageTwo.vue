@@ -11,7 +11,7 @@ const store = useStore()
       v-for="index in 34"
       :key="index"
       :index="index - 1"
-      :color="store.harmonicRowColorsReversed[index - 1]!"
+      :color="store.harmonicRowColors[index - 1]!"
     />
   </div>
 </template>

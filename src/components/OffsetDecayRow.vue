@@ -68,7 +68,7 @@ const segmentStyle = computed(() => {
   return {
     marginLeft: `${offset.value}px`,
     width: `${decay.value}px`,
-    backgroundColor: store.harmonicRowColorsReversed[props.index],
+    backgroundColor: store.harmonicRowColors[props.index],
   }
 })
 

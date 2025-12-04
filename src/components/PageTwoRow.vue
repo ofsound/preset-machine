@@ -10,23 +10,23 @@ const props = defineProps<{
 }>()
 
 const offsetWidth = computed(() => {
-  return preset.offsets[props.index] * 100 + 'px'
+  return preset.offsets[props.index]! * 100 + 'px'
 })
 
 const attackWidth = computed(() => {
-  return preset.attacks[props.index] * 100 + 'px'
+  return preset.attacks[props.index]! * 100 + 'px'
 })
 
 const decayWidth = computed(() => {
-  return preset.decays[props.index] * 100 + 'px'
+  return preset.decays[props.index]! * 100 + 'px'
 })
 
 const holdWidth = computed(() => {
-  return preset.holds[props.index] * 100 + 'px'
+  return preset.holds[props.index]! * 100 + 'px'
 })
 
 const releaseWidth = computed(() => {
-  return preset.releases[props.index] * 100 + 'px'
+  return preset.releases[props.index]! * 100 + 'px'
 })
 
 const attackBackgroundString =
