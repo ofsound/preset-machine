@@ -51,11 +51,9 @@ function getLabel(component: Component): string {
 
 <style>
 .crosshatch-background {
-  /* Two linear gradients with opposite angles */
   background-image:
     linear-gradient(45deg, rgba(0, 0, 0, 0.5) 5%, transparent 5%),
     linear-gradient(-45deg, rgba(0, 0, 0, 0.5) 5%, transparent 8%);
-  /* Controls the size of each square */
   background-size: 8px 8px;
 }
 </style>

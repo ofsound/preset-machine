@@ -13,12 +13,14 @@ import AppHeader from '@/components/AppHeader.vue'
 import PageTwo from '@/components/PageTwo.vue'
 import MenuSystem from '@/components/MenuSystem.vue'
 
+import InitModule from '@/components/InitModule.vue'
 import OffsetModule from '@/components/OffsetModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
 import PresetInspector from '@/components/PresetInspector.vue'
 
 const componentObjects: ComponentObject[] = [
+  { component: InitModule, label: 'Init' },
   { component: OffsetModule, label: 'Offset' },
   { component: FreeformModule, label: 'Freeform' },
   { component: RandomizeModule, label: 'Randomize' },
@@ -41,11 +43,11 @@ const toggleInspector = () => {
 
     <template v-if="!isWelcome">
       <AppHeader @toggleInspector="toggleInspector" />
-      <div v-if="isInspector">
+      <div v-show="isInspector">
         <PresetInspector />
       </div>
 
-      <div v-if="!isInspector">
+      <div v-show="!isInspector">
         <PageTwo />
         <MenuSystem :componentObjects="componentObjects" />
 

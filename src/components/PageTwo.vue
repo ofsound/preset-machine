@@ -10,8 +10,8 @@ const store = useStore()
     <PageTwoRow
       v-for="index in 34"
       :key="index"
-      :index="index"
-      :color="store.harmonicRowColorsReversed[index]!"
+      :index="index - 1"
+      :color="store.harmonicRowColorsReversed[index - 1]!"
     />
   </div>
 </template>

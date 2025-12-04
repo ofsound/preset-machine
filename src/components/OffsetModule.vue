@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import OffsetHoldRow from '@/components/OffsetHoldRow.vue'
+import OffsetDecayRow from '@/components/OffsetDecayRow.vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 const { preset } = usePreset()
@@ -19,16 +19,12 @@ const toolOptions = ref([
 const numHarmonics = ref<number>(8)
 const tempo = ref<number>(120)
 
-const updateEnvelopeOffset = (index: number, offsetValue: number) => {
-  const updatedArray = [...preset.offsets]
-  updatedArray[index] = offsetValue / tempo.value
-  preset.offsets.splice(0, updatedArray.length, ...updatedArray)
+const updateEnvelopeOffset = (index: number, offset: number) => {
+  preset.offsets[index] = offset / (tempo.value * 4)
 }
 
-const updateEnvelopeHold = (index: number, holdValue: number) => {
-  const updatedArray = [...preset.holds]
-  updatedArray[index] = holdValue / tempo.value
-  preset.holds.splice(0, updatedArray.length, ...updatedArray)
+const updateEnvelopeDecay = (index: number, decay: number) => {
+  preset.decays[index] = decay / (tempo.value * 4)
 }
 </script>
 
@@ -69,13 +65,13 @@ const updateEnvelopeHold = (index: number, holdValue: number) => {
       </div>
     </div>
     <div class="mx-auto mt-4 mb-10 flex flex-col-reverse">
-      <OffsetHoldRow
+      <OffsetDecayRow
         v-for="(item, index) in numHarmonics"
         :key="item"
         :value="toolOptionValue"
         :index="index"
         @updateEnvelopeOffset="updateEnvelopeOffset(index, $event)"
-        @updateEnvelopeHold="updateEnvelopeHold(index, $event)"
+        @updateEnvelopeDecay="updateEnvelopeDecay(index, $event)"
       />
     </div>
   </div>

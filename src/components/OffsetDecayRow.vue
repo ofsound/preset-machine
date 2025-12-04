@@ -4,10 +4,10 @@ import { ref, onMounted, computed } from 'vue'
 import { useStore } from '@/stores/store'
 const store = useStore()
 
-const emit = defineEmits(['updateEnvelopeOffset', 'updateEnvelopeHold'])
+const emit = defineEmits(['updateEnvelopeOffset', 'updateEnvelopeDecay'])
 
 const offset = ref(0)
-const hold = ref(0)
+const decay = ref(0)
 const divisions = ref(16)
 
 const value = defineModel<number>('value', { default: 0 })
@@ -27,12 +27,12 @@ onMounted(() => {
         const mouseXRelativeToParent = event.clientX - parentLeft!
         isMouseDown.value = true
         const roundAmount = gridElement.value.clientWidth / 16
-        hold.value = value.value * roundAmount
+        decay.value = value.value * roundAmount
         offset.value =
           Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
 
         emit('updateEnvelopeOffset', offset.value)
-        emit('updateEnvelopeHold', hold.value)
+        emit('updateEnvelopeDecay', decay.value)
       }
     }
 
@@ -52,8 +52,8 @@ onMounted(() => {
         const mouseXRelativeToParent = event.clientX - parentLeft!
         const roundAmount = gridElement.value?.offsetWidth / 16
         const dragLength = mouseXRelativeToParent - offset.value
-        hold.value = Math.ceil(dragLength / roundAmount) * roundAmount
-        emit('updateEnvelopeHold', hold.value)
+        decay.value = Math.ceil(dragLength / roundAmount) * roundAmount
+        emit('updateEnvelopeDecay', decay.value)
       }
     }
 
@@ -67,7 +67,7 @@ onMounted(() => {
 const segmentStyle = computed(() => {
   return {
     marginLeft: `${offset.value}px`,
-    width: `${hold.value}px`,
+    width: `${decay.value}px`,
     backgroundColor: store.harmonicRowColorsReversed[props.index],
   }
 })
@@ -88,7 +88,7 @@ const gridChildStyle = computed(() => {
       <div
         v-for="n in divisions"
         :key="n"
-        class="nth-child(4n):border-2 :nth-child(4n):border-blue-400 aspect-square h-auto even:bg-gray-100"
+        class="nth-child(4n):border-2 :nth-child(4n):border-blue-400 h-3 even:bg-gray-100"
         :style="gridChildStyle"
       ></div>
       <div class="absolute h-[calc(100%-2px)]" :style="segmentStyle"></div>
