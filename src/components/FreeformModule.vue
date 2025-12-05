@@ -6,6 +6,7 @@ const { preset } = usePreset()
 
 import FreeformModuleMenu from '@/components/FreeformModuleMenu.vue'
 import FreeformEnvelopeSegment from '@/components/FreeformEnvelopeSegment.vue'
+
 import type { EnvelopeLabelAndSegment } from '@/types'
 
 const envelopeSegments: EnvelopeLabelAndSegment[] = [

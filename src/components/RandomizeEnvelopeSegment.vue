@@ -1,22 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const props = defineProps({
-  index: {
-    type: Number,
-  },
-  envelopeSegment: {
-    type: Array<number>,
-    default: new Array(512).fill(0),
-  },
-  label: {
-    type: String,
-  },
-  updateEnvelopeSegmentArray: {
-    type: Function,
-    required: true,
-  },
-})
+const props = defineProps<{
+  index: number
+  envelopeSegment: number[]
+  label: string
+  updateEnvelopeSegmentArray: (
+    index: number,
+    activeEnvSegmentValues: number[],
+  ) => void
+}>()
 
 const lowerLimit = ref(0)
 const upperLimit = ref(0)
