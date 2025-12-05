@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+
 import { usePreset } from '@/composable/usePreset.ts'
+
 const { preset } = usePreset()
 
 const dataLink = ref('')

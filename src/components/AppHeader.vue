@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { usePreset } from '@/composable/usePreset.ts'
-const { preset } = usePreset()
-
 import JsonSave from '@/components/JsonSave.vue'
+import { usePreset } from '@/composable/usePreset.ts'
 
 defineEmits(['toggleInspector'])
+
+const { preset } = usePreset()
 </script>
 
 <template>

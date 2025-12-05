@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { usePreset } from '@/composable/usePreset.ts'
+
 const { preset } = usePreset()
 
 preset.parameters['One Shot'] = 0

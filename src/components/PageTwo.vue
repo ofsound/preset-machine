@@ -2,6 +2,7 @@
 import PageTwoRow from '@/components/PageTwoRow.vue'
 
 import { useStore } from '@/stores/store'
+
 const store = useStore()
 </script>
 

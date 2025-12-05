@@ -2,9 +2,10 @@
 import { ref, onMounted, computed } from 'vue'
 
 import { useStore } from '@/stores/store'
-const store = useStore()
 
 const emit = defineEmits(['updateEnvelopeOffset', 'updateEnvelopeDecay'])
+
+const store = useStore()
 
 const offset = ref(0)
 const decay = ref(0)

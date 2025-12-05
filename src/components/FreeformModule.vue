@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { usePreset } from '@/composable/usePreset.ts'
-const { preset } = usePreset()
-
 import FreeformModuleMenu from '@/components/FreeformModuleMenu.vue'
 import FreeformEnvelopeSegment from '@/components/FreeformEnvelopeSegment.vue'
 
+import { usePreset } from '@/composable/usePreset.ts'
+
 import type { EnvelopeLabelAndSegment } from '@/types'
+
+const { preset } = usePreset()
 
 const envelopeSegments: EnvelopeLabelAndSegment[] = [
   { label: 'Offset', envelopeSegment: preset.offsets },

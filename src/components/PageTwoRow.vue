@@ -2,12 +2,13 @@
 import { computed } from 'vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
-const { preset } = usePreset()
 
 const props = defineProps<{
   index: number
   color: string
 }>()
+
+const { preset } = usePreset()
 
 const offsetWidth = computed(() => {
   return preset.offsets[props.index]! * 100 + 'px'

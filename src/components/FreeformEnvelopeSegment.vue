@@ -2,13 +2,14 @@
 import FreeformHarmonicRow from '@/components/FreeformHarmonicRow.vue'
 
 import { useStore } from '@/stores/store'
-const store = useStore()
 
 const props = defineProps<{
   envelopeSegment: number[]
 }>()
 
 const emit = defineEmits(['updateEnvelopeSegmentArray'])
+
+const store = useStore()
 
 const activeEnvSegmentValues: number[] = [...props.envelopeSegment]
 

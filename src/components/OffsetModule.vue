@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import OffsetDecayRow from '@/components/OffsetDecayRow.vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
+
 const { preset } = usePreset()
 
 const toolOptionValue = ref<number>(1)

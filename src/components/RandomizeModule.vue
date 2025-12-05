@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { usePreset } from '@/composable/usePreset.ts'
-const { preset } = usePreset()
-
 import RandomizeEnvelopeSegment from '@/components/RandomizeEnvelopeSegment.vue'
+
+import { usePreset } from '@/composable/usePreset.ts'
+
 import type { EnvelopeLabelAndSegment } from '@/types'
+
+const { preset } = usePreset()
 
 const envelopeSegments: EnvelopeLabelAndSegment[] = [
   { label: 'Offset', envelopeSegment: preset.offsets },

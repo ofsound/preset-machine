@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 
-const emit = defineEmits(['rowValue'])
-
 const props = defineProps<{
   color: string
 }>()
+
+const emit = defineEmits(['rowValue'])
 
 const rowWidth = ref(0)
 const divisions = ref(8)
@@ -14,6 +14,19 @@ const gridElement = ref<HTMLElement | null>(null)
 const resetElement = ref<HTMLElement | null>(null)
 
 const isMouseDown = ref<boolean>(false)
+
+const segmentStyle = computed(() => {
+  return {
+    width: `${rowWidth.value}px`,
+    backgroundColor: props.color,
+  }
+})
+
+const gridChildStyle = computed(() => {
+  return {
+    width: `${(1 / divisions.value) * 100}%`,
+  }
+})
 
 const handleMouseDown = () => {
   isMouseDown.value = true
@@ -99,19 +112,6 @@ onMounted(() => {
 
   resetElement.value!.addEventListener('mouseenter', handleResetMouseEnter)
   resetElement.value!.addEventListener('click', handleResetMouseClick)
-})
-
-const segmentStyle = computed(() => {
-  return {
-    width: `${rowWidth.value}px`,
-    backgroundColor: props.color,
-  }
-})
-
-const gridChildStyle = computed(() => {
-  return {
-    width: `${(1 / divisions.value) * 100}%`,
-  }
 })
 </script>
 

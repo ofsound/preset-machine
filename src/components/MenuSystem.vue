@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { useStore } from '@/stores/store'
-
 import { toRaw, type Component } from 'vue'
-import type { ComponentObject } from '@/types.ts'
 
 import MenuSystemModuleItem from '@/components/MenuSystemModuleItem.vue'
-
 import MenuSystemAddModuleButton from '@/components/MenuSystemAddModuleButton.vue'
 
-const store = useStore()
+import { useStore } from '@/stores/store'
+
+import type { ComponentObject } from '@/types.ts'
 
 const props = defineProps<{
   componentObjects: ComponentObject[]
 }>()
+
+const store = useStore()
 
 function getLabel(component: Component): string {
   let returnString = ''

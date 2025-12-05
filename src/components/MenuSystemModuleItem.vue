@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useStore } from '@/stores/store'
-const store = useStore()
 
 const props = defineProps<{
   id: string
   label: string
 }>()
+
+const store = useStore()
 
 const openModule = () => {
   store.visibleModuleID = props.id
