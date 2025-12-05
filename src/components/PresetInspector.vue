@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 
@@ -39,32 +39,6 @@ const buttonObjects = ref([
   `pitchRatesBeats (${preset.pitchRatesBeats.length})`,
   `pitchNoiseAmounts (${preset.pitchNoiseAmounts.length})`,
 ])
-
-watch(preset, () => {
-  buttonObjects.value = [
-    'Meta',
-    `Gains (${preset.gains.length})`,
-    `Offsets (${preset.offsets.length})`,
-    `Attacks (${preset.attacks.length})`,
-    `Decays (${preset.decays.length})`,
-    `Sustains (${preset.sustains.length})`,
-    `Holds (${preset.holds.length})`,
-    `Releases (${preset.releases.length})`,
-    'Parameters',
-    `pitchMapping (${preset.pitchMapping.length})`,
-    `glideTimesInBlocks (${preset.glideTimesInBlocks.length})`,
-    `filterTable (${preset.filterTable.length})`,
-    `tremDepths (${preset.tremDepths.length})`,
-    `tremRatesSeconds (${preset.tremRatesSeconds.length})`,
-    `tremRatesBeats (${preset.tremRatesBeats.length})`,
-    `tremOffsets (${preset.tremOffsets.length})`,
-    `tremWavetable (${preset.tremWavetable.length})`,
-    `pitchDepths (${preset.pitchDepths.length})`,
-    `pitchRatesSeconds (${preset.pitchRatesSeconds.length})`,
-    `pitchRatesBeats (${preset.pitchRatesBeats.length})`,
-    `pitchNoiseAmounts (${preset.pitchNoiseAmounts.length})`,
-  ]
-})
 </script>
 
 <template>
