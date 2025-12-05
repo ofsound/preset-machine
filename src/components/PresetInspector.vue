@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 
@@ -39,6 +39,42 @@ const buttonObjects = ref([
   `pitchRatesBeats (${preset.pitchRatesBeats.length})`,
   `pitchNoiseAmounts (${preset.pitchNoiseAmounts.length})`,
 ])
+
+// A reusable factory function that takes a key name (e.g., 'gains', 'offsets')
+// and the 'preset' object, and returns a computed property.
+const createComputed = (key, preset) =>
+  computed({
+    get() {
+      return preset[key].join(',')
+    },
+    set(newValue) {
+      preset[key] = newValue
+        .split(',')
+        .map((item) => item.trim())
+        .filter((item) => !isNaN(Number(item)) && item !== '')
+    },
+  })
+
+const gains = createComputed('gains', preset)
+const offsets = createComputed('offsets', preset)
+const attacks = createComputed('attacks', preset)
+const decays = createComputed('decays', preset)
+const sustains = createComputed('sustains', preset)
+const holds = createComputed('holds', preset)
+const releases = createComputed('releases', preset)
+
+const pitchMapping = createComputed('pitchMapping', preset)
+const glideTimesInBlocks = createComputed('glideTimesInBlocks', preset)
+const filterTable = createComputed('filterTable', preset)
+const tremDepths = createComputed('tremDepths', preset)
+const tremRatesSeconds = createComputed('tremRatesSeconds', preset)
+const tremRatesBeats = createComputed('tremRatesBeats', preset)
+const tremOffsets = createComputed('tremOffsets', preset)
+const tremWavetable = createComputed('tremWavetable', preset)
+const pitchDepths = createComputed('pitchDepths', preset)
+const pitchRatesSeconds = createComputed('pitchRatesSeconds', preset)
+const pitchRatesBeats = createComputed('pitchRatesBeats', preset)
+const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
 </script>
 
 <template>
@@ -61,55 +97,217 @@ const buttonObjects = ref([
         </button>
       </div>
     </div>
-    <div>
-      <div v-if="dataLink === 'Meta'">
-        <div>{{ preset.name }}</div>
-        <div>{{ preset.author }}</div>
-        <div>{{ preset.description }}</div>
-        <div>{{ preset.uuid }}</div>
-        <div>{{ preset.derivedFrom }}</div>
-        <div>{{ preset.version }}</div>
+    <div class="flex-1">
+      <div
+        v-if="dataLink === 'Meta'"
+        class="*:mb-2 *:flex *:w-full *:[&>input]:w-full *:[&>input]:bg-slate-100 *:[&>input]:p-2 *:[&>span]:inline-block *:[&>span]:w-34 *:[&>span]:pt-2"
+      >
+        <label for="name">
+          <span>name:</span>
+          <input id="name" name="name" type="text" v-model="preset.name" />
+        </label>
+        <label for="author">
+          <span>author:</span>
+          <input
+            id="author"
+            name="author"
+            type="text"
+            v-model="preset.author"
+          />
+        </label>
+        <label for="description">
+          <span>description:</span>
+          <input
+            id="description"
+            name="description"
+            type="text"
+            v-model="preset.description"
+          />
+        </label>
+        <label for="uuid">
+          <span>uuid:</span>
+          <input id="uuid" name="uuid" type="text" v-model="preset.uuid" />
+        </label>
+        <label for="derivedFrom">
+          <span>derivedFrom:</span>
+          <input
+            id="derivedFrom"
+            name="derivedFrom"
+            type="text"
+            v-model="preset.derivedFrom"
+          />
+        </label>
+        <label for="version">
+          <span>version:</span>
+          <input
+            id="version"
+            name="version"
+            type="text"
+            v-model="preset.version"
+          />
+        </label>
       </div>
 
-      <div v-if="dataLink === 'Gains'">{{ preset.gains }}</div>
-      <div v-if="dataLink === 'Offsets'">{{ preset.offsets }}</div>
-      <div v-if="dataLink === 'Attacks'">{{ preset.attacks }}</div>
-      <div v-if="dataLink === 'Decays'">{{ preset.decays }}</div>
-      <div v-if="dataLink === 'Sustains'">{{ preset.sustains }}</div>
-      <div v-if="dataLink === 'Holds'">{{ preset.holds }}</div>
-      <div v-if="dataLink === 'Releases'">{{ preset.releases }}</div>
+      <div v-if="dataLink === 'Gains'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="gains"
+          rows="200"
+        ></textarea>
+      </div>
+
+      <div v-if="dataLink === 'Offsets'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="offsets"
+          rows="200"
+        ></textarea>
+      </div>
+
+      <div v-if="dataLink === 'Attacks'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="attacks"
+          rows="200"
+        ></textarea>
+      </div>
+
+      <div v-if="dataLink === 'Decays'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="decays"
+          rows="200"
+        ></textarea>
+      </div>
+
+      <div v-if="dataLink === 'Sustains'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="sustains"
+          rows="200"
+        ></textarea>
+      </div>
+
+      <div v-if="dataLink === 'Holds'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="holds"
+          rows="200"
+        ></textarea>
+      </div>
+
+      <div v-if="dataLink === 'Releases'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="releases"
+          rows="200"
+        ></textarea>
+      </div>
 
       <div v-if="dataLink === 'Parameters'">
+        <label
+          v-for="(value, key) in preset.parameters"
+          :key="key"
+          :for="key"
+          class="mb-2 flex"
+        >
+          <span class="w-64">{{ key }}:</span>
+          <input
+            :id="key"
+            :name="key"
+            type="text"
+            v-model="preset.parameters[key]"
+            class="w-full bg-slate-100 p-2"
+          />
+        </label>
         <pre class="text-xs">{{ preset.parameters }}</pre>
       </div>
 
       <div v-if="dataLink === 'pitchMapping'">
-        {{ preset.pitchMapping.join(', ') }}
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="pitchMapping"
+          rows="200"
+        ></textarea>
       </div>
       <div v-if="dataLink === 'glideTimesInBlocks'">
-        {{ preset.glideTimesInBlocks }}
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="glideTimesInBlocks"
+          rows="200"
+        ></textarea>
       </div>
-      <div v-if="dataLink === 'filterTable'">{{ preset.filterTable }}</div>
-      <div v-if="dataLink === 'tremDepths'">{{ preset.tremDepths }}</div>
+      <div v-if="dataLink === 'filterTable'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="filterTable"
+          rows="200"
+        ></textarea>
+      </div>
+      <div v-if="dataLink === 'tremDepths'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="tremDepths"
+          rows="200"
+        ></textarea>
+      </div>
       <div v-if="dataLink === 'tremRatesSeconds'">
-        {{ preset.tremRatesSeconds }}
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="tremRatesSeconds"
+          rows="200"
+        ></textarea>
       </div>
+
       <div v-if="dataLink === 'tremRatesBeats'">
-        {{ preset.tremRatesBeats }}
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="tremRatesBeats"
+          rows="200"
+        ></textarea>
       </div>
-      <div v-if="dataLink === 'tremOffsets'">{{ preset.tremOffsets }}</div>
-      <div v-if="dataLink === 'tremWavetable'">{{ preset.tremWavetable }}</div>
-      <div v-if="dataLink === 'pitchDepths'">{{ preset.pitchDepths }}</div>
+      <div v-if="dataLink === 'tremOffsets'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="tremOffsets"
+          rows="200"
+        ></textarea>
+      </div>
+      <div v-if="dataLink === 'tremWavetable'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="tremWavetable"
+          rows="200"
+        ></textarea>
+      </div>
+      <div v-if="dataLink === 'pitchDepths'">
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="pitchDepths"
+          rows="200"
+        ></textarea>
+      </div>
       <div v-if="dataLink === 'pitchRatesSeconds'">
-        {{ preset.pitchRatesSeconds }}
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="pitchRatesSeconds"
+          rows="200"
+        ></textarea>
       </div>
       <div v-if="dataLink === 'pitchRatesBeats'">
-        {{ preset.pitchRatesBeats }}
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="pitchRatesBeats"
+          rows="200"
+        ></textarea>
       </div>
       <div v-if="dataLink === 'pitchNoiseAmounts'">
-        {{ preset.pitchNoiseAmounts }}
+        <textarea
+          class="w-full bg-slate-100 p-2"
+          v-model="pitchNoiseAmounts"
+          rows="200"
+        ></textarea>
       </div>
-      <div v-if="dataLink === 'verbMix'">{{ preset.verbMix }}</div>
     </div>
   </div>
 </template>
