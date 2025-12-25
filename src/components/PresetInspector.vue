@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
+import type { Preset } from '@/types'
 
 const { preset } = usePreset()
 
@@ -40,18 +41,17 @@ const buttonObjects = ref([
   `pitchNoiseAmounts (${preset.pitchNoiseAmounts.length})`,
 ])
 
-// A reusable factory function that takes a key name (e.g., 'gains', 'offsets')
-// and the 'preset' object, and returns a computed property.
-const createComputed = (key, preset) =>
+const createComputed = (key: string, preset: Preset) =>
   computed({
     get() {
-      return preset[key].join(',')
+      return (preset[key as keyof typeof preset] as number[]).join(',')
     },
     set(newValue) {
-      preset[key] = newValue
+      preset[key as keyof typeof preset] = newValue
         .split(',')
-        .map((item) => item.trim())
-        .filter((item) => !isNaN(Number(item)) && item !== '')
+        .map((item: string) => item.trim())
+        .filter((item: string) => !isNaN(Number(item)) && item !== '')
+        .map(Number)
     },
   })
 

@@ -14,10 +14,10 @@ for (let i = 1; i <= 36; i++) {
 preset.parameters['gain01'] = 0
 
 preset.offsets = new Array(511).fill(0)
-// preset.gains = new Array(511).fill(0) // this will be overwritten
+preset.gains = new Array(511).fill(0)
 preset.attacks = new Array(511).fill(0)
 preset.decays = new Array(511).fill(0)
-// preset.sustains = new Array(511).fill(0)
+preset.sustains = new Array(511).fill(0)
 preset.releases = new Array(511).fill(0)
 </script>
 
