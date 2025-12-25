@@ -209,18 +209,22 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
           v-for="(value, key) in preset.parameters"
           :key="key"
           :for="key"
-          class="mb-2 flex"
+          class="mb-6 flex items-baseline"
         >
           <span class="w-64">{{ key }}:</span>
-          <input
-            :id="key"
-            :name="key"
-            type="text"
-            v-model="preset.parameters[key]"
-            class="w-full bg-slate-100 p-2"
-          />
+          <div class="w-full">
+            <input
+              :id="key"
+              :name="key"
+              type="text"
+              v-model="preset.parameters[key]"
+              class="w-full bg-slate-100 p-2"
+            />
+            <div class="mt-1 px-2 text-sm text-neutral-500 italic">
+              description, range, etc.
+            </div>
+          </div>
         </label>
-        <pre class="text-xs">{{ preset.parameters }}</pre>
       </div>
 
       <div v-if="dataLink === 'pitchMapping'">
