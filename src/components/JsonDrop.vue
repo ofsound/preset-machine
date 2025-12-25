@@ -7,6 +7,42 @@ const emit = defineEmits(['jsonLoaded'])
 
 const { preset } = usePreset()
 
+const fileInput = ref<HTMLInputElement | null>(null)
+
+const triggerFileInput = () => {
+  if (fileInput.value) {
+    fileInput.value.click()
+  }
+}
+
+const handleFileSelect = async (e: Event) => {
+  const inputElement = e.target as HTMLInputElement
+
+  if (inputElement.files) {
+    const file = inputElement.files[0]
+
+    if (file && file.type === 'application/json') {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        try {
+          if (e.target) {
+            if (typeof e.target.result === 'string') {
+              Object.assign(preset, JSON.parse(e.target.result))
+              emit('jsonLoaded')
+            }
+          }
+        } catch (error) {
+          console.error('Error parsing JSON:', error)
+        }
+      }
+      reader.readAsText(file)
+    } else {
+      console.error('Not a JSON file!')
+    }
+    inputElement.value = ''
+  }
+}
+
 const isDragOver = ref(false)
 
 const handleDrop = (event: DragEvent) => {
@@ -43,12 +79,21 @@ const handleDrop = (event: DragEvent) => {
     @dragenter.prevent="isDragOver = true"
     @dragleave.prevent="isDragOver = false"
     @drop.prevent="handleDrop"
+    @click="triggerFileInput"
     class="mx-auto flex h-30 w-60 cursor-pointer flex-col justify-center rounded-sm border border-slate-300 bg-gray-50 p-6 text-center font-semibold italic inset-shadow-sm inset-shadow-slate-400/40"
   >
     <div
       class="pointer-events-none mx-auto rounded-md border-2 border-dashed border-gray-300 px-4 py-2 font-semibold"
     >
-      Drag and Drop Preset .json
+      Drag and Drop Preset .json or<br />
+      Click To Add
     </div>
   </div>
+  <input
+    type="file"
+    ref="fileInput"
+    @change="handleFileSelect"
+    accept="application/json"
+    class="hidden"
+  />
 </template>
