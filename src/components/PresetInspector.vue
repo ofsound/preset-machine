@@ -80,7 +80,7 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
 <template>
   <div class="mx-4 my-8 flex gap-4">
     <div class="h-max min-w-54 bg-slate-100 p-2">
-      <div class="mb-3 px-1 font-semibold">Preset Inspector</div>
+      <div class="mb-3 px-1 text-lg font-semibold">Preset Inspector</div>
       <div class="flex flex-col items-start">
         <button
           v-for="item in buttonObjects"

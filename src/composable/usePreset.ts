@@ -1,8 +1,11 @@
 
 import { reactive } from 'vue';
 import { v4 as uuidv4 } from 'uuid'
+import type { Preset } from '@/types';
 
-const preset = reactive({
+
+
+const preset = reactive<Preset>({
   "uuid": uuidv4(),
   "name": 'New Preset',
   "author": 'BJM',
