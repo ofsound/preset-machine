@@ -6,9 +6,9 @@ const props = defineProps<{
   active: boolean
 }>()
 
-const emit = defineEmits(['rowValue'])
+const emit = defineEmits(['columnValue'])
 
-const rowHeight = ref(0)
+const columnHeight = ref(0)
 const divisions = ref(8)
 
 const gridElement = ref<HTMLElement | null>(null)
@@ -18,7 +18,7 @@ const isMouseDown = ref<boolean>(false)
 
 const segmentStyle = computed(() => {
   return {
-    height: `${rowHeight.value}px`,
+    height: `${columnHeight.value}px`,
     backgroundColor: props.color,
   }
 })
@@ -43,14 +43,9 @@ const handleMouseClick = (event: MouseEvent) => {
 
     const mouseYRelativeToParent = event.clientY - parentTop
 
-    // const roundAmount = gridElement.value.clientWidth / 16
-    // emit('roundAmount', roundAmount)
-    // rowWidth.value =
-    //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
+    columnHeight.value = mouseYRelativeToParent
 
-    rowHeight.value = mouseYRelativeToParent
-
-    emit('rowValue', mouseYRelativeToParent)
+    emit('columnValue', mouseYRelativeToParent)
   }
 }
 
@@ -61,14 +56,9 @@ const handleMouseMove = (event: MouseEvent) => {
 
       const mouseYRelativeToParent = event.clientY - parentTop
 
-      // const roundAmount = gridElement.value.clientWidth / 16
-      // emit('roundAmount', roundAmount)
-      // rowWidth.value =
-      //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
+      columnHeight.value = mouseYRelativeToParent
 
-      rowHeight.value = mouseYRelativeToParent
-
-      emit('rowValue', mouseYRelativeToParent)
+      emit('columnValue', mouseYRelativeToParent)
     }
   }
 }
@@ -80,28 +70,23 @@ const handleMouseEnter = (event: MouseEvent) => {
 
       const mouseYRelativeToParent = event.clientY - parentTop
 
-      // const roundAmount = gridElement.value.clientWidth / 16
-      // emit('roundAmount', roundAmount)
-      // rowWidth.value =
-      //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
+      columnHeight.value = mouseYRelativeToParent
 
-      rowHeight.value = mouseYRelativeToParent
-
-      emit('rowValue', mouseYRelativeToParent)
+      emit('columnValue', mouseYRelativeToParent)
     }
   }
 }
 
 const handleResetMouseEnter = () => {
   if (isMouseDown.value) {
-    rowHeight.value = 0
-    emit('rowValue', 0)
+    columnHeight.value = 0
+    emit('columnValue', 0)
   }
 }
 
 const handleResetMouseClick = () => {
-  rowHeight.value = 0
-  emit('rowValue', 0)
+  columnHeight.value = 0
+  emit('columnValue', 0)
 }
 
 onMounted(() => {

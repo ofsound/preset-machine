@@ -13,8 +13,8 @@ const store = useStore()
 
 const activeEnvSegmentValues: number[] = [...props.envelopeSegment]
 
-const handleRowValue = (index: number, rowValue: number) => {
-  activeEnvSegmentValues[index] = rowValue
+const handleColumnValue = (index: number, columnValue: number) => {
+  activeEnvSegmentValues[index] = columnValue
   emit('updateEnvelopeSegmentArray', activeEnvSegmentValues)
 }
 
@@ -39,7 +39,7 @@ function isPrime(n: number) {
       :active="isPrime(index)"
       :key="index"
       :color="store.harmonicRowColors[index]!"
-      @rowValue="handleRowValue(index, $event)"
+      @columnValue="handleColumnValue(index, $event)"
     />
   </div>
 </template>
