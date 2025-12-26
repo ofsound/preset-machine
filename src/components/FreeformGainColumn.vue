@@ -116,19 +116,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative flex h-30 w-10 cursor-pointer flex-col select-none">
+  <div class="relative flex h-30 w-full cursor-pointer flex-col select-none">
     <div
       ref="gridElement"
-      class="border-box border-right-2 flex border border-gray-300 hover:brightness-110"
-    ></div>
-    <div
-      v-for="n in divisions"
-      :key="n"
-      class="nth-child(4n):border-2 :nth-child(4n):border-blue-400 w-4"
-      :style="gridChildStyle"
-    ></div>
-    <div class="absolute w-4" :style="segmentStyle"></div>
+      class="border-box border-right-2 flex h-full w-full flex-col border border-gray-300 hover:brightness-110"
+    >
+      <div
+        v-for="n in divisions"
+        :key="n"
+        class="nth-child(4n):border-2 :nth-child(4n):border-blue-400 w-full min-w-full bg-gray-300"
+        :style="gridChildStyle"
+      ></div>
+      <div class="absolute w-full" :style="segmentStyle"></div>
+    </div>
 
-    <div ref="resetElement" class="absolute -left-6 h-full w-6"></div>
+    <div ref="resetElement" class="absolute -left-6 h-4 w-full"></div>
   </div>
 </template>
