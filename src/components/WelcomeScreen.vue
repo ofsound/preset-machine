@@ -23,7 +23,7 @@ defineEmits(['closeWelcome'])
       <div class="flex flex-col justify-center bg-neutral-300/45">
         <button
           @click="$emit('closeWelcome')"
-          class="mx-auto flex h-30 w-60 cursor-pointer flex-col justify-center rounded-sm border border-slate-300 bg-gray-50 p-6 text-center font-semibold italic inset-shadow-sm inset-shadow-slate-400/40 hover:bg-white"
+          class="mx-auto flex h-36 w-60 cursor-pointer flex-col justify-center rounded-sm border border-slate-300 bg-gray-50 p-6 text-center font-semibold italic inset-shadow-sm inset-shadow-slate-400/40 hover:bg-white"
         >
           <div class="mx-auto">Create New<br />Blank Preset</div>
         </button>

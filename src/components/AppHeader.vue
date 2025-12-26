@@ -2,6 +2,10 @@
 import JsonSave from '@/components/JsonSave.vue'
 import { usePreset } from '@/composable/usePreset.ts'
 
+defineProps<{
+  isInspector: boolean
+}>()
+
 defineEmits(['toggleInspector'])
 
 const { preset } = usePreset()
@@ -29,12 +33,12 @@ const { preset } = usePreset()
     </div>
     <div class="flex gap-2">
       <button
-        class="block cursor-pointer rounded-md bg-neutral-600 px-4 py-1 text-sm font-semibold tracking-wide text-white text-shadow-xs hover:text-shadow-lg"
+        class="block w-36 cursor-pointer rounded-md bg-neutral-600 px-4 py-1 text-center text-sm font-semibold tracking-wide text-white text-shadow-xs hover:text-shadow-lg"
         @click="$emit('toggleInspector')"
       >
-        Toggle Inspector
+        <span v-if="!isInspector">Show Inspector</span>
+        <span v-else>Hide Inspector</span>
       </button>
-
       <JsonSave />
     </div>
   </div>

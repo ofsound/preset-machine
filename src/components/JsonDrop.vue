@@ -56,20 +56,20 @@ const handleImportedJSON = (file: File) => {
 <template>
   <div
     @dragover.prevent
-    :class="{
-      'bg-white': isDragOver,
-    }"
     @dragenter.prevent="isDragOver = true"
     @dragleave.prevent="isDragOver = false"
     @drop.prevent="handleDrop"
     @click="triggerFileInput"
-    class="mx-auto flex h-30 w-60 cursor-pointer flex-col justify-center rounded-sm border border-slate-300 bg-gray-50 p-6 text-center font-semibold italic inset-shadow-sm inset-shadow-slate-400/40"
+    class="mx-auto flex h-36 w-60 cursor-pointer flex-col justify-center rounded-sm border border-slate-300 bg-gray-50 p-6 text-center font-semibold italic inset-shadow-sm inset-shadow-slate-400/40 hover:bg-white"
+    :class="{
+      'bg-white': isDragOver,
+    }"
   >
     <div
       class="pointer-events-none mx-auto rounded-md border-2 border-dashed border-gray-300 px-4 py-2 font-semibold"
     >
-      Drag and Drop Preset .json or<br />
-      Click Here To Add
+      Drag and Drop Preset JSON<br />
+      or Click Here
     </div>
   </div>
   <input
