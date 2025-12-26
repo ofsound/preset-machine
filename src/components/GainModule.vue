@@ -9,22 +9,25 @@ import { useStore } from '@/stores/store'
 
 import { usePreset } from '@/composable/usePreset.ts'
 
+import { isPrime } from '@/utils/math.ts'
+
 import type { EnvelopeLabelAndSegment } from '@/types'
 
 const store = useStore()
 
 const { preset } = usePreset()
 
-const envelopeSegments: EnvelopeLabelAndSegment[] = [
-  { label: 'Gains', envelopeSegment: preset.gains },
+const gainModuleModes: Array<{ label: string }> = [
+  { label: 'All' },
+  { label: 'Octaves' },
+  { label: 'Not Octaves' },
+  { label: 'Not Fifths' },
+  { label: 'Fifths' },
+  { label: 'Prime' },
 ]
 
 const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
-  envelopeSegments[index]!.envelopeSegment.splice(
-    0,
-    updatedArray.length,
-    ...updatedArray,
-  )
+  preset.gains.splice(0, updatedArray.length, ...updatedArray)
 }
 
 const lastMenuButtonClickedLabel = ref('Offset')
@@ -38,20 +41,6 @@ const activeEnvSegmentValues: number[] = [...preset.gains]
 const handleColumnValue = (index: number, columnValue: number) => {
   activeEnvSegmentValues[index] = columnValue
   updateEnvelopeSegmentArray(0, activeEnvSegmentValues)
-  // emit('updateEnvelopeSegmentArray', activeEnvSegmentValues)
-}
-
-function isPrime(n: number) {
-  if (n <= 1) return false
-  if (n <= 3) return true
-
-  if (n % 2 === 0 || n % 3 === 0) return false
-
-  for (let i = 5; i * i <= n; i += 6) {
-    if (n % i === 0 || n % (i + 2) === 0) return false
-  }
-
-  return true
 }
 </script>
 
@@ -67,7 +56,7 @@ function isPrime(n: number) {
       />
     </div>
     <GainModuleMenu
-      :envelopeSegments="envelopeSegments"
+      :gainModuleModes="gainModuleModes"
       @menuButtonClicked="menuButtonClicked"
       :lastMenuButtonClickedLabel="lastMenuButtonClickedLabel"
     />
