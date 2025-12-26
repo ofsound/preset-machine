@@ -31,7 +31,7 @@ const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
 
 <template>
   <div class="h-full">
-    <div class="mt-4 flex h-200">
+    <div class="mt-4 flex h-80">
       <FreeformGains
         v-for="(item, index) in envelopeSegments"
         v-show="lastMenuButtonClickedLabel === item.label"

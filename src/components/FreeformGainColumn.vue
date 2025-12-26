@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 
 const props = defineProps<{
   color: string
+  active: boolean
 }>()
 
 const emit = defineEmits(['rowValue'])
@@ -29,7 +30,7 @@ const gridChildStyle = computed(() => {
 })
 
 const handleMouseDown = () => {
-  isMouseDown.value = true
+  if (props.active) isMouseDown.value = true
 }
 
 const handleMouseUp = () => {
@@ -116,10 +117,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative flex h-30 w-full cursor-pointer flex-col select-none">
+  <div class="relative flex h-70 w-full cursor-pointer flex-col select-none">
     <div
       ref="gridElement"
-      class="border-box border-right-2 flex h-full w-full flex-col border border-gray-300 hover:brightness-110"
+      class="border-box border-right-2 flex h-full w-full flex-col-reverse border border-gray-300 hover:brightness-110"
     >
       <div
         v-for="n in divisions"
