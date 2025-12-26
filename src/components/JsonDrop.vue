@@ -9,6 +9,8 @@ const { preset } = usePreset()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 
+const isDragOver = ref(false)
+
 const triggerFileInput = () => {
   if (fileInput.value) {
     fileInput.value.click()
@@ -17,55 +19,36 @@ const triggerFileInput = () => {
 
 const handleFileSelect = async (e: Event) => {
   const inputElement = e.target as HTMLInputElement
-
   if (inputElement.files) {
-    const file = inputElement.files[0]
-
-    if (file && file.type === 'application/json') {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        try {
-          if (e.target) {
-            if (typeof e.target.result === 'string') {
-              Object.assign(preset, JSON.parse(e.target.result))
-              emit('jsonLoaded')
-            }
-          }
-        } catch (error) {
-          console.error('Error parsing JSON:', error)
-        }
-      }
-      reader.readAsText(file)
-    } else {
-      console.error('Not a JSON file!')
-    }
+    handleImportedJSON(inputElement.files[0] as File)
     inputElement.value = ''
   }
 }
 
-const isDragOver = ref(false)
-
 const handleDrop = (event: DragEvent) => {
   if (event.dataTransfer) {
-    const file = event.dataTransfer.files[0]
-    if (file && file.type === 'application/json') {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        try {
-          if (e.target) {
-            if (typeof e.target.result === 'string') {
-              Object.assign(preset, JSON.parse(e.target.result))
-              emit('jsonLoaded')
-            }
+    handleImportedJSON(event.dataTransfer.files[0] as File)
+  }
+}
+
+const handleImportedJSON = (file: File) => {
+  if (file && file.type === 'application/json') {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      try {
+        if (e.target) {
+          if (typeof e.target.result === 'string') {
+            Object.assign(preset, JSON.parse(e.target.result))
+            emit('jsonLoaded')
           }
-        } catch (error) {
-          console.error('Error parsing JSON:', error)
         }
+      } catch (error) {
+        console.error('Error parsing JSON:', error)
       }
-      reader.readAsText(file)
-    } else {
-      console.error('Not a JSON file!')
     }
+    reader.readAsText(file)
+  } else {
+    console.error('Not a JSON file!')
   }
 }
 </script>
@@ -86,7 +69,7 @@ const handleDrop = (event: DragEvent) => {
       class="pointer-events-none mx-auto rounded-md border-2 border-dashed border-gray-300 px-4 py-2 font-semibold"
     >
       Drag and Drop Preset .json or<br />
-      Click To Add
+      Click Here To Add
     </div>
   </div>
   <input
