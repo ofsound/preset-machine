@@ -73,6 +73,8 @@ const handleImportedJSON = (file: File) => {
     </div>
   </div>
   <input
+    name="file-input"
+    id="file-input"
     type="file"
     ref="fileInput"
     @change="handleFileSelect"

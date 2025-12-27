@@ -35,6 +35,8 @@ const updateEnvelopeDecay = (index: number, decay: number) => {
       <div>
         Harmonics:
         <input
+          name="num-harmonics"
+          id="num-harmonics"
           class="max-w-14 rounded-sm bg-gray-300 p-1"
           type="number"
           v-model="numHarmonics"
@@ -43,6 +45,8 @@ const updateEnvelopeDecay = (index: number, decay: number) => {
       <div class="ml-4">
         Tempo:
         <input
+          name="tempo"
+          id="tempo"
           class="max-w-14 rounded-sm bg-gray-300 p-1"
           type="number"
           v-model="tempo"
@@ -51,6 +55,8 @@ const updateEnvelopeDecay = (index: number, decay: number) => {
       <div class="ml-auto">
         Hold Length:&nbsp;&nbsp;
         <select
+          name="hold-length"
+          id="hold-length"
           class="bg-gray-3 rounded-sm bg-gray-300 p-1 text-black"
           v-model="toolOptionValue"
         >

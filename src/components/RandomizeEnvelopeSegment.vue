@@ -47,13 +47,15 @@ const randomize = () => {
       <input
         class="w-10 bg-slate-200"
         type="number"
-        id="lowerLimit"
+        :id="label.toLowerCase() + '-lower-limit'"
+        :name="label.toLowerCase() + '-lower-limit'"
         v-model="lowerLimit"
       />
       <input
         class="w-10 bg-slate-200"
         type="number"
-        id="upperLimit"
+        :id="label.toLowerCase() + '-upper-limit'"
+        :name="label.toLowerCase() + '-upper-limit'"
         v-model="upperLimit"
       />
       <button

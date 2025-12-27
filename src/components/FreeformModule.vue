@@ -45,7 +45,6 @@ const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
         v-for="(item, index) in envelopeSegments"
         v-show="lastMenuButtonClickedLabel === item.label"
         :key="index"
-        :index="index"
         :envelopeSegment="item.envelopeSegment"
         @updateEnvelopeSegmentArray="updateEnvelopeSegmentArray(index, $event)"
       />
