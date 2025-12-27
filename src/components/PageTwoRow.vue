@@ -40,23 +40,23 @@ const releaseBackgroundString =
 <template>
   <div class="mb-px flex">
     <div
-      style="background-color: red; height: 5px"
       :style="{
+        height: '5px',
         width: offsetWidth,
         backgroundColor: '#000',
       }"
     ></div>
     <div
-      style="background-color: blue; height: 5px"
       :style="{
+        height: '5px',
         width: attackWidth,
         background: attackBackgroundString,
         borderRight: '1px solid #FFF',
       }"
     ></div>
     <div
-      style="background-color: green; height: 5px"
       :style="{
+        height: '5px',
         width: decayWidth,
         backgroundColor: color,
         borderLeft: '1px solid #333',
@@ -64,8 +64,8 @@ const releaseBackgroundString =
       }"
     ></div>
     <div
-      style="background-color: yellow; height: 5px"
       :style="{
+        height: '5px',
         width: holdWidth,
         backgroundColor: color,
         borderLeft: '1px solid #333',
@@ -73,8 +73,8 @@ const releaseBackgroundString =
       }"
     ></div>
     <div
-      style="background-color: purple; height: 5px"
       :style="{
+        height: '5px',
         width: releaseWidth,
         background: releaseBackgroundString,
         borderLeft: '1px solid #333',

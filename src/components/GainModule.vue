@@ -11,7 +11,7 @@ import { usePreset } from '@/composable/usePreset.ts'
 
 import { isPrime } from '@/utils/math.ts'
 
-import type { EnvelopeLabelAndSegment } from '@/types'
+import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
 const store = useStore()
 

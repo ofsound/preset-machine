@@ -66,7 +66,7 @@ const handleImportedJSON = (file: File) => {
     }"
   >
     <div
-      class="pointer-events-none mx-auto rounded-md border-2 border-dashed border-gray-300 px-4 py-2 font-semibold"
+      class="pointer-events-none mx-auto rounded-md border-2 border-dashed border-slate-200 px-4 py-2 font-semibold"
     >
       Drag and Drop Preset JSON<br />
       or Click Here

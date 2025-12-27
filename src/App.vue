@@ -70,7 +70,7 @@ const toggleInspector = () => {
       class="mt-auto flex justify-between bg-neutral-100 p-3 text-right text-xs"
     >
       <div class="ml-auto font-semibold tracking-wide">
-        preset machine v0.0.4
+        preset machine v0.0.5
       </div>
     </footer>
   </div>

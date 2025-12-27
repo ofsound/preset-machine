@@ -56,7 +56,12 @@ const randomize = () => {
         id="upperLimit"
         v-model="upperLimit"
       />
-      <button @click="randomize" class="mb-1 border px-1">Randomize</button>
+      <button
+        @click="randomize"
+        class="cursor-pointer rounded-sm border bg-sky-50 px-3 py-px text-sm font-semibold tracking-wide"
+      >
+        Randomize
+      </button>
     </div>
   </div>
 </template>

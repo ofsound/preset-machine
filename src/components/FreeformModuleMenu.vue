@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EnvelopeLabelAndSegment } from '@/types'
+import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
 defineProps<{
   envelopeSegments: EnvelopeLabelAndSegment[]

@@ -3,7 +3,7 @@ import RandomizeEnvelopeSegment from '@/components/RandomizeEnvelopeSegment.vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 
-import type { EnvelopeLabelAndSegment } from '@/types'
+import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
 const { preset } = usePreset()
 

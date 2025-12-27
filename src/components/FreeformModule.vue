@@ -6,7 +6,7 @@ import FreeformEnvelopeSegment from '@/components/FreeformEnvelopeSegment.vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 
-import type { EnvelopeLabelAndSegment } from '@/types'
+import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
 const { preset } = usePreset()
 

@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
-import type { Preset } from '@/types'
+import type { Preset } from '@/types.ts'
 
 const { preset } = usePreset()
 
