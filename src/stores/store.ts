@@ -1,8 +1,8 @@
+import { ref } from 'vue'
+
+import { defineStore } from 'pinia'
 
 import type { ModuleObject } from '@/types.ts'
-
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
 
 export const useStore = defineStore('store', () => {
 
@@ -573,8 +573,6 @@ export const useStore = defineStore('store', () => {
     '#b82619',
     '#b82619',
     '#b82619',
-
-
   ]
 
   return { modules, visibleModuleID, harmonicRowColors }
