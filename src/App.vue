@@ -17,6 +17,7 @@ import InitModule from '@/components/InitModule.vue'
 import GainModule from '@/components/GainModule.vue'
 import OffsetModule from '@/components/OffsetModule.vue'
 import FreeformModule from '@/components/FreeformModule.vue'
+import BipolarModule from '@/components/BipolarModule.vue'
 import RandomizeModule from '@/components/RandomizeModule.vue'
 import PresetInspector from '@/components/PresetInspector.vue'
 
@@ -25,6 +26,7 @@ const componentObjects: ComponentObject[] = [
   { component: GainModule, label: 'Gain' },
   { component: OffsetModule, label: 'Offset' },
   { component: FreeformModule, label: 'Freeform' },
+  { component: BipolarModule, label: 'Bipolar' },
   { component: RandomizeModule, label: 'Randomize' },
 ]
 const isWelcome = ref(true)
