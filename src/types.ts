@@ -194,7 +194,6 @@ export interface PresetModLayer {
   "offsets": number[]
   "attacks": number[]
   "decays": number[]
-  "sustains": number[]
   "holds": number[]
   "releases": number[]
 }

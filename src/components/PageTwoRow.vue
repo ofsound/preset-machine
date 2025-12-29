@@ -8,26 +8,26 @@ const props = defineProps<{
   color: string
 }>()
 
-const { corePreset } = usePreset()
+const { finalPreset } = usePreset()
 
 const offsetWidth = computed(() => {
-  return corePreset.offsets[props.index]! * 100 + 'px'
+  return finalPreset.value.offsets[props.index]! * 100 + 'px'
 })
 
 const attackWidth = computed(() => {
-  return corePreset.attacks[props.index]! * 100 + 'px'
+  return finalPreset.value.attacks[props.index]! * 100 + 'px'
 })
 
 const decayWidth = computed(() => {
-  return corePreset.decays[props.index]! * 100 + 'px'
+  return finalPreset.value.decays[props.index]! * 100 + 'px'
 })
 
 const holdWidth = computed(() => {
-  return corePreset.holds[props.index]! * 100 + 'px'
+  return finalPreset.value.holds[props.index]! * 100 + 'px'
 })
 
 const releaseWidth = computed(() => {
-  return corePreset.releases[props.index]! * 100 + 'px'
+  return finalPreset.value.releases[props.index]! * 100 + 'px'
 })
 
 const attackBackgroundString =

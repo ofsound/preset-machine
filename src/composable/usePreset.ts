@@ -1,5 +1,5 @@
 
-import { reactive, computed } from 'vue';
+import { reactive, computed, toRaw } from 'vue';
 import { v4 as uuidv4 } from 'uuid'
 import type { Preset, PresetModLayer } from '@/types.ts';
 
@@ -178,9 +178,28 @@ const corePreset = reactive<Preset>({
 
 const presetModLayers = reactive<PresetModLayer[]>([]);
 
-const finalPreset = computed(() => {
+const finalPreset = computed<Preset>(() => {
+
+  const computedPreset = structuredClone(toRaw(corePreset))
+
+  for (let index = 0; index < presetModLayers.length; index++) {
+    const presetModLayer = presetModLayers[index]!
+
+    for (let i = 0; i < computedPreset.attacks.length; i++) {
+      computedPreset.attacks[i]! += presetModLayer.attacks[i]!
+      computedPreset.holds[i]! += presetModLayer.holds[i]!
+      computedPreset.decays[i]! += presetModLayer.decays[i]!
+      computedPreset.releases[i]! += presetModLayer.releases[i]!
+      computedPreset.offsets[i]! += presetModLayer.offsets[i]!
+    }
+
+  }
+  console.log("###");
+
   return {
-    ...corePreset
+
+
+    ...computedPreset
   }
 });
 

@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { useStore } from '@/stores/store'
 
+import { usePreset } from '@/composable/usePreset.ts'
+
 const props = defineProps<{
   id: string
   label: string
 }>()
 
 const store = useStore()
+
+const { presetModLayers } = usePreset()
 
 const openModule = () => {
   store.visibleModuleID = props.id
@@ -16,6 +20,10 @@ const deleteModule = () => {
   for (let index = 0; index < store.modules.length; index++) {
     if (store.modules[index]!.id === props.id) {
       store.modules.splice(index, 1)
+    }
+
+    if (presetModLayers[index]!.moduleID === props.id) {
+      presetModLayers.splice(index, 1)
     }
   }
 }

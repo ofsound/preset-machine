@@ -9,20 +9,18 @@ import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
 const store = useStore()
 
-const { corePreset, presetModLayers } = usePreset()
+const { presetModLayers, finalPreset } = usePreset()
 
 const presetModLayer = presetModLayers.find(
   (layer) => layer.moduleID === store.visibleModuleID,
-)
-
-console.log(presetModLayer)
+)!
 
 const envelopeSegments: EnvelopeLabelAndSegment[] = [
-  { label: 'Offset', envelopeSegment: corePreset.offsets },
-  { label: 'Attack', envelopeSegment: corePreset.attacks },
-  { label: 'Decay', envelopeSegment: corePreset.decays },
-  { label: 'Hold', envelopeSegment: corePreset.holds },
-  { label: 'Release', envelopeSegment: corePreset.releases },
+  { label: 'Offset', envelopeSegment: presetModLayer.offsets },
+  { label: 'Attack', envelopeSegment: presetModLayer.attacks },
+  { label: 'Decay', envelopeSegment: presetModLayer.decays },
+  { label: 'Hold', envelopeSegment: presetModLayer.holds },
+  { label: 'Release', envelopeSegment: presetModLayer.releases },
 ]
 
 const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
@@ -32,6 +30,8 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
         envelopeSegments[index]!.envelopeSegment[i] = updatedArray[i]
     })
   }
+
+  console.log(finalPreset.value)
 }
 </script>
 
