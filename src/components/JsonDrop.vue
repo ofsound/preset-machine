@@ -5,7 +5,7 @@ import { usePreset } from '@/composable/usePreset.ts'
 
 const emit = defineEmits(['jsonLoaded'])
 
-const { preset } = usePreset()
+const { corePreset } = usePreset()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 
@@ -38,7 +38,7 @@ const handleImportedJSON = (file: File) => {
       try {
         if (e.target) {
           if (typeof e.target.result === 'string') {
-            Object.assign(preset, JSON.parse(e.target.result))
+            Object.assign(corePreset, JSON.parse(e.target.result))
             emit('jsonLoaded')
           }
         }

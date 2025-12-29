@@ -1,11 +1,9 @@
 
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import { v4 as uuidv4 } from 'uuid'
-import type { Preset } from '@/types.ts';
+import type { Preset, PresetModLayer } from '@/types.ts';
 
-
-
-const preset = reactive<Preset>({
+const corePreset = reactive<Preset>({
   "uuid": uuidv4(),
   "name": 'New Preset',
   "author": 'BJM',
@@ -178,9 +176,18 @@ const preset = reactive<Preset>({
   }
 });
 
+const presetModLayers = reactive<PresetModLayer[]>([]);
+
+const finalPreset = computed(() => {
+  return {
+    ...corePreset
+  }
+});
 
 export function usePreset() {
   return {
-    preset,
+    corePreset,
+    presetModLayers,
+    finalPreset
   };
 }

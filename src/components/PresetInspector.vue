@@ -4,7 +4,7 @@ import { ref, computed } from 'vue'
 import { usePreset } from '@/composable/usePreset.ts'
 import type { Preset } from '@/types.ts'
 
-const { preset } = usePreset()
+const { corePreset } = usePreset()
 
 const dataLink = ref('')
 const dataLinkOriginal = ref('')
@@ -19,35 +19,35 @@ const handleClick = (event: MouseEvent) => {
 
 const buttonObjects = ref([
   'Meta',
-  `Gains (${preset.gains.length})`,
-  `Offsets (${preset.offsets.length})`,
-  `Attacks (${preset.attacks.length})`,
-  `Decays (${preset.decays.length})`,
-  `Sustains (${preset.sustains.length})`,
-  `Holds (${preset.holds.length})`,
-  `Releases (${preset.releases.length})`,
+  `Gains (${corePreset.gains.length})`,
+  `Offsets (${corePreset.offsets.length})`,
+  `Attacks (${corePreset.attacks.length})`,
+  `Decays (${corePreset.decays.length})`,
+  `Sustains (${corePreset.sustains.length})`,
+  `Holds (${corePreset.holds.length})`,
+  `Releases (${corePreset.releases.length})`,
   'Parameters',
-  `pitchMapping (${preset.pitchMapping.length})`,
-  `glideTimesInBlocks (${preset.glideTimesInBlocks.length})`,
-  `filterTable (${preset.filterTable.length})`,
-  `tremDepths (${preset.tremDepths.length})`,
-  `tremRatesSeconds (${preset.tremRatesSeconds.length})`,
-  `tremRatesBeats (${preset.tremRatesBeats.length})`,
-  `tremOffsets (${preset.tremOffsets.length})`,
-  `tremWavetable (${preset.tremWavetable.length})`,
-  `pitchDepths (${preset.pitchDepths.length})`,
-  `pitchRatesSeconds (${preset.pitchRatesSeconds.length})`,
-  `pitchRatesBeats (${preset.pitchRatesBeats.length})`,
-  `pitchNoiseAmounts (${preset.pitchNoiseAmounts.length})`,
+  `pitchMapping (${corePreset.pitchMapping.length})`,
+  `glideTimesInBlocks (${corePreset.glideTimesInBlocks.length})`,
+  `filterTable (${corePreset.filterTable.length})`,
+  `tremDepths (${corePreset.tremDepths.length})`,
+  `tremRatesSeconds (${corePreset.tremRatesSeconds.length})`,
+  `tremRatesBeats (${corePreset.tremRatesBeats.length})`,
+  `tremOffsets (${corePreset.tremOffsets.length})`,
+  `tremWavetable (${corePreset.tremWavetable.length})`,
+  `pitchDepths (${corePreset.pitchDepths.length})`,
+  `pitchRatesSeconds (${corePreset.pitchRatesSeconds.length})`,
+  `pitchRatesBeats (${corePreset.pitchRatesBeats.length})`,
+  `pitchNoiseAmounts (${corePreset.pitchNoiseAmounts.length})`,
 ])
 
-const createComputed = (key: string, preset: Preset) =>
+const createComputed = (key: string, corePreset: Preset) =>
   computed({
     get() {
-      return (preset[key as keyof typeof preset] as number[]).join(',')
+      return (corePreset[key as keyof typeof corePreset] as number[]).join(',')
     },
     set(newValue) {
-      preset[key as keyof typeof preset] = newValue
+      corePreset[key as keyof typeof corePreset] = newValue
         .split(',')
         .map((item: string) => item.trim())
         .filter((item: string) => !isNaN(Number(item)) && item !== '')
@@ -55,26 +55,26 @@ const createComputed = (key: string, preset: Preset) =>
     },
   })
 
-const gains = createComputed('gains', preset)
-const offsets = createComputed('offsets', preset)
-const attacks = createComputed('attacks', preset)
-const decays = createComputed('decays', preset)
-const sustains = createComputed('sustains', preset)
-const holds = createComputed('holds', preset)
-const releases = createComputed('releases', preset)
+const gains = createComputed('gains', corePreset)
+const offsets = createComputed('offsets', corePreset)
+const attacks = createComputed('attacks', corePreset)
+const decays = createComputed('decays', corePreset)
+const sustains = createComputed('sustains', corePreset)
+const holds = createComputed('holds', corePreset)
+const releases = createComputed('releases', corePreset)
 
-const pitchMapping = createComputed('pitchMapping', preset)
-const glideTimesInBlocks = createComputed('glideTimesInBlocks', preset)
-const filterTable = createComputed('filterTable', preset)
-const tremDepths = createComputed('tremDepths', preset)
-const tremRatesSeconds = createComputed('tremRatesSeconds', preset)
-const tremRatesBeats = createComputed('tremRatesBeats', preset)
-const tremOffsets = createComputed('tremOffsets', preset)
-const tremWavetable = createComputed('tremWavetable', preset)
-const pitchDepths = createComputed('pitchDepths', preset)
-const pitchRatesSeconds = createComputed('pitchRatesSeconds', preset)
-const pitchRatesBeats = createComputed('pitchRatesBeats', preset)
-const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
+const pitchMapping = createComputed('pitchMapping', corePreset)
+const glideTimesInBlocks = createComputed('glideTimesInBlocks', corePreset)
+const filterTable = createComputed('filterTable', corePreset)
+const tremDepths = createComputed('tremDepths', corePreset)
+const tremRatesSeconds = createComputed('tremRatesSeconds', corePreset)
+const tremRatesBeats = createComputed('tremRatesBeats', corePreset)
+const tremOffsets = createComputed('tremOffsets', corePreset)
+const tremWavetable = createComputed('tremWavetable', corePreset)
+const pitchDepths = createComputed('pitchDepths', corePreset)
+const pitchRatesSeconds = createComputed('pitchRatesSeconds', corePreset)
+const pitchRatesBeats = createComputed('pitchRatesBeats', corePreset)
+const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', corePreset)
 </script>
 
 <template>
@@ -104,7 +104,7 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
       >
         <label for="name">
           <span>name:</span>
-          <input id="name" name="name" type="text" v-model="preset.name" />
+          <input id="name" name="name" type="text" v-model="corePreset.name" />
         </label>
         <label for="author">
           <span>author:</span>
@@ -112,7 +112,7 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
             id="author"
             name="author"
             type="text"
-            v-model="preset.author"
+            v-model="corePreset.author"
           />
         </label>
         <label for="description">
@@ -121,12 +121,12 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
             id="description"
             name="description"
             type="text"
-            v-model="preset.description"
+            v-model="corePreset.description"
           />
         </label>
         <label for="uuid">
           <span>uuid:</span>
-          <input id="uuid" name="uuid" type="text" v-model="preset.uuid" />
+          <input id="uuid" name="uuid" type="text" v-model="corePreset.uuid" />
         </label>
         <label for="derivedFrom">
           <span>derivedFrom:</span>
@@ -134,7 +134,7 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
             id="derivedFrom"
             name="derivedFrom"
             type="text"
-            v-model="preset.derivedFrom"
+            v-model="corePreset.derivedFrom"
           />
         </label>
         <label for="version">
@@ -143,7 +143,7 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
             id="version"
             name="version"
             type="text"
-            v-model="preset.version"
+            v-model="corePreset.version"
           />
         </label>
       </div>
@@ -206,7 +206,7 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
 
       <div v-if="dataLink === 'Parameters'">
         <label
-          v-for="(value, key) in preset.parameters"
+          v-for="(value, key) in corePreset.parameters"
           :key="key"
           :for="key"
           class="mb-6 flex items-baseline"
@@ -217,7 +217,7 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', preset)
               :id="key"
               :name="key"
               type="text"
-              v-model="preset.parameters[key]"
+              v-model="corePreset.parameters[key]"
               class="w-full bg-slate-100 p-2"
             />
             <div class="mt-1 px-2 text-sm text-neutral-500 italic">

@@ -4,18 +4,28 @@ import { ref } from 'vue'
 import FreeformModuleMenu from '@/components/FreeformModuleMenu.vue'
 import BipolarEnvelopeSegment from '@/components/BipolarEnvelopeSegment.vue'
 
+import { useStore } from '@/stores/store'
+
 import { usePreset } from '@/composable/usePreset.ts'
 
 import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
-const { preset } = usePreset()
+const store = useStore()
+
+const { corePreset, presetModLayers } = usePreset()
+
+const presetModLayer = presetModLayers.find(
+  (layer) => layer.moduleID === store.visibleModuleID,
+)
+
+console.log(presetModLayer)
 
 const envelopeSegments: EnvelopeLabelAndSegment[] = [
-  { label: 'Offset', envelopeSegment: preset.offsets },
-  { label: 'Attack', envelopeSegment: preset.attacks },
-  { label: 'Decay', envelopeSegment: preset.decays },
-  { label: 'Hold', envelopeSegment: preset.holds },
-  { label: 'Release', envelopeSegment: preset.releases },
+  { label: 'Offset', envelopeSegment: corePreset.offsets },
+  { label: 'Attack', envelopeSegment: corePreset.attacks },
+  { label: 'Decay', envelopeSegment: corePreset.decays },
+  { label: 'Hold', envelopeSegment: corePreset.holds },
+  { label: 'Release', envelopeSegment: corePreset.releases },
 ]
 
 const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {

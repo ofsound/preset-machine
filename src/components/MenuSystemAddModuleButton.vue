@@ -3,7 +3,11 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { useStore } from '@/stores/store'
 
-import type { ComponentObject } from '@/types.ts'
+import { usePreset } from '@/composable/usePreset.ts'
+
+const { presetModLayers } = usePreset()
+
+import type { ComponentObject, PresetModLayer } from '@/types.ts'
 
 const props = defineProps<{
   componentObject: ComponentObject
@@ -19,6 +23,18 @@ const addComponentToModules = () => {
     id: idForNewComponent,
   })
   store.visibleModuleID = idForNewComponent
+
+  const presetModLayer: PresetModLayer = {
+    moduleID: idForNewComponent,
+    offsets: Array(511).fill(0),
+    attacks: Array(511).fill(0),
+    decays: Array(511).fill(0),
+    sustains: Array(511).fill(0),
+    holds: Array(511).fill(0),
+    releases: Array(511).fill(0),
+  }
+
+  presetModLayers.push(presetModLayer)
 }
 </script>
 

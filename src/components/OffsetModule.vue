@@ -5,7 +5,7 @@ import OffsetDecayRow from '@/components/OffsetDecayRow.vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 
-const { preset } = usePreset()
+const { corePreset } = usePreset()
 
 const toolOptionValue = ref<number>(1)
 
@@ -21,11 +21,11 @@ const numHarmonics = ref<number>(8)
 const tempo = ref<number>(120)
 
 const updateEnvelopeOffset = (index: number, offset: number) => {
-  preset.offsets[index] = offset / (tempo.value * 4)
+  corePreset.offsets[index] = offset / (tempo.value * 4)
 }
 
 const updateEnvelopeDecay = (index: number, decay: number) => {
-  preset.decays[index] = decay / (tempo.value * 4)
+  corePreset.decays[index] = decay / (tempo.value * 4)
 }
 </script>
 

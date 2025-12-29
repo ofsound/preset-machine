@@ -8,7 +8,7 @@ defineProps<{
 
 defineEmits(['toggleInspector'])
 
-const { preset } = usePreset()
+const { corePreset } = usePreset()
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const { preset } = usePreset()
         type="text"
         id="preset-name"
         name="preset-name"
-        v-model="preset.name"
+        v-model="corePreset.name"
         placeholder="Preset Name"
         class="rounded-md bg-neutral-100 px-3 py-1 text-xl font-semibold tracking-wide"
       />
@@ -26,7 +26,7 @@ const { preset } = usePreset()
         type="text"
         id="preset-author"
         name="preset-author"
-        v-model="preset.author"
+        v-model="corePreset.author"
         placeholder="Preset Author"
         class="rounded-md bg-neutral-100 px-3 py-1 text-xl font-semibold tracking-wide"
       />

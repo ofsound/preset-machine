@@ -15,7 +15,7 @@ import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
 const store = useStore()
 
-const { preset } = usePreset()
+const { corePreset } = usePreset()
 
 const gainModuleModes: Array<{ label: string }> = [
   { label: 'All' },
@@ -27,7 +27,7 @@ const gainModuleModes: Array<{ label: string }> = [
 ]
 
 const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
-  preset.gains.splice(0, updatedArray.length, ...updatedArray)
+  corePreset.gains.splice(0, updatedArray.length, ...updatedArray)
 }
 
 const lastMenuButtonClickedLabel = ref('Offset')
@@ -36,7 +36,7 @@ const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
   lastMenuButtonClickedLabel.value = item.label
 }
 
-const activeEnvSegmentValues: number[] = [...preset.gains]
+const activeEnvSegmentValues: number[] = [...corePreset.gains]
 
 const handleColumnValue = (index: number, columnValue: number) => {
   activeEnvSegmentValues[index] = columnValue

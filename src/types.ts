@@ -188,3 +188,13 @@ export interface Preset {
     "Filter Type": number
   }
 }
+
+export interface PresetModLayer {
+  moduleID: string
+  "offsets": number[]
+  "attacks": number[]
+  "decays": number[]
+  "sustains": number[]
+  "holds": number[]
+  "releases": number[]
+}
