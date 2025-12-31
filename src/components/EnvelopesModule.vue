@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import AbsoluteRelativeMenu from '@/components/AbsoluteRelativeMenu.vue'
+// import AbsoluteRelativeMenu from '@/components/AbsoluteRelativeMenu.vue'
 import EnvelopeSegmentMenu from '@/components/EnvelopeSegmentMenu.vue'
 import EnvelopeSegment from '@/components/EnvelopeSegment.vue'
 import ActiveHarmonicsMenu from './ActiveHarmonicsMenu.vue'
@@ -93,9 +93,9 @@ const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
           </option>
         </select>
       </div>
-      <div class="mb-4 ml-auto flex justify-center">
+      <!-- <div class="mb-4 ml-auto flex justify-center">
         <AbsoluteRelativeMenu />
-      </div>
+      </div> -->
     </div>
     <div>
       Max Harmonics:
@@ -116,7 +116,7 @@ const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
 
     <hr class="mb-4" />
 
-    <EnvelopeSegmentMenuq
+    <EnvelopeSegmentMenu
       :envelopeSegments="envelopeSegments"
       @menuButtonClicked="menuButtonClicked"
       :lastMenuButtonClickedLabel="lastMenuButtonClickedLabel"

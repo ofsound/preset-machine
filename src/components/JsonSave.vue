@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { usePreset } from '@/composable/usePreset.ts'
 
-const { corePreset } = usePreset()
+const { finalPreset } = usePreset()
 
 const downloadJson = () => {
-  const jsonString = JSON.stringify(preset, null, 2)
+  const jsonString = JSON.stringify(finalPreset.value, null, 2)
 
   const blob = new Blob([jsonString], { type: 'application/json' })
 
@@ -12,7 +12,7 @@ const downloadJson = () => {
 
   const link = document.createElement('a')
   link.href = url
-  link.download = corePreset.name + '.json'
+  link.download = finalPreset.value.name + '.json'
 
   document.body.appendChild(link)
   link.click()
