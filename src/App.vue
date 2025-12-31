@@ -13,21 +13,21 @@ import AppHeader from '@/components/AppHeader.vue'
 import PageTwo from '@/components/PageTwo.vue'
 import MenuSystem from '@/components/MenuSystem.vue'
 
-import InitModule from '@/components/InitModule.vue'
-import GainModule from '@/components/GainModule.vue'
-import OffsetModule from '@/components/OffsetModule.vue'
-import FreeformModule from '@/components/FreeformModule.vue'
-import BipolarModule from '@/components/BipolarModule.vue'
-import RandomizeModule from '@/components/RandomizeModule.vue'
+// import InitModule from '@/components/InitModule.vue'
+import GainsModule from '@/components/GainsModule.vue'
+// import OffsetModule from '@/components/OffsetModule.vue'
+import EnvelopesModule from '@/components/EnvelopesModule.vue'
+// import BipolarModule from '@/components/BipolarModule.vue'
+// import RandomizeModule from '@/components/RandomizeModule.vue'
 import PresetInspector from '@/components/PresetInspector.vue'
 
 const componentObjects: ComponentObject[] = [
-  { component: InitModule, label: 'Init' },
-  { component: GainModule, label: 'Gain' },
-  { component: OffsetModule, label: 'Offset' },
-  { component: FreeformModule, label: 'Freeform' },
-  { component: BipolarModule, label: 'Bipolar' },
-  { component: RandomizeModule, label: 'Randomize' },
+  // { component: InitModule, label: 'Init' },
+  { component: GainsModule, label: 'Gains' },
+  // { component: OffsetModule, label: 'Offset' },
+  { component: EnvelopesModule, label: 'Envelopes' },
+  // { component: BipolarModule, label: 'Bipolar' },
+  // { component: RandomizeModule, label: 'Randomize' },
 ]
 const isWelcome = ref(true)
 const isInspector = ref(false)
@@ -72,7 +72,7 @@ const toggleInspector = () => {
       class="mt-auto flex justify-between bg-neutral-100 p-3 text-right text-xs"
     >
       <div class="ml-auto font-semibold tracking-wide">
-        corePreset machine v0.0.5
+        preset machine v0.0.5
       </div>
     </footer>
   </div>

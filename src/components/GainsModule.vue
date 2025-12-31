@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import GainModuleMenu from '@/components/GainModuleMenu.vue'
+import GainsModuleMenu from '@/components/GainsModuleMenu.vue'
 
-import GainColumn from '@/components/GainColumn.vue'
+import GainsColumn from '@/components/GainsColumn.vue'
 
 import { useStore } from '@/stores/store'
 
@@ -47,7 +47,7 @@ const handleColumnValue = (index: number, columnValue: number) => {
 <template>
   <div class="h-full">
     <div class="mb-3 flex h-full w-full">
-      <GainColumn
+      <GainsColumn
         v-for="(item, index) in 200"
         :active="isPrime(index)"
         :key="index"
@@ -55,7 +55,7 @@ const handleColumnValue = (index: number, columnValue: number) => {
         @columnValue="handleColumnValue(index, $event)"
       />
     </div>
-    <GainModuleMenu
+    <GainsModuleMenu
       :gainModuleModes="gainModuleModes"
       @menuButtonClicked="menuButtonClicked"
       :lastMenuButtonClickedLabel="lastMenuButtonClickedLabel"

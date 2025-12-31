@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import FreeformModuleMenu from '@/components/FreeformModuleMenu.vue'
+import EnvelopesModuleMenu from '@/components/EnvelopesModuleMenu.vue'
 import BipolarEnvelopeSegment from '@/components/BipolarEnvelopeSegment.vue'
 
 import { useStore } from '@/stores/store'
@@ -45,7 +45,7 @@ const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
 
 <template>
   <div>
-    <FreeformModuleMenu
+    <EnvelopesModuleMenu
       :envelopeSegments="envelopeSegments"
       @menuButtonClicked="menuButtonClicked"
       :lastMenuButtonClickedLabel="lastMenuButtonClickedLabel"
