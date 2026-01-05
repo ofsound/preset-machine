@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 import { isPrime, isFibonacci } from '@/utils/math'
+
+const emit = defineEmits(['update:activeHarmonics'])
 
 const selected = ref('All')
 
@@ -24,59 +26,55 @@ const lowestHarmonic = ref<number>(1)
 const highestHarmonic = ref<number>(30)
 
 const activeHarmonics = computed(() => {
-  const allHarmonics: number[] = Array.from({ length: 511 }, (_, i) => i + 1)
-
-  let activeHarmonicsBeforeRange: number[] = []
-
-  switch (selected.value) {
-    case 'All':
-      activeHarmonicsBeforeRange = [...allHarmonics]
-      break
-    case 'Odd':
-      activeHarmonicsBeforeRange = allHarmonics.filter((n) => n % 2 !== 0)
-      break
-    case 'Even':
-      activeHarmonicsBeforeRange = allHarmonics.filter((n) => n % 2 === 0)
-      break
-    case 'Octaves':
-      activeHarmonicsBeforeRange = allHarmonics.filter(
-        (n) => Math.log2(n) % 1 === 0,
-      )
-      break
-    case 'Not Octaves':
-      activeHarmonicsBeforeRange = allHarmonics.filter(
-        (n) => Math.log2(n) % 1 !== 0,
-      )
-      break
-    case 'Fifths':
-      activeHarmonicsBeforeRange = allHarmonics.filter(
-        (n) => Math.log2(n / 3) % 1 === 0,
-      )
-      break
-    case 'Not Fifths':
-      activeHarmonicsBeforeRange = allHarmonics.filter(
-        (n) => Math.log2(n / 3) % 1 !== 0,
-      )
-      break
-    case 'Primes':
-      activeHarmonicsBeforeRange = allHarmonics.filter((n) => isPrime(n))
-      break
-    case 'Not Primes':
-      activeHarmonicsBeforeRange = allHarmonics.filter((n) => !isPrime(n))
-      break
-    case 'Fibonacci':
-      activeHarmonicsBeforeRange = allHarmonics.filter((n) => isFibonacci(n))
-      break
-    case 'Not Fibonacci':
-      activeHarmonicsBeforeRange = allHarmonics.filter((n) => !isFibonacci(n))
-      break
+  const checks = {
+    isEven: (n: number) => n % 2 === 0,
+    isOctave: (n: number) => Math.log2(n) % 1 === 0,
+    isFifth: (n: number) => Math.log2(n / 3) % 1 === 0,
+    isPrime: (n: number) => isPrime(n),
+    isFibonacci: (n: number) => isFibonacci(n),
   }
 
-  const activeHarmonicsInRange: number[] = activeHarmonicsBeforeRange.filter(
-    (value) => value >= lowestHarmonic.value && value <= highestHarmonic.value,
-  )
+  const filterStrategies: Record<string, (n: number) => boolean> = {
+    All: () => true,
+    Odd: (n) => !checks.isEven(n),
+    Even: checks.isEven,
+    Octaves: checks.isOctave,
+    'Not Octaves': (n) => !checks.isOctave(n),
+    Fifths: checks.isFifth,
+    'Not Fifths': (n) => !checks.isFifth(n),
+    Primes: checks.isPrime,
+    'Not Primes': (n) => !checks.isPrime(n),
+    Fibonacci: checks.isFibonacci,
+    'Not Fibonacci': (n) => !checks.isFibonacci(n),
+    List: (n) => customListArray.value.includes(n),
+  }
 
-  return activeHarmonicsInRange
+  return Array.from({ length: 511 }, (_, i) => i + 1).filter((n) => {
+    const filterStrategy = filterStrategies[selected.value]!
+    const matchesType = filterStrategy(n)
+    const inRange = n >= lowestHarmonic.value && n <= highestHarmonic.value
+
+    return matchesType && inRange
+  })
+})
+
+const customListArray = ref<number[]>([])
+
+const customList = computed({
+  get() {
+    return customListArray.value.join(', ')
+  },
+  set(newValue) {
+    customListArray.value = newValue
+      .split(',')
+      .map((item) => item.trim())
+      .filter((item) => item.length > 0)
+      .map(Number)
+  },
+})
+
+watch(activeHarmonics, (newValue) => {
+  emit('update:activeHarmonics', newValue)
 })
 </script>
 
@@ -104,7 +102,7 @@ const activeHarmonics = computed(() => {
     </div>
   </div>
   <div class="my-4">
-    <label for="my-select">Filter Active Harmonics: </label>
+    <label for="my-select">Filter: </label>
     <select id="my-select" v-model="selected">
       <option
         v-for="option in activeHarmonicsMode"
@@ -115,7 +113,14 @@ const activeHarmonics = computed(() => {
       </option>
     </select>
   </div>
-  <!-- <textarea name="list" id="list" class="bg-gray-200"></textarea> -->
+  <textarea
+    name="list"
+    id="list"
+    v-model="customList"
+    placeholder="Copy and Paste a list of comma separated numbers here."
+    class="w-full bg-gray-200 p-2"
+    v-show="selected === 'List'"
+  ></textarea>
   <div class="mb-4">
     {{ activeHarmonics }}
   </div>

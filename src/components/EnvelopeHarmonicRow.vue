@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 
 const props = defineProps<{
   color: string
+  isActive: boolean
 }>()
 
 const emit = defineEmits(['rowValue'])
@@ -37,7 +38,7 @@ const handleMouseUp = () => {
 }
 
 const handleMouseClick = (event: MouseEvent) => {
-  if (gridElement.value?.clientWidth) {
+  if (gridElement.value?.clientWidth && props.isActive) {
     const parentLeft = gridElement.value.getBoundingClientRect().left
 
     const mouseXRelativeToParent = event.clientX - parentLeft
@@ -54,7 +55,7 @@ const handleMouseClick = (event: MouseEvent) => {
 }
 
 const handleMouseMove = (event: MouseEvent) => {
-  if (gridElement.value?.clientWidth) {
+  if (gridElement.value?.clientWidth && props.isActive) {
     if (isMouseDown.value) {
       const parentLeft = gridElement.value.getBoundingClientRect().left
 
@@ -73,7 +74,7 @@ const handleMouseMove = (event: MouseEvent) => {
 }
 
 const handleMouseEnter = (event: MouseEvent) => {
-  if (gridElement.value?.clientWidth) {
+  if (gridElement.value?.clientWidth && props.isActive) {
     if (isMouseDown.value) {
       const parentLeft = gridElement.value.getBoundingClientRect().left
 
@@ -106,6 +107,7 @@ const handleResetMouseClick = () => {
 onMounted(() => {
   window.addEventListener('mousedown', handleMouseDown)
   window.addEventListener('mouseup', handleMouseUp)
+
   gridElement.value!.addEventListener('mouseenter', handleMouseEnter)
   gridElement.value!.addEventListener('click', handleMouseClick)
   gridElement.value!.addEventListener('mousemove', handleMouseMove)

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import EnvelopesHarmonicRow from '@/components/EnvelopesHarmonicRow.vue'
+import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
 
 import { useStore } from '@/stores/store'
 
 const props = defineProps<{
   envelopeSegment: number[]
   numHarmonics: number
+  activeHarmonics: number[]
 }>()
 
 const emit = defineEmits(['updateEnvelopeSegmentArray'])
@@ -76,9 +77,10 @@ const randomize = () => {
     </div>
 
     <div class="mb-3 flex w-full flex-col-reverse">
-      <EnvelopesHarmonicRow
-        v-for="(item, index) in numHarmonics"
+      <EnvelopeHarmonicRow
+        v-for="(item, index) in 511"
         :key="index"
+        :isActive="activeHarmonics.includes(index)"
         :color="store.harmonicRowColors[index]!"
         @rowValue="handleRowValue(index, $event)"
       />

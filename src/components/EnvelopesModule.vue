@@ -12,6 +12,8 @@ import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
 const { corePreset } = usePreset()
 
+const activeHarmonics = ref<number[]>([])
+
 const toolOptionValue = ref<number>(1)
 
 const toolOptions = ref([
@@ -46,6 +48,10 @@ const lastMenuButtonClickedLabel = ref('Offset')
 
 const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
   lastMenuButtonClickedLabel.value = item.label
+}
+
+function handleActiveHarmonicsUpdate(newArray: number[]) {
+  activeHarmonics.value = [...newArray]
 }
 </script>
 
@@ -85,7 +91,7 @@ const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
       </div> -->
     </div>
 
-    <ActiveHarmonics />
+    <ActiveHarmonics @update:active-harmonics="handleActiveHarmonicsUpdate" />
 
     <hr class="mb-4" />
 
@@ -100,7 +106,8 @@ const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
         v-for="(item, index) in envelopeSegments"
         v-show="lastMenuButtonClickedLabel === item.label"
         :key="index"
-        :numHarmonics="4"
+        :numHarmonics="36"
+        :activeHarmonics
         :envelopeSegment="item.envelopeSegment"
         @updateEnvelopeSegmentArray="updateEnvelopeSegmentArray(index, $event)"
       />
