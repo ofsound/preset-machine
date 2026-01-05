@@ -121,18 +121,15 @@ onMounted(() => {
       ref="gridElement"
       class="border-box border-right-2 flex border border-gray-300 [&>.grid-child:nth-child(4n)]:border-r-2 [&>.grid-child:nth-child(4n)]:border-gray-300"
     > -->
-    <div ref="resetElement" class="absolute -left-6 h-full w-6"></div>
-    <div
-      ref="gridElement"
-      class="border-box border-right-2 flex border border-gray-300 hover:brightness-110"
-    >
+    <div ref="resetElement" class="absolute -left-6 h-px w-6"></div>
+    <div ref="gridElement" class="flex hover:brightness-110">
       <div
         v-for="n in divisions"
         :key="n"
-        class="nth-child(4n):border-2 :nth-child(4n):border-blue-400 h-4"
+        class="h-px"
         :style="gridChildStyle"
       ></div>
-      <div class="absolute h-[calc(100%-2px)]" :style="segmentStyle"></div>
+      <div class="absolute h-px" :style="segmentStyle"></div>
     </div>
   </div>
 </template>

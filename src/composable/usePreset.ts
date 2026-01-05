@@ -192,13 +192,9 @@ const finalPreset = computed<Preset>(() => {
       computedPreset.releases[i]! += presetModLayer.releases[i]!
       computedPreset.offsets[i]! += presetModLayer.offsets[i]!
     }
-
   }
-  console.log("###");
 
   return {
-
-
     ...computedPreset
   }
 });
