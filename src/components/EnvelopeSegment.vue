@@ -78,7 +78,7 @@ const randomize = () => {
 
     <div class="mb-3 flex w-full flex-col-reverse">
       <EnvelopeHarmonicRow
-        v-for="(item, index) in 511"
+        v-for="(item, index) in 100"
         :key="index"
         :isActive="activeHarmonics.includes(index)"
         :color="store.harmonicRowColors[index]!"

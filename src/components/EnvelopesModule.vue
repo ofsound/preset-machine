@@ -101,7 +101,7 @@ function handleActiveHarmonicsUpdate(newArray: number[]) {
       :lastMenuButtonClickedLabel="lastMenuButtonClickedLabel"
     />
 
-    <div class="mt-4 flex">
+    <div class="mt-4 w-full bg-blue-100">
       <EnvelopeSegment
         v-for="(item, index) in envelopeSegments"
         v-show="lastMenuButtonClickedLabel === item.label"

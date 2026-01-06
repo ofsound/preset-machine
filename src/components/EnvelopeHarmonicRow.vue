@@ -11,7 +11,8 @@ const emit = defineEmits(['rowValue'])
 const rowWidth = ref(0)
 const divisions = ref(8)
 
-const gridElement = ref<HTMLElement | null>(null)
+const positiveGridElement = ref<HTMLElement | null>(null)
+const negativeGridElement = ref<HTMLElement | null>(null)
 const resetElement = ref<HTMLElement | null>(null)
 
 const isMouseDown = ref<boolean>(false)
@@ -37,13 +38,16 @@ const handleMouseUp = () => {
   isMouseDown.value = false
 }
 
-const handleMouseClick = (event: MouseEvent) => {
-  if (gridElement.value?.clientWidth && props.isActive) {
-    const parentLeft = gridElement.value.getBoundingClientRect().left
+const handleMouseClickPositive = (event: MouseEvent) => {
+  if (positiveGridElement.value?.clientWidth && props.isActive) {
+    if (negativeGridElement.value) negativeGridElement.value.style.opacity = '0'
+    if (positiveGridElement.value) positiveGridElement.value.style.opacity = '1'
+
+    const parentLeft = positiveGridElement.value.getBoundingClientRect().left
 
     const mouseXRelativeToParent = event.clientX - parentLeft
 
-    // const roundAmount = gridElement.value.clientWidth / 16
+    // const roundAmount = positiveGridElement.value.clientWidth / 16
     // emit('roundAmount', roundAmount)
     // rowWidth.value =
     //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
@@ -54,14 +58,20 @@ const handleMouseClick = (event: MouseEvent) => {
   }
 }
 
-const handleMouseMove = (event: MouseEvent) => {
-  if (gridElement.value?.clientWidth && props.isActive) {
+const handleMouseMovePositive = (event: MouseEvent) => {
+  if (positiveGridElement.value?.clientWidth && props.isActive) {
     if (isMouseDown.value) {
-      const parentLeft = gridElement.value.getBoundingClientRect().left
+      if (negativeGridElement.value)
+        negativeGridElement.value.style.opacity = '0'
+
+      if (positiveGridElement.value)
+        positiveGridElement.value.style.opacity = '1'
+
+      const parentLeft = positiveGridElement.value.getBoundingClientRect().left
 
       const mouseXRelativeToParent = event.clientX - parentLeft
 
-      // const roundAmount = gridElement.value.clientWidth / 16
+      // const roundAmount = positiveGridElement.value.clientWidth / 16
       // emit('roundAmount', roundAmount)
       // rowWidth.value =
       //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
@@ -73,14 +83,92 @@ const handleMouseMove = (event: MouseEvent) => {
   }
 }
 
-const handleMouseEnter = (event: MouseEvent) => {
-  if (gridElement.value?.clientWidth && props.isActive) {
+const handleMouseEnterPositive = (event: MouseEvent) => {
+  if (positiveGridElement.value?.clientWidth && props.isActive) {
     if (isMouseDown.value) {
-      const parentLeft = gridElement.value.getBoundingClientRect().left
+      if (negativeGridElement.value)
+        negativeGridElement.value.style.opacity = '0'
+
+      if (positiveGridElement.value)
+        positiveGridElement.value.style.opacity = '1'
+
+      const parentLeft = positiveGridElement.value.getBoundingClientRect().left
 
       const mouseXRelativeToParent = event.clientX - parentLeft
 
-      // const roundAmount = gridElement.value.clientWidth / 16
+      // const roundAmount = positiveGridElement.value.clientWidth / 16
+      // emit('roundAmount', roundAmount)
+      // rowWidth.value =
+      //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
+
+      rowWidth.value = mouseXRelativeToParent
+
+      emit('rowValue', mouseXRelativeToParent)
+    }
+  }
+}
+
+const handleMouseClickNegative = (event: MouseEvent) => {
+  if (negativeGridElement.value?.clientWidth && props.isActive) {
+    const parentRight = negativeGridElement.value.getBoundingClientRect().right
+
+    if (positiveGridElement.value) positiveGridElement.value.style.opacity = '0'
+
+    const mouseXRelativeToParent = parentRight - event.clientX
+
+    if (negativeGridElement.value) negativeGridElement.value.style.opacity = '1'
+
+    // const roundAmount = negativeGridElement.value.clientWidth / 16
+    // emit('roundAmount', roundAmount)
+    // rowWidth.value =
+    //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
+
+    rowWidth.value = mouseXRelativeToParent
+
+    emit('rowValue', mouseXRelativeToParent)
+  }
+}
+
+const handleMouseMoveNegative = (event: MouseEvent) => {
+  if (negativeGridElement.value?.clientWidth && props.isActive) {
+    if (isMouseDown.value) {
+      const parentRight =
+        negativeGridElement.value.getBoundingClientRect().right
+
+      const mouseXRelativeToParent = parentRight - event.clientX
+
+      if (positiveGridElement.value)
+        positiveGridElement.value.style.opacity = '0'
+
+      if (negativeGridElement.value)
+        negativeGridElement.value.style.opacity = '1'
+      // const roundAmount = negativeGridElement.value.clientWidth / 16
+      // emit('roundAmount', roundAmount)
+      // rowWidth.value =
+      //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
+
+      rowWidth.value = mouseXRelativeToParent
+
+      emit('rowValue', mouseXRelativeToParent)
+    }
+  }
+}
+
+const handleMouseEnterNegative = (event: MouseEvent) => {
+  if (negativeGridElement.value?.clientWidth && props.isActive) {
+    if (isMouseDown.value) {
+      const parentRight =
+        negativeGridElement.value.getBoundingClientRect().right
+
+      const mouseXRelativeToParent = parentRight - event.clientX
+
+      if (positiveGridElement.value)
+        positiveGridElement.value.style.opacity = '0'
+
+      if (negativeGridElement.value)
+        negativeGridElement.value.style.opacity = '1'
+
+      // const roundAmount = negativeGridElement.value.clientWidth / 16
       // emit('roundAmount', roundAmount)
       // rowWidth.value =
       //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
@@ -108,9 +196,25 @@ onMounted(() => {
   window.addEventListener('mousedown', handleMouseDown)
   window.addEventListener('mouseup', handleMouseUp)
 
-  gridElement.value!.addEventListener('mouseenter', handleMouseEnter)
-  gridElement.value!.addEventListener('click', handleMouseClick)
-  gridElement.value!.addEventListener('mousemove', handleMouseMove)
+  positiveGridElement.value!.addEventListener(
+    'mouseenter',
+    handleMouseEnterPositive,
+  )
+  positiveGridElement.value!.addEventListener('click', handleMouseClickPositive)
+  positiveGridElement.value!.addEventListener(
+    'mousemove',
+    handleMouseMovePositive,
+  )
+
+  negativeGridElement.value!.addEventListener(
+    'mouseenter',
+    handleMouseEnterNegative,
+  )
+  negativeGridElement.value!.addEventListener('click', handleMouseClickNegative)
+  negativeGridElement.value!.addEventListener(
+    'mousemove',
+    handleMouseMoveNegative,
+  )
 
   resetElement.value!.addEventListener('mouseenter', handleResetMouseEnter)
   resetElement.value!.addEventListener('click', handleResetMouseClick)
@@ -118,20 +222,29 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative cursor-pointer select-none">
-    <!-- <div
-      ref="gridElement"
-      class="border-box border-right-2 flex border border-gray-300 [&>.grid-child:nth-child(4n)]:border-r-2 [&>.grid-child:nth-child(4n)]:border-gray-300"
-    > -->
-    <div ref="resetElement" class="absolute -left-6 h-px w-6"></div>
-    <div ref="gridElement" class="flex hover:brightness-110">
+  <div class="relative flex cursor-pointer select-none">
+    <div
+      ref="negativeGridElement"
+      class="relative flex flex-1 hover:brightness-110"
+    >
       <div
         v-for="n in divisions"
         :key="n"
-        class="h-px"
+        class="h-2"
         :style="gridChildStyle"
       ></div>
-      <div class="absolute h-px" :style="segmentStyle"></div>
+      <div class="absolute right-0 h-2" :style="segmentStyle"></div>
+    </div>
+
+    <div ref="resetElement" class="h-2 w-6 bg-white"></div>
+    <div ref="positiveGridElement" class="flex flex-1 hover:brightness-110">
+      <div
+        v-for="n in divisions"
+        :key="n"
+        class="h-2"
+        :style="gridChildStyle"
+      ></div>
+      <div class="absolute h-2" :style="segmentStyle"></div>
     </div>
   </div>
 </template>
