@@ -7,17 +7,24 @@ import EnvelopeSegmentMenu from '@/components/EnvelopeSegmentMenu.vue'
 import EnvelopeSegment from '@/components/EnvelopeSegment.vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
+import { useStore } from '@/stores/store'
 
 import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
-const { corePreset } = usePreset()
+const store = useStore()
+
+const { presetModLayers } = usePreset()
+
+const presetModLayer = presetModLayers.find(
+  (layer) => layer.moduleID === store.visibleModuleID,
+)!
 
 const envelopeSegments: EnvelopeLabelAndSegment[] = [
-  { label: 'Offset', envelopeSegmentValues: corePreset.offsets },
-  { label: 'Attack', envelopeSegmentValues: corePreset.attacks },
-  { label: 'Decay', envelopeSegmentValues: corePreset.decays },
-  { label: 'Hold', envelopeSegmentValues: corePreset.holds },
-  { label: 'Release', envelopeSegmentValues: corePreset.releases },
+  { label: 'Offset', envelopeSegmentValues: presetModLayer.offsets },
+  { label: 'Attack', envelopeSegmentValues: presetModLayer.attacks },
+  { label: 'Decay', envelopeSegmentValues: presetModLayer.decays },
+  { label: 'Hold', envelopeSegmentValues: presetModLayer.holds },
+  { label: 'Release', envelopeSegmentValues: presetModLayer.releases },
 ]
 
 const lastMenuButtonClickedLabel = ref('Offset')
@@ -62,7 +69,7 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
         :key="index"
         :activeHarmonics
         :envelopeSegmentValues="item.envelopeSegmentValues"
-        @updateEnvelopeSegmentArray="updateEnvelopeSegmentArray(index, $event)"
+        @updateEnvelopeSegmentValues="updateEnvelopeSegmentArray(index, $event)"
       />
     </div>
   </div>

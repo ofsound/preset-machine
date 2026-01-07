@@ -49,7 +49,7 @@ const setRandomValueInRange = (maxValue: number, minValue: number) => {
 }
 
 defineExpose({
-  setRandomValueInRange, // The method is also exposed
+  setRandomValueInRange,
 })
 
 const handleMousePositive = (event: MouseEvent) => {
@@ -97,7 +97,7 @@ const handleMouseNegative = (event: MouseEvent) => {
 
       rowWidth.value = mouseXRelativeToParent
 
-      emit('updateRowValue', mouseXRelativeToParent)
+      emit('updateRowValue', -mouseXRelativeToParent)
     }
   }
 }

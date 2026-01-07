@@ -52,7 +52,7 @@ const randomize = (lowerLimit: number, upperLimit: number) => {
 
     <div class="mb-3 flex w-full flex-col-reverse">
       <EnvelopeHarmonicRow
-        v-for="(item, index) in 100"
+        v-for="(item, index) in 36"
         :key="index"
         :ref="
           (el) => setRefs(el as InstanceType<typeof EnvelopeHarmonicRow>, index)
