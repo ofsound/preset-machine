@@ -38,6 +38,35 @@ const handleMouseUp = () => {
   isMouseDown.value = false
 }
 
+const setRandomValueInRange = (maxValue: number, minValue: number) => {
+  // console.log('go!')
+
+  const randomizeRange = minValue / 10 - maxValue / 10
+
+  const randomDeltaWithinRange = Math.random() * randomizeRange
+
+  const randomValueWithinRange = randomDeltaWithinRange + minValue / 10
+
+  // const thisValue = array[index]
+
+  // const newValue = thisValue! + randomValueWithinRange
+
+  // if (newValue < 0) {
+  //   array[index] = 0
+  // } else {
+  // array[index] = newValue
+
+  // console.log(newValue)
+
+  rowWidth.value = randomValueWithinRange
+
+  console.log(rowWidth.value)
+}
+
+defineExpose({
+  setRandomValueInRange, // The method is also exposed
+})
+
 const handleMouseClickPositive = (event: MouseEvent) => {
   if (positiveGridElement.value?.clientWidth && props.isActive) {
     if (negativeGridElement.value) negativeGridElement.value.style.opacity = '0'
@@ -230,7 +259,7 @@ onMounted(() => {
       <div
         v-for="n in divisions"
         :key="n"
-        class="h-2"
+        class="h-2 border-r"
         :style="gridChildStyle"
       ></div>
       <div class="absolute right-0 h-2" :style="segmentStyle"></div>
@@ -241,7 +270,7 @@ onMounted(() => {
       <div
         v-for="n in divisions"
         :key="n"
-        class="h-2"
+        class="h-2 border-l"
         :style="gridChildStyle"
       ></div>
       <div class="absolute h-2" :style="segmentStyle"></div>

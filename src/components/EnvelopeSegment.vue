@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import TopMargin from '@/components/TopMargin.vue'
 import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
 
 import { useStore } from '@/stores/store'
@@ -25,44 +26,37 @@ const handleRowValue = (index: number, rowValue: number) => {
 const lowerLimit = ref(0)
 const upperLimit = ref(0)
 
-// const activeEnvSegmentValues: number[] = [...props.envelopeSegment]
+const childRefs = ref<InstanceType<typeof EnvelopeHarmonicRow>[]>([])
+
+const setChildRef = (
+  el: InstanceType<typeof EnvelopeHarmonicRow> | null,
+  index: number,
+) => {
+  if (el) {
+    childRefs.value[index] = el
+  }
+}
 
 const randomize = () => {
-  activeEnvSegmentValues.forEach((element, index, array) => {
-    const randomizeRange = upperLimit.value / 10 - lowerLimit.value / 10
-
-    const randomDeltaWithinRange = Math.random() * randomizeRange
-
-    const randomValueWithinRange =
-      randomDeltaWithinRange + lowerLimit.value / 10
-
-    const thisValue = array[index]
-
-    const newValue = thisValue! + randomValueWithinRange
-
-    if (newValue < 0) {
-      array[index] = 0
-    } else {
-      array[index] = newValue
-    }
+  childRefs.value.forEach((childInstance, index) => {
+    if (props.activeHarmonics.includes(index))
+      childInstance.setRandomValueInRange(lowerLimit.value, upperLimit.value)
   })
-
-  // props.updateEnvelopeSegmentArray(props.index, activeEnvSegmentValues)
 }
 </script>
 
 <template>
   <div>
-    <div class="flex gap-2">
+    <div class="mb-4 flex justify-center gap-2 border">
       <input
-        class="w-10 bg-slate-200"
+        class="w-16 bg-slate-200"
         type="number"
         :id="'lower-limit'"
         :name="'lower-limit'"
         v-model="lowerLimit"
       />
       <input
-        class="w-10 bg-slate-200"
+        class="w-16 bg-slate-200"
         type="number"
         :id="'upper-limit'"
         :name="'upper-limit'"
@@ -76,10 +70,16 @@ const randomize = () => {
       </button>
     </div>
 
+    <TopMargin />
+
     <div class="mb-3 flex w-full flex-col-reverse">
       <EnvelopeHarmonicRow
         v-for="(item, index) in 100"
         :key="index"
+        :ref="
+          (el) =>
+            setChildRef(el as InstanceType<typeof EnvelopeHarmonicRow>, index)
+        "
         :isActive="activeHarmonics.includes(index)"
         :color="store.harmonicRowColors[index]!"
         @rowValue="handleRowValue(index, $event)"

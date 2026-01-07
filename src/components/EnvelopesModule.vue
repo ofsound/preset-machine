@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-// import AbsoluteRelativeMenu from '@/components/AbsoluteRelativeMenu.vue'
 import EnvelopeSegmentMenu from '@/components/EnvelopeSegmentMenu.vue'
 import EnvelopeSegment from '@/components/EnvelopeSegment.vue'
-import ActiveHarmonics from './ActiveHarmonics.vue'
+import ActiveHarmonics from '@/components//ActiveHarmonics.vue'
+import TempoGridControls from '@/components//TempoGridControls.vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 
@@ -12,21 +12,9 @@ import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
 const { corePreset } = usePreset()
 
-const activeHarmonics = ref<number[]>([])
-
-const toolOptionValue = ref<number>(1)
-
-const toolOptions = ref([
-  { text: '1/32', value: 1 },
-  { text: '1/16', value: 1 },
-  { text: '1/8', value: 2 },
-  { text: 'Dotted 1/8', value: 3 },
-  { text: '1/4', value: 4 },
-  { text: '1/2', value: 8 },
-  { text: 'none', value: 8 },
-])
-
-const tempo = ref<number>(120)
+const activeHarmonics = ref<number[]>(
+  Array.from({ length: 511 }, (_, i) => i + 1),
+)
 
 const envelopeSegments: EnvelopeLabelAndSegment[] = [
   { label: 'Offset', envelopeSegment: corePreset.offsets },
@@ -57,43 +45,9 @@ function handleActiveHarmonicsUpdate(newArray: number[]) {
 
 <template>
   <div>
-    <div v-show="false" class="flex rounded-sm bg-gray-200 p-4">
-      <div class="">
-        Tempo:
-        <input
-          name="tempo"
-          id="tempo"
-          class="max-w-14 rounded-sm bg-gray-300 p-1"
-          type="number"
-          v-model="tempo"
-        />
-      </div>
-      <div class>
-        Grid:&nbsp;&nbsp;
-        <select
-          name="hold-length"
-          id="hold-length"
-          class="bg-gray-3 rounded-sm bg-gray-300 p-1 text-black"
-          v-model="toolOptionValue"
-        >
-          <option value="-1" disabled>Hold note value</option>
-          <option
-            v-for="toolOption in toolOptions"
-            :key="toolOption.value"
-            :value="toolOption.value"
-          >
-            {{ toolOption.text }}
-          </option>
-        </select>
-      </div>
-      <!-- <div class="mb-4 ml-auto flex justify-center">
-        <AbsoluteRelativeMenu />
-      </div> -->
-    </div>
+    <TempoGridControls />
 
     <ActiveHarmonics @update:active-harmonics="handleActiveHarmonicsUpdate" />
-
-    <hr class="mb-4" />
 
     <EnvelopeSegmentMenu
       :envelopeSegments="envelopeSegments"
@@ -101,7 +55,7 @@ function handleActiveHarmonicsUpdate(newArray: number[]) {
       :lastMenuButtonClickedLabel="lastMenuButtonClickedLabel"
     />
 
-    <div class="mt-4 w-full bg-blue-100">
+    <div class="mt-4 w-full">
       <EnvelopeSegment
         v-for="(item, index) in envelopeSegments"
         v-show="lastMenuButtonClickedLabel === item.label"
