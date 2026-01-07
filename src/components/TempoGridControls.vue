@@ -4,13 +4,12 @@ import { ref } from 'vue'
 const toolOptionValue = ref<number>(1)
 
 const toolOptions = ref([
-  { text: '1/32', value: 1 },
-  { text: '1/16', value: 1 },
-  { text: '1/8', value: 2 },
-  { text: 'Dotted 1/8', value: 3 },
-  { text: '1/4', value: 4 },
+  { text: 'none', value: 0 },
   { text: '1/2', value: 8 },
-  { text: 'none', value: 8 },
+  { text: '1/4', value: 4 },
+  { text: 'Dotted 1/8', value: 3 },
+  { text: '1/8', value: 2 },
+  { text: '1/16', value: 1 },
 ])
 
 const tempo = ref<number>(120)
@@ -29,7 +28,7 @@ const tempo = ref<number>(120)
       />
     </div>
     <div class>
-      Grid:&nbsp;&nbsp;
+      Grid:
       <select
         name="hold-length"
         id="hold-length"

@@ -11,7 +11,7 @@ export interface ComponentObject {
 }
 
 export interface EnvelopeLabelAndSegment {
-  envelopeSegment: number[]
+  envelopeSegmentValues: number[]
   label: string
 }
 

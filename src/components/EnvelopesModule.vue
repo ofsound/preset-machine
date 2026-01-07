@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import TempoGridControls from '@/components//TempoGridControls.vue'
+import ActiveHarmonics from '@/components//ActiveHarmonics.vue'
 import EnvelopeSegmentMenu from '@/components/EnvelopeSegmentMenu.vue'
 import EnvelopeSegment from '@/components/EnvelopeSegment.vue'
-import ActiveHarmonics from '@/components//ActiveHarmonics.vue'
-import TempoGridControls from '@/components//TempoGridControls.vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 
@@ -12,25 +12,13 @@ import type { EnvelopeLabelAndSegment } from '@/types.ts'
 
 const { corePreset } = usePreset()
 
-const activeHarmonics = ref<number[]>(
-  Array.from({ length: 511 }, (_, i) => i + 1),
-)
-
 const envelopeSegments: EnvelopeLabelAndSegment[] = [
-  { label: 'Offset', envelopeSegment: corePreset.offsets },
-  { label: 'Attack', envelopeSegment: corePreset.attacks },
-  { label: 'Decay', envelopeSegment: corePreset.decays },
-  { label: 'Hold', envelopeSegment: corePreset.holds },
-  { label: 'Release', envelopeSegment: corePreset.releases },
+  { label: 'Offset', envelopeSegmentValues: corePreset.offsets },
+  { label: 'Attack', envelopeSegmentValues: corePreset.attacks },
+  { label: 'Decay', envelopeSegmentValues: corePreset.decays },
+  { label: 'Hold', envelopeSegmentValues: corePreset.holds },
+  { label: 'Release', envelopeSegmentValues: corePreset.releases },
 ]
-
-const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
-  envelopeSegments[index]!.envelopeSegment.splice(
-    0,
-    updatedArray.length,
-    ...updatedArray,
-  )
-}
 
 const lastMenuButtonClickedLabel = ref('Offset')
 
@@ -38,8 +26,20 @@ const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
   lastMenuButtonClickedLabel.value = item.label
 }
 
-function handleActiveHarmonicsUpdate(newArray: number[]) {
+const activeHarmonics = ref<number[]>(
+  Array.from({ length: 511 }, (_, i) => i + 1),
+)
+
+const handleActiveHarmonicsUpdate = (newArray: number[]) => {
   activeHarmonics.value = [...newArray]
+}
+
+const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
+  envelopeSegments[index]!.envelopeSegmentValues.splice(
+    0,
+    updatedArray.length,
+    ...updatedArray,
+  )
 }
 </script>
 
@@ -60,9 +60,8 @@ function handleActiveHarmonicsUpdate(newArray: number[]) {
         v-for="(item, index) in envelopeSegments"
         v-show="lastMenuButtonClickedLabel === item.label"
         :key="index"
-        :numHarmonics="36"
         :activeHarmonics
-        :envelopeSegment="item.envelopeSegment"
+        :envelopeSegmentValues="item.envelopeSegmentValues"
         @updateEnvelopeSegmentArray="updateEnvelopeSegmentArray(index, $event)"
       />
     </div>

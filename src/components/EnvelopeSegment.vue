@@ -1,30 +1,27 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import RandomizeControls from '@/components/RandomizeControls.vue'
 import TopMargin from '@/components/TopMargin.vue'
 import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
 
 import { useStore } from '@/stores/store'
 
 const props = defineProps<{
-  envelopeSegment: number[]
-  numHarmonics: number
+  envelopeSegmentValues: number[]
   activeHarmonics: number[]
 }>()
 
-const emit = defineEmits(['updateEnvelopeSegmentArray'])
+const emit = defineEmits(['updateEnvelopeSegmentValues'])
 
 const store = useStore()
 
-const activeEnvSegmentValues: number[] = [...props.envelopeSegment]
+const activeEnvSegmentValues: number[] = [...props.envelopeSegmentValues]
 
 const handleRowValue = (index: number, rowValue: number) => {
   activeEnvSegmentValues[index] = rowValue
-  emit('updateEnvelopeSegmentArray', activeEnvSegmentValues)
+  emit('updateEnvelopeSegmentValues', activeEnvSegmentValues)
 }
-
-const lowerLimit = ref(0)
-const upperLimit = ref(0)
 
 const childRefs = ref<InstanceType<typeof EnvelopeHarmonicRow>[]>([])
 
@@ -37,38 +34,17 @@ const setChildRef = (
   }
 }
 
-const randomize = () => {
+const randomize = (lowerLimit: number, upperLimit: number) => {
   childRefs.value.forEach((childInstance, index) => {
     if (props.activeHarmonics.includes(index))
-      childInstance.setRandomValueInRange(lowerLimit.value, upperLimit.value)
+      childInstance.setRandomValueInRange(lowerLimit, upperLimit)
   })
 }
 </script>
 
 <template>
   <div>
-    <div class="mb-4 flex justify-center gap-2 border">
-      <input
-        class="w-16 bg-slate-200"
-        type="number"
-        :id="'lower-limit'"
-        :name="'lower-limit'"
-        v-model="lowerLimit"
-      />
-      <input
-        class="w-16 bg-slate-200"
-        type="number"
-        :id="'upper-limit'"
-        :name="'upper-limit'"
-        v-model="upperLimit"
-      />
-      <button
-        @click="randomize"
-        class="cursor-pointer rounded-sm border bg-sky-50 px-3 py-px text-sm font-semibold tracking-wide"
-      >
-        Randomize
-      </button>
-    </div>
+    <RandomizeControls @randomize="randomize" />
 
     <TopMargin />
 
