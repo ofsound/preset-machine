@@ -8,7 +8,7 @@ const upperLimit = ref(0)
 </script>
 
 <template>
-  <div class="mb-4 flex justify-center gap-2 border">
+  <div class="mb-4 flex justify-center gap-2">
     <input
       class="w-16 bg-slate-200"
       type="number"

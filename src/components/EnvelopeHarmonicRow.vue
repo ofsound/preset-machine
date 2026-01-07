@@ -8,6 +8,8 @@ const props = defineProps<{
 
 const emit = defineEmits(['updateRowValue'])
 
+const isPositive = ref(true)
+
 const rowWidth = ref(0)
 const divisions = ref(8)
 
@@ -39,13 +41,21 @@ const handleMouseUp = () => {
 }
 
 const setRandomValueInRange = (maxValue: number, minValue: number) => {
-  const randomizeRange = minValue / 10 - maxValue / 10
+  const randomizeRange = maxValue - minValue
 
   const randomDeltaWithinRange = Math.random() * randomizeRange
 
-  const randomValueWithinRange = randomDeltaWithinRange + minValue / 10
+  const randomValueWithinRange = randomDeltaWithinRange + minValue
 
-  rowWidth.value = randomValueWithinRange
+  rowWidth.value = Math.abs(randomValueWithinRange)
+
+  if (randomValueWithinRange > 0) {
+    isPositive.value = true
+  } else {
+    isPositive.value = false
+  }
+
+  emit('updateRowValue', randomValueWithinRange)
 }
 
 defineExpose({
@@ -55,11 +65,7 @@ defineExpose({
 const handleMousePositive = (event: MouseEvent) => {
   if (positiveGridElement.value?.clientWidth && props.isActive) {
     if (isMouseDown.value || event.type === 'mousedown') {
-      if (negativeGridElement.value)
-        negativeGridElement.value.style.opacity = '0'
-
-      if (positiveGridElement.value)
-        positiveGridElement.value.style.opacity = '1'
+      isPositive.value = true
 
       const parentLeft = positiveGridElement.value.getBoundingClientRect().left
 
@@ -85,11 +91,8 @@ const handleMouseNegative = (event: MouseEvent) => {
 
       const mouseXRelativeToParent = parentRight - event.clientX
 
-      if (positiveGridElement.value)
-        positiveGridElement.value.style.opacity = '0'
+      isPositive.value = false
 
-      if (negativeGridElement.value)
-        negativeGridElement.value.style.opacity = '1'
       // const roundAmount = negativeGridElement.value.clientWidth / 16
       // emit('roundAmount', roundAmount)
       // rowWidth.value =
@@ -149,7 +152,11 @@ onMounted(() => {
         class="h-2 border-r"
         :style="gridStyle"
       ></div>
-      <div class="absolute right-0 h-2" :style="valueStyle"></div>
+      <div
+        v-show="!isPositive"
+        class="absolute right-0 h-2"
+        :style="valueStyle"
+      ></div>
     </div>
 
     <div ref="resetElement" class="h-2 w-6 bg-white"></div>
@@ -160,7 +167,7 @@ onMounted(() => {
         class="h-2 border-l"
         :style="gridStyle"
       ></div>
-      <div class="absolute h-2" :style="valueStyle"></div>
+      <div v-show="isPositive" class="absolute h-2" :style="valueStyle"></div>
     </div>
   </div>
 </template>
