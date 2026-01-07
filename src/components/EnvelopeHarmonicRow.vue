@@ -2,33 +2,33 @@
 import { ref, onMounted, computed } from 'vue'
 
 const props = defineProps<{
-  color: string
   isActive: boolean
+  color: string
 }>()
 
-const emit = defineEmits(['rowValue'])
+const emit = defineEmits(['updateRowValue'])
 
 const rowWidth = ref(0)
 const divisions = ref(8)
 
 const positiveGridElement = ref<HTMLElement | null>(null)
-const negativeGridElement = ref<HTMLElement | null>(null)
 const resetElement = ref<HTMLElement | null>(null)
+const negativeGridElement = ref<HTMLElement | null>(null)
 
-const isMouseDown = ref<boolean>(false)
-
-const segmentStyle = computed(() => {
+const valueStyle = computed(() => {
   return {
     width: `${rowWidth.value}px`,
     backgroundColor: props.color,
   }
 })
 
-const gridChildStyle = computed(() => {
+const gridStyle = computed(() => {
   return {
     width: `${(1 / divisions.value) * 100}%`,
   }
 })
+
+const isMouseDown = ref<boolean>(false)
 
 const handleMouseDown = () => {
   isMouseDown.value = true
@@ -39,57 +39,22 @@ const handleMouseUp = () => {
 }
 
 const setRandomValueInRange = (maxValue: number, minValue: number) => {
-  // console.log('go!')
-
   const randomizeRange = minValue / 10 - maxValue / 10
 
   const randomDeltaWithinRange = Math.random() * randomizeRange
 
   const randomValueWithinRange = randomDeltaWithinRange + minValue / 10
 
-  // const thisValue = array[index]
-
-  // const newValue = thisValue! + randomValueWithinRange
-
-  // if (newValue < 0) {
-  //   array[index] = 0
-  // } else {
-  // array[index] = newValue
-
-  // console.log(newValue)
-
   rowWidth.value = randomValueWithinRange
-
-  console.log(rowWidth.value)
 }
 
 defineExpose({
   setRandomValueInRange, // The method is also exposed
 })
 
-const handleMouseClickPositive = (event: MouseEvent) => {
+const handleMousePositive = (event: MouseEvent) => {
   if (positiveGridElement.value?.clientWidth && props.isActive) {
-    if (negativeGridElement.value) negativeGridElement.value.style.opacity = '0'
-    if (positiveGridElement.value) positiveGridElement.value.style.opacity = '1'
-
-    const parentLeft = positiveGridElement.value.getBoundingClientRect().left
-
-    const mouseXRelativeToParent = event.clientX - parentLeft
-
-    // const roundAmount = positiveGridElement.value.clientWidth / 16
-    // emit('roundAmount', roundAmount)
-    // rowWidth.value =
-    //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
-
-    rowWidth.value = mouseXRelativeToParent
-
-    emit('rowValue', mouseXRelativeToParent)
-  }
-}
-
-const handleMouseMovePositive = (event: MouseEvent) => {
-  if (positiveGridElement.value?.clientWidth && props.isActive) {
-    if (isMouseDown.value) {
+    if (isMouseDown.value || event.type === 'mousedown') {
       if (negativeGridElement.value)
         negativeGridElement.value.style.opacity = '0'
 
@@ -107,60 +72,14 @@ const handleMouseMovePositive = (event: MouseEvent) => {
 
       rowWidth.value = mouseXRelativeToParent
 
-      emit('rowValue', mouseXRelativeToParent)
+      emit('updateRowValue', mouseXRelativeToParent)
     }
   }
 }
 
-const handleMouseEnterPositive = (event: MouseEvent) => {
-  if (positiveGridElement.value?.clientWidth && props.isActive) {
-    if (isMouseDown.value) {
-      if (negativeGridElement.value)
-        negativeGridElement.value.style.opacity = '0'
-
-      if (positiveGridElement.value)
-        positiveGridElement.value.style.opacity = '1'
-
-      const parentLeft = positiveGridElement.value.getBoundingClientRect().left
-
-      const mouseXRelativeToParent = event.clientX - parentLeft
-
-      // const roundAmount = positiveGridElement.value.clientWidth / 16
-      // emit('roundAmount', roundAmount)
-      // rowWidth.value =
-      //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
-
-      rowWidth.value = mouseXRelativeToParent
-
-      emit('rowValue', mouseXRelativeToParent)
-    }
-  }
-}
-
-const handleMouseClickNegative = (event: MouseEvent) => {
+const handleMouseNegative = (event: MouseEvent) => {
   if (negativeGridElement.value?.clientWidth && props.isActive) {
-    const parentRight = negativeGridElement.value.getBoundingClientRect().right
-
-    if (positiveGridElement.value) positiveGridElement.value.style.opacity = '0'
-
-    const mouseXRelativeToParent = parentRight - event.clientX
-
-    if (negativeGridElement.value) negativeGridElement.value.style.opacity = '1'
-
-    // const roundAmount = negativeGridElement.value.clientWidth / 16
-    // emit('roundAmount', roundAmount)
-    // rowWidth.value =
-    //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
-
-    rowWidth.value = mouseXRelativeToParent
-
-    emit('rowValue', mouseXRelativeToParent)
-  }
-}
-
-const handleMouseMoveNegative = (event: MouseEvent) => {
-  if (negativeGridElement.value?.clientWidth && props.isActive) {
-    if (isMouseDown.value) {
+    if (isMouseDown.value || event.type === 'mousedown') {
       const parentRight =
         negativeGridElement.value.getBoundingClientRect().right
 
@@ -178,75 +97,43 @@ const handleMouseMoveNegative = (event: MouseEvent) => {
 
       rowWidth.value = mouseXRelativeToParent
 
-      emit('rowValue', mouseXRelativeToParent)
+      emit('updateRowValue', mouseXRelativeToParent)
     }
   }
 }
 
-const handleMouseEnterNegative = (event: MouseEvent) => {
-  if (negativeGridElement.value?.clientWidth && props.isActive) {
-    if (isMouseDown.value) {
-      const parentRight =
-        negativeGridElement.value.getBoundingClientRect().right
-
-      const mouseXRelativeToParent = parentRight - event.clientX
-
-      if (positiveGridElement.value)
-        positiveGridElement.value.style.opacity = '0'
-
-      if (negativeGridElement.value)
-        negativeGridElement.value.style.opacity = '1'
-
-      // const roundAmount = negativeGridElement.value.clientWidth / 16
-      // emit('roundAmount', roundAmount)
-      // rowWidth.value =
-      //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
-
-      rowWidth.value = mouseXRelativeToParent
-
-      emit('rowValue', mouseXRelativeToParent)
-    }
-  }
-}
-
-const handleResetMouseEnter = () => {
+const handleResetMouse = () => {
   if (isMouseDown.value) {
     rowWidth.value = 0
-    emit('rowValue', 0)
+    emit('updateRowValue', 0)
   }
-}
-
-const handleResetMouseClick = () => {
-  rowWidth.value = 0
-  emit('rowValue', 0)
 }
 
 onMounted(() => {
   window.addEventListener('mousedown', handleMouseDown)
   window.addEventListener('mouseup', handleMouseUp)
 
-  positiveGridElement.value!.addEventListener(
-    'mouseenter',
-    handleMouseEnterPositive,
-  )
-  positiveGridElement.value!.addEventListener('click', handleMouseClickPositive)
-  positiveGridElement.value!.addEventListener(
-    'mousemove',
-    handleMouseMovePositive,
-  )
+  const gridEvents = ['mousedown', 'mousemove']
 
-  negativeGridElement.value!.addEventListener(
-    'mouseenter',
-    handleMouseEnterNegative,
-  )
-  negativeGridElement.value!.addEventListener('click', handleMouseClickNegative)
-  negativeGridElement.value!.addEventListener(
-    'mousemove',
-    handleMouseMoveNegative,
-  )
+  gridEvents.forEach((eventType) => {
+    positiveGridElement.value!.addEventListener(
+      eventType,
+      handleMousePositive as EventListener,
+    )
+    negativeGridElement.value!.addEventListener(
+      eventType,
+      handleMouseNegative as EventListener,
+    )
+  })
 
-  resetElement.value!.addEventListener('mouseenter', handleResetMouseEnter)
-  resetElement.value!.addEventListener('click', handleResetMouseClick)
+  const resetEvents = ['mousedown', 'mousemove']
+
+  resetEvents.forEach((eventType) => {
+    resetElement.value!.addEventListener(
+      eventType,
+      handleResetMouse as EventListener,
+    )
+  })
 })
 </script>
 
@@ -260,9 +147,9 @@ onMounted(() => {
         v-for="n in divisions"
         :key="n"
         class="h-2 border-r"
-        :style="gridChildStyle"
+        :style="gridStyle"
       ></div>
-      <div class="absolute right-0 h-2" :style="segmentStyle"></div>
+      <div class="absolute right-0 h-2" :style="valueStyle"></div>
     </div>
 
     <div ref="resetElement" class="h-2 w-6 bg-white"></div>
@@ -271,9 +158,9 @@ onMounted(() => {
         v-for="n in divisions"
         :key="n"
         class="h-2 border-l"
-        :style="gridChildStyle"
+        :style="gridStyle"
       ></div>
-      <div class="absolute h-2" :style="segmentStyle"></div>
+      <div class="absolute h-2" :style="valueStyle"></div>
     </div>
   </div>
 </template>

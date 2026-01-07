@@ -18,24 +18,26 @@ const store = useStore()
 
 const activeEnvSegmentValues: number[] = [...props.envelopeSegmentValues]
 
-const handleRowValue = (index: number, rowValue: number) => {
-  activeEnvSegmentValues[index] = rowValue
-  emit('updateEnvelopeSegmentValues', activeEnvSegmentValues)
-}
+const envelopeHarmonicRowRefs = ref<InstanceType<typeof EnvelopeHarmonicRow>[]>(
+  [],
+)
 
-const childRefs = ref<InstanceType<typeof EnvelopeHarmonicRow>[]>([])
-
-const setChildRef = (
+const setRefs = (
   el: InstanceType<typeof EnvelopeHarmonicRow> | null,
   index: number,
 ) => {
   if (el) {
-    childRefs.value[index] = el
+    envelopeHarmonicRowRefs.value[index] = el
   }
 }
 
+const handleUpdateRowValue = (index: number, rowValue: number) => {
+  activeEnvSegmentValues[index] = rowValue
+  emit('updateEnvelopeSegmentValues', activeEnvSegmentValues)
+}
+
 const randomize = (lowerLimit: number, upperLimit: number) => {
-  childRefs.value.forEach((childInstance, index) => {
+  envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
     if (props.activeHarmonics.includes(index))
       childInstance.setRandomValueInRange(lowerLimit, upperLimit)
   })
@@ -53,12 +55,11 @@ const randomize = (lowerLimit: number, upperLimit: number) => {
         v-for="(item, index) in 100"
         :key="index"
         :ref="
-          (el) =>
-            setChildRef(el as InstanceType<typeof EnvelopeHarmonicRow>, index)
+          (el) => setRefs(el as InstanceType<typeof EnvelopeHarmonicRow>, index)
         "
         :isActive="activeHarmonics.includes(index)"
         :color="store.harmonicRowColors[index]!"
-        @rowValue="handleRowValue(index, $event)"
+        @updateRowValue="handleUpdateRowValue(index, $event)"
       />
     </div>
   </div>
