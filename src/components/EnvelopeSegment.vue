@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 import RandomizeControls from '@/components/RandomizeControls.vue'
+import TimeScaleControls from '@/components/TimeScaleControls.vue'
 import TopMargin from '@/components/TopMargin.vue'
 import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
 
@@ -15,6 +16,9 @@ const props = defineProps<{
 const emit = defineEmits(['updateEnvelopeSegmentValues'])
 
 const store = useStore()
+
+const maxSeconds = ref<number>(5)
+const numDivisions = ref<number>(5)
 
 const activeEnvSegmentValues: number[] = [...props.envelopeSegmentValues]
 
@@ -42,13 +46,22 @@ const randomize = (lowerLimit: number, upperLimit: number) => {
       childInstance.setRandomValueInRange(lowerLimit, upperLimit)
   })
 }
+
+const updateTimeScale = (newMaxSeconds: number, newNumDivisions: number) => {
+  maxSeconds.value = newMaxSeconds
+  numDivisions.value = newNumDivisions
+  console.log(maxSeconds.value)
+  console.log(numDivisions.value)
+}
 </script>
 
 <template>
   <div>
     <RandomizeControls @randomize="randomize" />
 
-    <TopMargin />
+    <TimeScaleControls @updateTimeScale="updateTimeScale" />
+
+    <TopMargin :maxSeconds :numDivisions />
 
     <div class="mb-3 flex w-full flex-col-reverse">
       <EnvelopeHarmonicRow
@@ -59,6 +72,8 @@ const randomize = (lowerLimit: number, upperLimit: number) => {
         "
         :isActive="activeHarmonics.includes(index)"
         :color="store.harmonicRowColors[index]!"
+        :maxSeconds
+        :numDivisions
         @updateRowValue="handleUpdateRowValue(index, $event)"
       />
     </div>

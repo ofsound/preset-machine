@@ -4,6 +4,8 @@ import { ref, onMounted, computed } from 'vue'
 const props = defineProps<{
   isActive: boolean
   color: string
+  maxSeconds: number
+  numDivisions: number
 }>()
 
 const emit = defineEmits(['updateRowValue'])
@@ -11,7 +13,6 @@ const emit = defineEmits(['updateRowValue'])
 const isPositive = ref(true)
 
 const rowWidth = ref(0)
-const divisions = ref(8)
 
 const positiveGridElement = ref<HTMLElement | null>(null)
 const resetElement = ref<HTMLElement | null>(null)
@@ -21,12 +22,6 @@ const valueStyle = computed(() => {
   return {
     width: `${rowWidth.value}px`,
     backgroundColor: props.color,
-  }
-})
-
-const gridStyle = computed(() => {
-  return {
-    width: `${(1 / divisions.value) * 100}%`,
   }
 })
 
@@ -42,9 +37,7 @@ const handleMouseUp = () => {
 
 const setRandomValueInRange = (maxValue: number, minValue: number) => {
   const randomizeRange = maxValue - minValue
-
   const randomDeltaWithinRange = Math.random() * randomizeRange
-
   const randomValueWithinRange = randomDeltaWithinRange + minValue
 
   rowWidth.value = Math.abs(randomValueWithinRange)
@@ -146,12 +139,7 @@ onMounted(() => {
       ref="negativeGridElement"
       class="relative flex flex-1 hover:brightness-110"
     >
-      <div
-        v-for="n in divisions"
-        :key="n"
-        class="h-2 border-r"
-        :style="gridStyle"
-      ></div>
+      <div v-for="n in numDivisions" :key="n" class="h-2 flex-1 border-r"></div>
       <div
         v-show="!isPositive"
         class="absolute right-0 h-2"
@@ -161,12 +149,7 @@ onMounted(() => {
 
     <div ref="resetElement" class="h-2 w-6 bg-white"></div>
     <div ref="positiveGridElement" class="flex flex-1 hover:brightness-110">
-      <div
-        v-for="n in divisions"
-        :key="n"
-        class="h-2 border-l"
-        :style="gridStyle"
-      ></div>
+      <div v-for="n in numDivisions" :key="n" class="h-2 flex-1 border-r"></div>
       <div v-show="isPositive" class="absolute h-2" :style="valueStyle"></div>
     </div>
   </div>

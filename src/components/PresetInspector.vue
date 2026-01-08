@@ -19,7 +19,7 @@ const handleClick = (event: MouseEvent) => {
 
 const buttonObjects = ref([
   'Meta',
-  `Gainss (${corePreset.gains.length})`,
+  `Gains (${corePreset.gains.length})`,
   `Offsets (${corePreset.offsets.length})`,
   `Attacks (${corePreset.attacks.length})`,
   `Decays (${corePreset.decays.length})`,
@@ -148,7 +148,7 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', corePreset)
         </label>
       </div>
 
-      <div v-if="dataLink === 'Gainss'">
+      <div v-if="dataLink === 'Gains'">
         <textarea
           class="w-full bg-slate-100 p-2"
           v-model="gains"
