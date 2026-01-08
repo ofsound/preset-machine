@@ -50,8 +50,6 @@ const randomize = (lowerLimit: number, upperLimit: number) => {
 const updateTimeScale = (newMaxSeconds: number, newNumDivisions: number) => {
   maxSeconds.value = newMaxSeconds
   numDivisions.value = newNumDivisions
-  console.log(maxSeconds.value)
-  console.log(numDivisions.value)
 }
 </script>
 

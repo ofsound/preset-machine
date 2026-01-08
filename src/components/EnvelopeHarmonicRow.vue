@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 
 const props = defineProps<{
   isActive: boolean
@@ -11,12 +11,18 @@ const props = defineProps<{
 const emit = defineEmits(['updateRowValue'])
 
 const isPositive = ref(true)
-
 const rowWidth = ref(0)
 
 const positiveGridElement = ref<HTMLElement | null>(null)
 const resetElement = ref<HTMLElement | null>(null)
 const negativeGridElement = ref<HTMLElement | null>(null)
+
+const updateRowValue = (pixelValue: number) => {
+  const scaledRowValue =
+    (pixelValue * props.maxSeconds) / positiveGridElement.value!.clientWidth
+
+  emit('updateRowValue', scaledRowValue)
+}
 
 const valueStyle = computed(() => {
   return {
@@ -48,7 +54,7 @@ const setRandomValueInRange = (maxValue: number, minValue: number) => {
     isPositive.value = false
   }
 
-  emit('updateRowValue', randomValueWithinRange)
+  updateRowValue(randomValueWithinRange)
 }
 
 defineExpose({
@@ -64,14 +70,9 @@ const handleMousePositive = (event: MouseEvent) => {
 
       const mouseXRelativeToParent = event.clientX - parentLeft
 
-      // const roundAmount = positiveGridElement.value.clientWidth / 16
-      // emit('roundAmount', roundAmount)
-      // rowWidth.value =
-      //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
-
       rowWidth.value = mouseXRelativeToParent
 
-      emit('updateRowValue', mouseXRelativeToParent)
+      updateRowValue(mouseXRelativeToParent)
     }
   }
 }
@@ -79,21 +80,16 @@ const handleMousePositive = (event: MouseEvent) => {
 const handleMouseNegative = (event: MouseEvent) => {
   if (negativeGridElement.value?.clientWidth && props.isActive) {
     if (isMouseDown.value || event.type === 'mousedown') {
+      isPositive.value = false
+
       const parentRight =
         negativeGridElement.value.getBoundingClientRect().right
 
-      const mouseXRelativeToParent = parentRight - event.clientX
+      const mouseXRelativeToParent = event.clientX - parentRight
 
-      isPositive.value = false
+      rowWidth.value = Math.abs(mouseXRelativeToParent)
 
-      // const roundAmount = negativeGridElement.value.clientWidth / 16
-      // emit('roundAmount', roundAmount)
-      // rowWidth.value =
-      //   Math.floor(mouseXRelativeToParent / roundAmount) * roundAmount
-
-      rowWidth.value = mouseXRelativeToParent
-
-      emit('updateRowValue', -mouseXRelativeToParent)
+      updateRowValue(mouseXRelativeToParent)
     }
   }
 }
@@ -104,6 +100,13 @@ const handleResetMouse = () => {
     emit('updateRowValue', 0)
   }
 }
+
+watch(
+  () => props.maxSeconds,
+  (newValue, oldValue) => {
+    rowWidth.value *= oldValue / newValue
+  },
+)
 
 onMounted(() => {
   window.addEventListener('mousedown', handleMouseDown)

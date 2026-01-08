@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 
@@ -10,24 +10,28 @@ const props = defineProps<{
 
 const { finalPreset } = usePreset()
 
+const rowElement = ref<HTMLElement | null>(null)
+
+const scaleFactor = ref(100)
+
 const offsetWidth = computed(() => {
-  return finalPreset.value.offsets[props.index]! * 100 + 'px'
+  return finalPreset.value.offsets[props.index]! * scaleFactor.value + 'px'
 })
 
 const attackWidth = computed(() => {
-  return finalPreset.value.attacks[props.index]! * 100 + 'px'
+  return finalPreset.value.attacks[props.index]! * scaleFactor.value + 'px'
 })
 
 const decayWidth = computed(() => {
-  return finalPreset.value.decays[props.index]! * 100 + 'px'
+  return finalPreset.value.decays[props.index]! * scaleFactor.value + 'px'
 })
 
 const holdWidth = computed(() => {
-  return finalPreset.value.holds[props.index]! * 100 + 'px'
+  return finalPreset.value.holds[props.index]! * scaleFactor.value + 'px'
 })
 
 const releaseWidth = computed(() => {
-  return finalPreset.value.releases[props.index]! * 100 + 'px'
+  return finalPreset.value.releases[props.index]! * scaleFactor.value + 'px'
 })
 
 const attackBackgroundString =
@@ -35,10 +39,14 @@ const attackBackgroundString =
 
 const releaseBackgroundString =
   'linear-gradient(to right,' + props.color + ',' + '#000' + ' 100%'
+
+onMounted(() => {
+  scaleFactor.value = rowElement.value!.clientWidth / 20
+})
 </script>
 
 <template>
-  <div class="mb-px flex">
+  <div ref="rowElement" class="mb-px flex">
     <div
       :style="{
         height: '5px',
