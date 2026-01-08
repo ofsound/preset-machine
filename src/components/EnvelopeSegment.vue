@@ -2,8 +2,9 @@
 import { ref } from 'vue'
 
 import RandomizeControls from '@/components/RandomizeControls.vue'
-import TimeScaleControls from '@/components/TimeScaleControls.vue'
 import TopMargin from '@/components/TopMargin.vue'
+import ManualEntry from '@/components/ManualEntry.vue'
+import TimeScaleControls from '@/components/TimeScaleControls.vue'
 import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
 
 import { useStore } from '@/stores/store'
@@ -19,6 +20,9 @@ const store = useStore()
 
 const maxSeconds = ref<number>(5)
 const numDivisions = ref<number>(5)
+
+const currentHarmonicIndex = ref(0)
+const currentHarmonicValue = ref(0)
 
 const activeEnvSegmentValues: number[] = [...props.envelopeSegmentValues]
 
@@ -36,6 +40,9 @@ const setRefs = (
 }
 
 const handleUpdateRowValue = (index: number, rowValue: number) => {
+  currentHarmonicIndex.value = index
+  currentHarmonicValue.value = rowValue
+
   activeEnvSegmentValues[index] = rowValue
   emit('updateEnvelopeSegmentValues', activeEnvSegmentValues)
 }
@@ -57,7 +64,11 @@ const updateTimeScale = (newMaxSeconds: number, newNumDivisions: number) => {
   <div>
     <RandomizeControls @randomize="randomize" />
 
-    <TimeScaleControls @updateTimeScale="updateTimeScale" />
+    <div class="flex justify-between">
+      <ManualEntry :currentHarmonicIndex :currentHarmonicValue />
+
+      <TimeScaleControls @updateTimeScale="updateTimeScale" />
+    </div>
 
     <TopMargin :maxSeconds :numDivisions />
 
