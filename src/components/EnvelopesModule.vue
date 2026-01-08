@@ -29,6 +29,20 @@ const envelopeSegments: EnvelopeLabelAndSegment[] = [
 
 const lastMenuButtonClickedLabel = ref('Offset')
 
+const grid = ref(1)
+const bars = ref(1)
+const tempo = ref(120)
+
+const updateTempoGridSetting = (
+  newGrid: number,
+  newBars: number,
+  newTempo: number,
+) => {
+  grid.value = newGrid
+  bars.value = newBars
+  tempo.value = newTempo
+}
+
 const menuButtonClicked = (item: EnvelopeLabelAndSegment) => {
   lastMenuButtonClickedLabel.value = item.label
 }
@@ -52,7 +66,10 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
 
 <template>
   <div>
-    <TempoGridControls v-show="true" />
+    <TempoGridControls
+      v-show="true"
+      @updateTempoGridSetting="updateTempoGridSetting"
+    />
 
     <ActiveHarmonics @update:active-harmonics="handleActiveHarmonicsUpdate" />
 
@@ -67,6 +84,9 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
         v-for="(item, index) in envelopeSegments"
         v-show="lastMenuButtonClickedLabel === item.label"
         :key="index"
+        :grid
+        :bars
+        :tempo
         :activeHarmonics
         :envelopeSegmentValues="item.envelopeSegmentValues"
         @updateEnvelopeSegmentValues="updateEnvelopeSegmentArray(index, $event)"

@@ -10,8 +10,11 @@ import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
 import { useStore } from '@/stores/store'
 
 const props = defineProps<{
-  envelopeSegmentValues: number[]
+  grid: number
+  bars: number
+  tempo: number
   activeHarmonics: number[]
+  envelopeSegmentValues: number[]
 }>()
 
 const emit = defineEmits(['updateEnvelopeSegmentValues'])
@@ -76,10 +79,13 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
         :currentHarmonicValue
         @updateRowValue="updateRowValueFromManual"
       />
-      <TimeScaleControls @updateTimeScale="updateTimeScale" />
+      <TimeScaleControls
+        v-show="grid === 0"
+        @updateTimeScale="updateTimeScale"
+      />
     </div>
 
-    <TopMargin :maxSeconds :numDivisions />
+    <TopMargin :maxSeconds :numDivisions :grid :bars />
 
     <div class="mb-3 flex w-full flex-col-reverse">
       <EnvelopeHarmonicRow
@@ -92,6 +98,9 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
         :color="store.harmonicRowColors[index]!"
         :maxSeconds
         :numDivisions
+        :grid
+        :bars
+        :tempo
         @updateRowValue="handleUpdateRowValue(index, $event)"
       />
     </div>

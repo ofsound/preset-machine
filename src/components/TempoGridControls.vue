@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const emit = defineEmits(['updateTempoGridSetting'])
+
 const toolOptions = ref([
   { text: 'none', value: 0 },
   { text: '1/2', value: 8 },
@@ -13,6 +15,10 @@ const toolOptions = ref([
 const grid = ref<number>(0)
 const bars = ref<number>(4)
 const tempo = ref<number>(120)
+
+const handleNewValue = () => {
+  emit('updateTempoGridSetting', grid.value, bars.value, tempo.value)
+}
 </script>
 
 <template>
@@ -24,6 +30,7 @@ const tempo = ref<number>(120)
         id="hold-length"
         class="bg-gray-3 rounded-sm bg-gray-300 p-1 text-black"
         v-model="grid"
+        @change="handleNewValue"
       >
         <option
           v-for="toolOption in toolOptions"
@@ -42,6 +49,7 @@ const tempo = ref<number>(120)
         class="max-w-14 rounded-sm bg-gray-300 p-1"
         type="number"
         v-model="bars"
+        @input="handleNewValue"
       />
     </div>
     <div v-show="grid !== 0" class="ml-auto">
@@ -52,6 +60,7 @@ const tempo = ref<number>(120)
         class="max-w-14 rounded-sm bg-gray-300 p-1"
         type="number"
         v-model="tempo"
+        @input="handleNewValue"
       />
     </div>
   </div>

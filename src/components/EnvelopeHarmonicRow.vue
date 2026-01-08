@@ -6,6 +6,9 @@ const props = defineProps<{
   color: string
   maxSeconds: number
   numDivisions: number
+  grid: number
+  bars: number
+  tempo: number
 }>()
 
 const emit = defineEmits(['updateRowValue'])
@@ -18,10 +21,34 @@ const resetElement = ref<HTMLElement | null>(null)
 const negativeGridElement = ref<HTMLElement | null>(null)
 
 const updateRowValue = (pixelValue: number) => {
-  const scaledRowValue =
-    (pixelValue * props.maxSeconds) / positiveGridElement.value!.clientWidth
+  if (props.grid > 0) {
+    const width = positiveGridElement.value!.clientWidth
 
-  emit('updateRowValue', scaledRowValue)
+    const totalSteps = (16 * props.bars) / props.grid
+
+    const currentStep = Math.ceil((pixelValue / width) * totalSteps)
+
+    const stepDuration = (props.grid / 4) * (60 / props.tempo)
+
+    const snappedRowValue = currentStep * stepDuration
+
+    emit('updateRowValue', snappedRowValue)
+  } else {
+    const scaledRowValue =
+      (pixelValue * props.maxSeconds) / positiveGridElement.value!.clientWidth
+    emit('updateRowValue', scaledRowValue)
+  }
+}
+
+const updateRowPixelWidth = (pixelValue: number) => {
+  if (props.grid > 0) {
+    const roundAmount =
+      positiveGridElement.value!.clientWidth / ((16 * props.bars) / props.grid)
+
+    rowWidth.value = Math.ceil(pixelValue / roundAmount) * roundAmount
+  } else {
+    rowWidth.value = pixelValue
+  }
 }
 
 const valueStyle = computed(() => {
@@ -50,7 +77,7 @@ const setRandomValueInRange = (maxValue: number, minValue: number) => {
     randomValueWithinRange *
     (positiveGridElement.value!.clientWidth / props.maxSeconds)
 
-  rowWidth.value = Math.abs(scaledWidth)
+  updateRowPixelWidth(Math.abs(scaledWidth))
 
   if (randomValueWithinRange > 0) {
     isPositive.value = true
@@ -65,7 +92,7 @@ const setManualValue = (newValue: number) => {
   const scaledWidth =
     newValue * (positiveGridElement.value!.clientWidth / props.maxSeconds)
 
-  rowWidth.value = Math.abs(scaledWidth)
+  updateRowPixelWidth(Math.abs(scaledWidth))
 
   if (newValue > 0) {
     isPositive.value = true
@@ -90,7 +117,7 @@ const handleMousePositive = (event: MouseEvent) => {
 
       const mouseXRelativeToParent = event.clientX - parentLeft
 
-      rowWidth.value = mouseXRelativeToParent
+      updateRowPixelWidth(mouseXRelativeToParent)
 
       updateRowValue(mouseXRelativeToParent)
     }
@@ -107,7 +134,7 @@ const handleMouseNegative = (event: MouseEvent) => {
 
       const mouseXRelativeToParent = event.clientX - parentRight
 
-      rowWidth.value = Math.abs(mouseXRelativeToParent)
+      updateRowPixelWidth(Math.abs(mouseXRelativeToParent))
 
       updateRowValue(mouseXRelativeToParent)
     }
@@ -162,7 +189,12 @@ onMounted(() => {
       ref="negativeGridElement"
       class="relative flex flex-1 hover:brightness-110"
     >
-      <div v-for="n in numDivisions" :key="n" class="h-2 flex-1 border-r"></div>
+      <!-- <div v-for="n in numDivisions" :key="n" class="h-2 flex-1 border-r"></div> -->
+      <div
+        v-for="n in (16 * bars) / grid"
+        :key="n"
+        class="h-2 flex-1 border-r"
+      ></div>
       <div
         v-show="!isPositive"
         class="absolute right-0 h-2"
@@ -172,7 +204,11 @@ onMounted(() => {
 
     <div ref="resetElement" class="h-2 w-6 bg-white"></div>
     <div ref="positiveGridElement" class="flex flex-1 hover:brightness-110">
-      <div v-for="n in numDivisions" :key="n" class="h-2 flex-1 border-r"></div>
+      <!-- <div v-for="n in numDivisions" :key="n" class="h-2 flex-1 border-r"></div> -->
+      <div v-for="n in (16 * bars) / grid" :key="n" class="h-2 flex-1 border-r">
+        <!-- {{ index % 4 === 0 ? index / 4 : '|' }} -->
+      </div>
+
       <div v-show="isPositive" class="absolute h-2" :style="valueStyle"></div>
     </div>
   </div>
