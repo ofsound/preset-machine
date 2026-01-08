@@ -45,7 +45,7 @@ watch(
       name="harmonicValue"
       class="w-18 rounded-sm border bg-white px-1"
       :value="currentHarmonicValue"
-      @input="handleUserInput"
+      @keyup.enter="handleUserInput"
     />
   </div>
 </template>
