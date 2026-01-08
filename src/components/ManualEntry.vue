@@ -11,9 +11,8 @@ const harmonicValue = ref(props.currentHarmonicValue)
 
 const emit = defineEmits(['updateRowValue'])
 
-const handleUserInput = (event: Event) => {
-  const newValue = (event.target as HTMLInputElement).value
-  emit('updateRowValue', harmonicIndex.value, newValue)
+const handleUserInput = () => {
+  emit('updateRowValue', harmonicIndex.value, harmonicValue.value)
 }
 
 watch(

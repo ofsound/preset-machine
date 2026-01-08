@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const toolOptionValue = ref<number>(1)
-
 const toolOptions = ref([
   { text: 'none', value: 0 },
   { text: '1/2', value: 8 },
@@ -12,30 +10,21 @@ const toolOptions = ref([
   { text: '1/16', value: 1 },
 ])
 
+const grid = ref<number>(0)
+const bars = ref<number>(4)
 const tempo = ref<number>(120)
 </script>
 
 <template>
-  <div class="flex rounded-sm bg-gray-200 p-4">
-    <div class="">
-      Tempo:
-      <input
-        name="tempo"
-        id="tempo"
-        class="max-w-14 rounded-sm bg-gray-300 p-1"
-        type="number"
-        v-model="tempo"
-      />
-    </div>
-    <div class>
+  <div class="mb-6 flex gap-4 rounded-sm">
+    <div>
       Grid:
       <select
         name="hold-length"
         id="hold-length"
         class="bg-gray-3 rounded-sm bg-gray-300 p-1 text-black"
-        v-model="toolOptionValue"
+        v-model="grid"
       >
-        <option value="-1" disabled>Hold note value</option>
         <option
           v-for="toolOption in toolOptions"
           :key="toolOption.value"
@@ -44,6 +33,26 @@ const tempo = ref<number>(120)
           {{ toolOption.text }}
         </option>
       </select>
+    </div>
+    <div v-show="grid !== 0">
+      Bars:
+      <input
+        name="bars"
+        id="bars"
+        class="max-w-14 rounded-sm bg-gray-300 p-1"
+        type="number"
+        v-model="bars"
+      />
+    </div>
+    <div v-show="grid !== 0" class="ml-auto">
+      Tempo:
+      <input
+        name="tempo"
+        id="tempo"
+        class="max-w-14 rounded-sm bg-gray-300 p-1"
+        type="number"
+        v-model="tempo"
+      />
     </div>
   </div>
 </template>

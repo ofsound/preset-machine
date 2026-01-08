@@ -52,7 +52,7 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
 
 <template>
   <div>
-    <TempoGridControls v-show="false" />
+    <TempoGridControls v-show="true" />
 
     <ActiveHarmonics @update:active-harmonics="handleActiveHarmonicsUpdate" />
 
