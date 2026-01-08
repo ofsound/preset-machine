@@ -46,7 +46,11 @@ const setRandomValueInRange = (maxValue: number, minValue: number) => {
   const randomDeltaWithinRange = Math.random() * randomizeRange
   const randomValueWithinRange = randomDeltaWithinRange + minValue
 
-  rowWidth.value = Math.abs(randomValueWithinRange)
+  const scaledWidth =
+    randomValueWithinRange *
+    (positiveGridElement.value!.clientWidth / props.maxSeconds)
+
+  rowWidth.value = Math.abs(scaledWidth)
 
   if (randomValueWithinRange > 0) {
     isPositive.value = true
@@ -54,11 +58,27 @@ const setRandomValueInRange = (maxValue: number, minValue: number) => {
     isPositive.value = false
   }
 
-  updateRowValue(randomValueWithinRange)
+  updateRowValue(scaledWidth)
+}
+
+const setManualValue = (newValue: number) => {
+  const scaledWidth =
+    newValue * (positiveGridElement.value!.clientWidth / props.maxSeconds)
+
+  rowWidth.value = Math.abs(scaledWidth)
+
+  if (newValue > 0) {
+    isPositive.value = true
+  } else {
+    isPositive.value = false
+  }
+
+  updateRowValue(scaledWidth)
 }
 
 defineExpose({
   setRandomValueInRange,
+  setManualValue,
 })
 
 const handleMousePositive = (event: MouseEvent) => {

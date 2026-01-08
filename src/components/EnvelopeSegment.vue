@@ -58,6 +58,12 @@ const updateTimeScale = (newMaxSeconds: number, newNumDivisions: number) => {
   maxSeconds.value = newMaxSeconds
   numDivisions.value = newNumDivisions
 }
+
+const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
+  envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
+    if (index === rowIndex) childInstance.setManualValue(newRowValue)
+  })
+}
 </script>
 
 <template>
@@ -65,8 +71,11 @@ const updateTimeScale = (newMaxSeconds: number, newNumDivisions: number) => {
     <RandomizeControls @randomize="randomize" />
 
     <div class="flex justify-between">
-      <ManualEntry :currentHarmonicIndex :currentHarmonicValue />
-
+      <ManualEntry
+        :currentHarmonicIndex
+        :currentHarmonicValue
+        @updateRowValue="updateRowValueFromManual"
+      />
       <TimeScaleControls @updateTimeScale="updateTimeScale" />
     </div>
 

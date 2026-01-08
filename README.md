@@ -1,10 +1,6 @@
-# corePreset-machine
+# preset-machine
 
-This template should help get you started developing with Vue 3 in Vite.
-
-Although, as the lead dev, I don't actually know exactly how this will work.
-
-Will you have to install other things, or is that on lock with package.json...
+This should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
