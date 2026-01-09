@@ -3,28 +3,29 @@ import { ref } from 'vue'
 
 const emit = defineEmits(['randomize'])
 
-const lowerLimit = ref(0)
-const upperLimit = ref(0)
+const lowerLimit = ref('0')
+const upperLimit = ref('0')
 </script>
 
 <template>
   <div class="mb-4 flex justify-center gap-2">
     <input
-      class="w-16 bg-slate-200"
-      type="number"
+      class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+      type="text"
       :id="'lower-limit'"
       :name="'lower-limit'"
       v-model="lowerLimit"
     />
+    <div class="text-lg font-bold">&harr;</div>
     <input
-      class="w-16 bg-slate-200"
-      type="number"
+      class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+      type="text"
       :id="'upper-limit'"
       :name="'upper-limit'"
       v-model="upperLimit"
     />
     <button
-      @click="emit('randomize', lowerLimit, upperLimit)"
+      @click="emit('randomize', Number(lowerLimit), Number(upperLimit))"
       class="cursor-pointer rounded-sm border bg-sky-50 px-3 py-px text-sm font-semibold tracking-wide"
     >
       Randomize

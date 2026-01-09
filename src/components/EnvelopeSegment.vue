@@ -24,6 +24,8 @@ const store = useStore()
 const maxSeconds = ref<number>(5)
 const numDivisions = ref<number>(5)
 
+const rowPixelHeight = ref('1')
+
 const currentHarmonicIndex = ref(0)
 const currentHarmonicValue = ref(0)
 
@@ -70,18 +72,23 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
 </script>
 
 <template>
-  <div>
-    <RandomizeControls @randomize="randomize" />
-
+  <div class="bg-slate-300 pt-4">
     <div class="flex justify-between">
       <ManualEntry
         :currentHarmonicIndex
         :currentHarmonicValue
         @updateRowValue="updateRowValueFromManual"
       />
+      <RandomizeControls @randomize="randomize" />
+
       <TimeScaleControls
         v-show="grid === 0"
         @updateTimeScale="updateTimeScale"
+      />
+      <input
+        type="text"
+        class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+        v-model="rowPixelHeight"
       />
     </div>
 
@@ -89,13 +96,14 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
 
     <div class="mb-3 flex w-full flex-col-reverse">
       <EnvelopeHarmonicRow
-        v-for="(item, index) in 36"
+        v-for="(item, index) in activeHarmonics[activeHarmonics.length - 1]"
         :key="index"
         :ref="
           (el) => setRefs(el as InstanceType<typeof EnvelopeHarmonicRow>, index)
         "
         :isActive="activeHarmonics.includes(index)"
         :color="store.harmonicRowColors[index]!"
+        :rowPixelHeight
         :maxSeconds
         :numDivisions
         :grid

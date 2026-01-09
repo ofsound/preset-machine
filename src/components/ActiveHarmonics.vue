@@ -79,49 +79,51 @@ watch(activeHarmonics, (newValue) => {
 </script>
 
 <template>
-  <div class="flex gap-4">
-    <div>
-      Lowest Harmonic:
-      <input
-        name="num-harmonics"
-        id="num-harmonics"
-        class="max-w-14 rounded-sm bg-gray-300 p-1"
-        type="number"
-        v-model="lowestHarmonic"
-      />
+  <div class="p-4">
+    <div class="flex gap-4">
+      <div>
+        Partial Range: min
+        <input
+          name="num-harmonics"
+          id="num-harmonics"
+          class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+          type="text"
+          v-model="lowestHarmonic"
+        />
+      </div>
+      <div>
+        Max
+        <input
+          name="num-harmonics"
+          id="num-harmonics"
+          class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+          type="text"
+          v-model="highestHarmonic"
+        />
+      </div>
+      <div>
+        <label for="my-select">Filter: </label>
+        <select id="my-select" v-model="selected" title="boo">
+          <option
+            v-for="option in activeHarmonicsMode"
+            :value="option.label"
+            :key="option.label"
+          >
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
     </div>
-    <div>
-      Highest Harmonic:
-      <input
-        name="num-harmonics"
-        id="num-harmonics"
-        class="max-w-14 rounded-sm bg-gray-300 p-1"
-        type="number"
-        v-model="highestHarmonic"
-      />
+    <textarea
+      name="list"
+      id="list"
+      v-model="customList"
+      placeholder="Copy and Paste a list of comma separated numbers here."
+      class="w-full bg-gray-200 p-2"
+      v-show="selected === 'List'"
+    ></textarea>
+    <div class="mt-2 bg-slate-200 px-2 py-1 text-sm">
+      {{ activeHarmonics.join(', ') }}
     </div>
-  </div>
-  <div class="my-4">
-    <label for="my-select">Filter: </label>
-    <select id="my-select" v-model="selected">
-      <option
-        v-for="option in activeHarmonicsMode"
-        :value="option.label"
-        :key="option.label"
-      >
-        {{ option.label }}
-      </option>
-    </select>
-  </div>
-  <textarea
-    name="list"
-    id="list"
-    v-model="customList"
-    placeholder="Copy and Paste a list of comma separated numbers here."
-    class="w-full bg-gray-200 p-2"
-    v-show="selected === 'List'"
-  ></textarea>
-  <div class="mb-4">
-    {{ activeHarmonics }}
   </div>
 </template>

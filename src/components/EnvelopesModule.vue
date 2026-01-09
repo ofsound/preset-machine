@@ -71,6 +71,8 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
       @updateTempoGridSetting="updateTempoGridSetting"
     />
 
+    <hr />
+
     <ActiveHarmonics @update:active-harmonics="handleActiveHarmonicsUpdate" />
 
     <EnvelopeSegmentMenu
@@ -79,18 +81,16 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
       :lastMenuButtonClickedLabel="lastMenuButtonClickedLabel"
     />
 
-    <div class="mt-4 w-full">
-      <EnvelopeSegment
-        v-for="(item, index) in envelopeSegments"
-        v-show="lastMenuButtonClickedLabel === item.label"
-        :key="index"
-        :grid
-        :bars
-        :tempo
-        :activeHarmonics
-        :envelopeSegmentValues="item.envelopeSegmentValues"
-        @updateEnvelopeSegmentValues="updateEnvelopeSegmentArray(index, $event)"
-      />
-    </div>
+    <EnvelopeSegment
+      v-for="(item, index) in envelopeSegments"
+      v-show="lastMenuButtonClickedLabel === item.label"
+      :key="index"
+      :grid
+      :bars
+      :tempo
+      :activeHarmonics
+      :envelopeSegmentValues="item.envelopeSegmentValues"
+      @updateEnvelopeSegmentValues="updateEnvelopeSegmentArray(index, $event)"
+    />
   </div>
 </template>

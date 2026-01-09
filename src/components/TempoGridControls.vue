@@ -22,7 +22,7 @@ const handleNewValue = () => {
 </script>
 
 <template>
-  <div class="mb-6 flex gap-4 rounded-sm">
+  <div class="flex gap-4 rounded-sm p-4">
     <div>
       Grid:
       <select

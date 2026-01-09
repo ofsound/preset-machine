@@ -13,21 +13,15 @@ import AppHeader from '@/components/AppHeader.vue'
 import PageTwo from '@/components/PageTwo.vue'
 import MenuSystem from '@/components/MenuSystem.vue'
 
-// import InitModule from '@/components/InitModule.vue'
 import GainsModule from '@/components/GainsModule.vue'
 // import OffsetModule from '@/components/OffsetModule.vue'
 import EnvelopesModule from '@/components/EnvelopesModule.vue'
-// import BipolarModule from '@/components/BipolarModule.vue'
-// import RandomizeModule from '@/components/RandomizeModule.vue'
 import PresetInspector from '@/components/PresetInspector.vue'
 
 const componentObjects: ComponentObject[] = [
-  // { component: InitModule, label: 'Init' },
   { component: GainsModule, label: 'Gains' },
   // { component: OffsetModule, label: 'Offset' },
   { component: EnvelopesModule, label: 'Envelopes' },
-  // { component: BipolarModule, label: 'Bipolar' },
-  // { component: RandomizeModule, label: 'Randomize' },
 ]
 const isWelcome = ref(true)
 const isInspector = ref(false)
@@ -56,7 +50,7 @@ const toggleInspector = () => {
         <MenuSystem :componentObjects="componentObjects" />
 
         <div class="flex-1 bg-slate-800 p-5">
-          <div class="h-full rounded-lg bg-neutral-50 px-8 py-5">
+          <div class="h-full rounded-lg bg-neutral-50">
             <component
               v-show="store.visibleModuleID === item.id"
               v-for="item in store.modules"
