@@ -10,7 +10,7 @@ defineEmits(['menuButtonClicked'])
 </script>
 
 <template>
-  <div class="mt-4 flex justify-center gap-2">
+  <div class="mt-6 flex justify-center gap-2">
     <button
       v-for="(item, index) in envelopeSegments"
       :key="index"

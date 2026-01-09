@@ -80,38 +80,38 @@ watch(activeHarmonics, (newValue) => {
 
 <template>
   <div class="p-4">
-    <div class="flex gap-4">
+    <div class="flex gap-8">
       <div
-        class="w-34 self-center text-[15px] font-bold tracking-wider text-slate-400/70 uppercase"
+        class="w-34 self-center text-[15px] font-bold tracking-wider text-zinc-400/80 uppercase"
       >
         Harmonics
       </div>
-      <div class="text-sm font-semibold">
+      <div class="text-sm font-semibold text-neutral-700">
         Min:&nbsp;&nbsp;
         <input
           name="num-harmonics"
           id="num-harmonics"
-          class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+          class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
           type="text"
           v-model="lowestHarmonic"
         />
       </div>
-      <div class="text-sm font-semibold">
+      <div class="text-sm font-semibold text-neutral-700">
         Max:&nbsp;&nbsp;
         <input
           name="num-harmonics"
           id="num-harmonics"
-          class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+          class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
           type="text"
           v-model="highestHarmonic"
         />
       </div>
-      <div class="text-sm font-semibold">
+      <div class="text-sm font-semibold text-neutral-700">
         <label for="my-select">Filter:&nbsp;&nbsp;</label>
         <select
           id="my-select"
           v-model="selected"
-          class="w-32 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+          class="w-32 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
           :title="activeHarmonics.join(', ')"
         >
           <option

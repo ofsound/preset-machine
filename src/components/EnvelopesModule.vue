@@ -71,7 +71,11 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
       @updateTempoGridSetting="updateTempoGridSetting"
     />
 
+    <hr class="border-gray-200" />
+
     <ActiveHarmonics @update:active-harmonics="handleActiveHarmonicsUpdate" />
+
+    <hr class="border-gray-200" />
 
     <EnvelopeSegmentMenu
       :envelopeSegments="envelopeSegments"

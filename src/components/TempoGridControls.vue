@@ -22,18 +22,18 @@ const handleNewValue = () => {
 </script>
 
 <template>
-  <div class="flex gap-4 rounded-sm p-4">
+  <div class="flex gap-8 rounded-sm p-4">
     <div
-      class="w-34 self-center text-[15px] font-bold tracking-wider text-slate-400/70 uppercase"
+      class="w-34 self-center text-[15px] font-bold tracking-wider text-zinc-400/80 uppercase"
     >
       Tempo Sync
     </div>
-    <div class="text-sm font-semibold">
+    <div class="text-sm font-semibold text-neutral-700">
       Grid:&nbsp;&nbsp;
       <select
         name="hold-length"
         id="hold-length"
-        class="w-20 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+        class="w-20 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
         v-model="grid"
         @change="handleNewValue"
       >
@@ -46,23 +46,23 @@ const handleNewValue = () => {
         </option>
       </select>
     </div>
-    <div v-show="grid !== 0" class="text-sm font-semibold">
+    <div v-show="grid !== 0" class="text-sm font-semibold text-neutral-700">
       Bars:&nbsp;&nbsp;
       <input
         name="bars"
         id="bars"
-        class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+        class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
         type="text"
         v-model="bars"
         @input="handleNewValue"
       />
     </div>
-    <div v-show="grid !== 0" class="text-sm font-semibold">
+    <div v-show="grid !== 0" class="text-sm font-semibold text-neutral-700">
       Tempo:&nbsp;&nbsp;
       <input
         name="tempo"
         id="tempo"
-        class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+        class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
         type="text"
         v-model="tempo"
         @input="handleNewValue"
