@@ -35,14 +35,14 @@ watch(
       type="text"
       id="harmonicIndex"
       name="harmonicIndex"
-      class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+      class="w-11 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
       v-model="harmonicIndex"
     />
     <input
       type="text"
       id="harmonicValue"
       name="harmonicValue"
-      class="w-16 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+      class="w-16 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
       :value="currentHarmonicValue"
       @keyup.enter="handleUserInput"
     />

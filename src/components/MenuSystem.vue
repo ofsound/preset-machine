@@ -37,7 +37,7 @@ function getLabel(component: Component): string {
       />
     </div>
     <div
-      class="crosshatch-background mx-4 flex min-h-16 justify-center gap-4 rounded-full border border-gray-400 bg-slate-100 pt-4 pb-3"
+      class="crosshatch-background mx-4 flex min-h-14 justify-center gap-4 rounded-full border border-gray-400 bg-slate-100 pt-4 pb-3"
     >
       <MenuSystemModuleItem
         v-for="item in store.modules"

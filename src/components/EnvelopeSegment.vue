@@ -85,7 +85,7 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
           <div class="self-center text-xs">Time Scale (s)</div>
           <input
             type="text"
-            class="w-9 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+            class="w-9 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
             v-model="timeScaleSeconds"
           />
         </div>
@@ -93,7 +93,7 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
           <div class="self-center text-xs">Row Height (px)</div>
           <input
             type="text"
-            class="w-9 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+            class="w-9 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
             v-model="rowPixelHeight"
           />
         </div>

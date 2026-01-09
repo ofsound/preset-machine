@@ -40,8 +40,8 @@ const addComponentToModules = () => {
 <template>
   <button
     @click="addComponentToModules"
-    class="cursor-pointer rounded-sm border bg-slate-200 px-2 py-1 text-sm font-semibold tracking-wider shadow-sm hover:bg-neutral-100"
+    class="cursor-pointer rounded-sm border bg-slate-200 px-2 py-1 text-xs font-semibold tracking-wider shadow-sm hover:bg-neutral-100"
   >
-    {{ componentObject.label }} <span class="relative text-xs">⬇︎</span>
+    {{ componentObject.label }} <span class="relative text-[10px]">⬇︎</span>
   </button>
 </template>

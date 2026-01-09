@@ -34,7 +34,7 @@ const deleteModule = () => {
     <button
       @click="openModule"
       :class="{ 'bg-teal-400': store.visibleModuleID === id }"
-      class="cursor-pointer rounded-sm border bg-slate-100 px-2 py-1 font-semibold tracking-wider shadow-md hover:brightness-120"
+      class="cursor-pointer rounded-sm border bg-slate-100 px-1.5 text-sm font-semibold tracking-wider shadow-md hover:brightness-120"
     >
       {{ label }}
     </button>
@@ -44,6 +44,6 @@ const deleteModule = () => {
     >
       <div class="relative -top-[1.5px]">×</div>
     </button>
-    <div class="relative top-1 mr-2 ml-3 text-xl text-slate-600">➡︎</div>
+    <div class="relative top-1 mr-1.5 ml-2.5 text-xl text-slate-600">➡︎</div>
   </div>
 </template>

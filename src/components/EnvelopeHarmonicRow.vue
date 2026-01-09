@@ -26,7 +26,13 @@ const updateRowValue = (pixelValue: number) => {
 
     const totalSteps = (16 * props.bars) / props.grid
 
-    const currentStep = Math.ceil((pixelValue / width) * totalSteps)
+    let currentStep
+
+    if (isPositive.value) {
+      currentStep = Math.ceil((pixelValue / width) * totalSteps)
+    } else {
+      currentStep = Math.floor((pixelValue / width) * totalSteps)
+    }
 
     const stepDuration = (props.grid / 4) * (60 / props.tempo)
 

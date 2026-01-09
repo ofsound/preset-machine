@@ -10,7 +10,7 @@ const upperLimit = ref('0')
 <template>
   <div class="flex justify-center gap-1">
     <input
-      class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+      class="w-14 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
       type="text"
       :id="'lower-limit'"
       :name="'lower-limit'"
@@ -18,7 +18,7 @@ const upperLimit = ref('0')
     />
     <div class="text-lg font-bold">&harr;</div>
     <input
-      class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+      class="w-14 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
       type="text"
       :id="'upper-limit'"
       :name="'upper-limit'"
@@ -29,7 +29,6 @@ const upperLimit = ref('0')
       class="ml-2 cursor-pointer rounded-sm text-sm font-semibold tracking-wide"
     >
       <svg width="22" height="22" viewBox="0 0 100 100">
-        <!-- Dice Body -->
         <rect
           x="10"
           y="10"
@@ -40,7 +39,6 @@ const upperLimit = ref('0')
           stroke="#AAAAAA"
           stroke-width="4"
         />
-        <!-- Pips for Number 5 -->
         <circle cx="30" cy="30" r="9" fill="#000000" />
         <circle cx="70" cy="30" r="9" fill="#000000" />
         <circle cx="30" cy="70" r="9" fill="#000000" />

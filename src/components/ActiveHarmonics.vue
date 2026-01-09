@@ -82,7 +82,7 @@ watch(activeHarmonics, (newValue) => {
   <div class="p-4">
     <div class="flex gap-8">
       <div
-        class="w-34 self-center text-[15px] font-bold tracking-wider text-zinc-400/80 uppercase"
+        class="w-34 self-center text-[15px] font-bold tracking-wider text-zinc-400 uppercase"
       >
         Harmonics
       </div>
