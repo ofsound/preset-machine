@@ -15,7 +15,7 @@ const store = useStore()
       :color="store.harmonicRowColors[index - 1]!"
     />
   </div>
-  <div class="flex justify-between py-1 text-sm">
+  <div class="flex justify-between py-1 text-xs font-semibold">
     <div v-for="index in 20" :key="index">{{ index - 1 }}</div>
   </div>
 </template>

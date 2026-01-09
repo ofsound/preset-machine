@@ -102,7 +102,7 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
 
     <TopMargin :timeScaleSeconds="parseInt(timeScaleSeconds)" :grid :bars />
 
-    <div class="mb-3 flex w-full flex-col-reverse bg-white">
+    <div class="flex w-full flex-col-reverse bg-white">
       <EnvelopeHarmonicRow
         v-for="(item, index) in activeHarmonics[activeHarmonics.length - 1]"
         :key="index"

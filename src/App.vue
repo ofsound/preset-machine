@@ -50,14 +50,12 @@ const toggleInspector = () => {
         <MenuSystem :componentObjects="componentObjects" />
 
         <div class="flex-1 bg-slate-800 p-5">
-          <div class="h-full rounded-lg bg-neutral-50">
-            <component
-              v-show="store.visibleModuleID === item.id"
-              v-for="item in store.modules"
-              :key="item.id"
-              :is="toRaw(item.component)"
-            ></component>
-          </div>
+          <component
+            v-show="store.visibleModuleID === item.id"
+            v-for="item in store.modules"
+            :key="item.id"
+            :is="toRaw(item.component)"
+          ></component>
         </div>
       </div>
     </template>

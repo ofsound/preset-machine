@@ -22,7 +22,7 @@ const handleNewValue = () => {
 </script>
 
 <template>
-  <div class="flex gap-8 rounded-sm p-4">
+  <div class="flex gap-8 p-4">
     <div
       class="w-34 self-center text-[15px] font-bold tracking-wider text-zinc-400/80 uppercase"
     >
