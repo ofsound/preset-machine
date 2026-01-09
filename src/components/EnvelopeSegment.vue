@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import RandomizeControls from '@/components/RandomizeControls.vue'
 import TopMargin from '@/components/TopMargin.vue'
 import ManualEntry from '@/components/ManualEntry.vue'
-import TimeScaleControls from '@/components/TimeScaleControls.vue'
 import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
 
 import { useStore } from '@/stores/store'
@@ -25,6 +24,7 @@ const maxSeconds = ref<number>(5)
 const numDivisions = ref<number>(5)
 
 const rowPixelHeight = ref('6')
+const timeScaleSeconds = ref('5')
 
 const currentHarmonicIndex = ref(0)
 const currentHarmonicValue = ref(0)
@@ -81,10 +81,16 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
       />
       <RandomizeControls @randomize="randomize" />
 
-      <TimeScaleControls
+      <!-- <TimeScaleControls
         v-show="grid === 0"
         @updateTimeScale="updateTimeScale"
+      /> -->
+      <input
+        type="text"
+        class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+        v-model="timeScaleSeconds"
       />
+
       <input
         type="text"
         class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
@@ -92,7 +98,7 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
       />
     </div>
 
-    <TopMargin :maxSeconds :numDivisions :grid :bars />
+    <TopMargin :timeScaleSeconds="parseInt(timeScaleSeconds)" :grid :bars />
 
     <div class="mb-3 flex w-full flex-col-reverse">
       <EnvelopeHarmonicRow
@@ -104,8 +110,7 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
         :isActive="activeHarmonics.includes(index)"
         :color="store.harmonicRowColors[index]!"
         :rowPixelHeight
-        :maxSeconds
-        :numDivisions
+        :timeScaleSeconds="parseInt(timeScaleSeconds)"
         :grid
         :bars
         :tempo

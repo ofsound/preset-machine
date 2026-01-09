@@ -2,8 +2,7 @@
 defineProps<{
   grid: number
   bars: number
-  maxSeconds: number
-  numDivisions: number
+  timeScaleSeconds: number
 }>()
 </script>
 
@@ -28,12 +27,12 @@ defineProps<{
       </template>
       <template v-if="grid === 0">
         <div
-          v-for="n in numDivisions"
+          v-for="n in timeScaleSeconds"
           :key="n"
           class="relative h-full flex-1 text-xs font-semibold"
         >
           <div class="absolute -left-3 block w-6 text-center">
-            {{ n * (maxSeconds / numDivisions) }}
+            {{ n }}
           </div>
         </div>
       </template>
@@ -58,12 +57,12 @@ defineProps<{
       </template>
       <template v-if="grid === 0">
         <div
-          v-for="n in numDivisions"
+          v-for="n in timeScaleSeconds"
           :key="n"
           class="relative h-2 flex-1 text-center text-xs font-semibold"
         >
           <div class="absolute -right-3 block w-6 text-center">
-            {{ n * (maxSeconds / numDivisions) }}
+            {{ n }}
           </div>
         </div>
       </template>

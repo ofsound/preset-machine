@@ -5,8 +5,7 @@ const props = defineProps<{
   isActive: boolean
   color: string
   rowPixelHeight: string
-  maxSeconds: number
-  numDivisions: number
+  timeScaleSeconds: number
   grid: number
   bars: number
   tempo: number
@@ -36,7 +35,8 @@ const updateRowValue = (pixelValue: number) => {
     emit('updateRowValue', snappedRowValue)
   } else {
     const scaledRowValue =
-      (pixelValue * props.maxSeconds) / positiveGridElement.value!.clientWidth
+      (pixelValue * props.timeScaleSeconds) /
+      positiveGridElement.value!.clientWidth
     emit('updateRowValue', scaledRowValue)
   }
 }
@@ -76,7 +76,7 @@ const setRandomValueInRange = (maxValue: number, minValue: number) => {
 
   const scaledWidth =
     randomValueWithinRange *
-    (positiveGridElement.value!.clientWidth / props.maxSeconds)
+    (positiveGridElement.value!.clientWidth / props.timeScaleSeconds)
 
   updateRowPixelWidth(Math.abs(scaledWidth))
 
@@ -91,7 +91,7 @@ const setRandomValueInRange = (maxValue: number, minValue: number) => {
 
 const setManualValue = (newValue: number) => {
   const scaledWidth =
-    newValue * (positiveGridElement.value!.clientWidth / props.maxSeconds)
+    newValue * (positiveGridElement.value!.clientWidth / props.timeScaleSeconds)
 
   updateRowPixelWidth(Math.abs(scaledWidth))
 
@@ -150,7 +150,7 @@ const handleResetMouse = () => {
 }
 
 watch(
-  () => props.maxSeconds,
+  () => props.timeScaleSeconds,
   (newValue, oldValue) => {
     rowWidth.value *= oldValue / newValue
   },
@@ -195,7 +195,7 @@ onMounted(() => {
     >
       <template v-if="grid === 0">
         <div
-          v-for="n in numDivisions"
+          v-for="n in timeScaleSeconds"
           :key="n"
           class="h-full flex-1 border-r border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
         ></div>
@@ -222,7 +222,7 @@ onMounted(() => {
     >
       <template v-if="grid === 0">
         <div
-          v-for="n in numDivisions"
+          v-for="n in timeScaleSeconds"
           :key="n"
           class="h-full flex-1 border-r border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
         ></div>
