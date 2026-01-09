@@ -187,14 +187,23 @@ onMounted(() => {
   <div class="relative flex cursor-pointer select-none">
     <div
       ref="negativeGridElement"
-      class="relative flex flex-1 hover:brightness-110"
+      class="relative flex flex-1 flex-row-reverse hover:[&>*:last-child]:brightness-110"
     >
-      <!-- <div v-for="n in numDivisions" :key="n" class="h-2 flex-1 border-r"></div> -->
-      <div
-        v-for="n in (16 * bars) / grid"
-        :key="n"
-        class="h-2 flex-1 border-r"
-      ></div>
+      <template v-if="grid === 0">
+        <div
+          v-for="n in numDivisions"
+          :key="n"
+          class="h-2 flex-1 border-r border-neutral-200 even:bg-zinc-100"
+        ></div>
+      </template>
+      <template v-if="grid !== 0">
+        <div
+          v-for="n in (16 * bars) / grid"
+          :key="n"
+          class="h-2 flex-1 border-l border-neutral-200 even:bg-zinc-100"
+          :class="{ 'border-zinc-400!': n % ((4 * bars) / grid) === 0 }"
+        ></div>
+      </template>
       <div
         v-show="!isPositive"
         class="absolute right-0 h-2"
@@ -203,12 +212,25 @@ onMounted(() => {
     </div>
 
     <div ref="resetElement" class="h-2 w-6 bg-white"></div>
-    <div ref="positiveGridElement" class="flex flex-1 hover:brightness-110">
-      <!-- <div v-for="n in numDivisions" :key="n" class="h-2 flex-1 border-r"></div> -->
-      <div v-for="n in (16 * bars) / grid" :key="n" class="h-2 flex-1 border-r">
-        <!-- {{ index % 4 === 0 ? index / 4 : '|' }} -->
-      </div>
-
+    <div
+      ref="positiveGridElement"
+      class="flex flex-1 hover:[&>*:last-child]:brightness-110"
+    >
+      <template v-if="grid === 0">
+        <div
+          v-for="n in numDivisions"
+          :key="n"
+          class="h-2 flex-1 border-r border-neutral-200 even:bg-zinc-100"
+        ></div>
+      </template>
+      <template v-if="grid !== 0">
+        <div
+          v-for="n in (16 * bars) / grid"
+          :key="n"
+          class="h-2 flex-1 border-r border-neutral-200 even:bg-zinc-100"
+          :class="{ 'border-zinc-400!': n % ((4 * bars) / grid) === 0 }"
+        ></div>
+      </template>
       <div v-show="isPositive" class="absolute h-2" :style="valueStyle"></div>
     </div>
   </div>

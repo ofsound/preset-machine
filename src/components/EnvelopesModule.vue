@@ -29,7 +29,7 @@ const envelopeSegments: EnvelopeLabelAndSegment[] = [
 
 const lastMenuButtonClickedLabel = ref('Offset')
 
-const grid = ref(1)
+const grid = ref(0)
 const bars = ref(1)
 const tempo = ref(120)
 
