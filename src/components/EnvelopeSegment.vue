@@ -20,9 +20,6 @@ const emit = defineEmits(['updateEnvelopeSegmentValues'])
 
 const store = useStore()
 
-const maxSeconds = ref<number>(5)
-const numDivisions = ref<number>(5)
-
 const rowPixelHeight = ref('6')
 const timeScaleSeconds = ref('5')
 
@@ -83,9 +80,9 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
         <RandomizeControls @randomize="randomize" />
       </div>
 
-      <div class="flex gap-3">
-        <div class="flex gap-2">
-          <div class="self-center text-sm">Time Scale (s)</div>
+      <div class="flex gap-4">
+        <div v-show="grid === 0" class="flex gap-2">
+          <div class="self-center text-xs">Time Scale (s)</div>
           <input
             type="text"
             class="w-9 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
@@ -93,7 +90,7 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
           />
         </div>
         <div class="flex gap-2">
-          <div class="self-center text-sm">Row Height (px)</div>
+          <div class="self-center text-xs">Row Height (px)</div>
           <input
             type="text"
             class="w-9 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"

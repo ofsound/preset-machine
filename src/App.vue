@@ -65,9 +65,7 @@ const toggleInspector = () => {
     <footer
       class="mt-auto flex justify-between bg-neutral-100 p-3 text-right text-xs"
     >
-      <div class="ml-auto font-semibold tracking-wide">
-        preset machine v0.0.5
-      </div>
+      <div class="ml-auto font-semibold tracking-wide">preset machine v0.1</div>
     </footer>
   </div>
 </template>
