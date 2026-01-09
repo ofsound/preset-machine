@@ -12,7 +12,7 @@ const { corePreset } = usePreset()
 </script>
 
 <template>
-  <div class="flex p-4">
+  <div class="flex p-2 py-3">
     <div class="mr-auto flex gap-4">
       <input
         type="text"
@@ -20,7 +20,7 @@ const { corePreset } = usePreset()
         name="preset-name"
         v-model="corePreset.name"
         placeholder="Preset Name"
-        class="rounded-md bg-neutral-100 px-3 py-1 text-xl font-semibold tracking-wide"
+        class="rounded-md bg-neutral-100 px-3 py-1 font-semibold tracking-wide"
       />
       <input
         type="text"
@@ -28,7 +28,7 @@ const { corePreset } = usePreset()
         name="preset-author"
         v-model="corePreset.author"
         placeholder="Preset Author"
-        class="rounded-md bg-neutral-100 px-3 py-1 text-xl font-semibold tracking-wide"
+        class="rounded-md bg-neutral-100 px-3 py-1 font-semibold tracking-wide"
       />
     </div>
     <div class="flex gap-2">
