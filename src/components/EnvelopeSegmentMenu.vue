@@ -17,7 +17,7 @@ defineEmits(['menuButtonClicked'])
       @click="$emit('menuButtonClicked', item)"
       class="cursor-pointer rounded-t-sm bg-sky-50 px-3 py-px text-sm font-semibold tracking-wide"
       :class="{
-        'bg-slate-300': lastMenuButtonClickedLabel === item.label,
+        'bg-slate-200': lastMenuButtonClickedLabel === item.label,
       }"
     >
       {{ item.label }}

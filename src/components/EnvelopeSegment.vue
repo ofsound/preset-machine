@@ -72,7 +72,7 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
 </script>
 
 <template>
-  <div class="bg-slate-300 pt-4">
+  <div class="bg-slate-200 px-4 pt-6">
     <div class="flex justify-between">
       <ManualEntry
         :currentHarmonicIndex

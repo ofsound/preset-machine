@@ -81,9 +81,13 @@ watch(activeHarmonics, (newValue) => {
 <template>
   <div class="p-4">
     <div class="flex gap-4">
-      <div class="w-36 font-semibold">Active Harmonics</div>
+      <div
+        class="w-34 self-center text-[15px] font-bold tracking-wider text-slate-400/70 uppercase"
+      >
+        Harmonics
+      </div>
       <div class="text-sm font-semibold">
-        Min:
+        Min:&nbsp;&nbsp;
         <input
           name="num-harmonics"
           id="num-harmonics"
@@ -93,7 +97,7 @@ watch(activeHarmonics, (newValue) => {
         />
       </div>
       <div class="text-sm font-semibold">
-        Max:
+        Max:&nbsp;&nbsp;
         <input
           name="num-harmonics"
           id="num-harmonics"
@@ -103,7 +107,7 @@ watch(activeHarmonics, (newValue) => {
         />
       </div>
       <div class="text-sm font-semibold">
-        <label for="my-select">Filter: </label>
+        <label for="my-select">Filter:&nbsp;&nbsp;</label>
         <select
           id="my-select"
           v-model="selected"
