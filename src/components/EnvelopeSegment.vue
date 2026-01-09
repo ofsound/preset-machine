@@ -59,10 +59,10 @@ const randomize = (lowerLimit: number, upperLimit: number) => {
   })
 }
 
-const updateTimeScale = (newMaxSeconds: number, newNumDivisions: number) => {
-  maxSeconds.value = newMaxSeconds
-  numDivisions.value = newNumDivisions
-}
+// const updateTimeScale = (newMaxSeconds: number, newNumDivisions: number) => {
+//   maxSeconds.value = newMaxSeconds
+//   numDivisions.value = newNumDivisions
+// }
 
 const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
   envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
@@ -72,35 +72,40 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
 </script>
 
 <template>
-  <div class="bg-slate-200 px-4 pt-6">
-    <div class="flex justify-between">
-      <ManualEntry
-        :currentHarmonicIndex
-        :currentHarmonicValue
-        @updateRowValue="updateRowValueFromManual"
-      />
-      <RandomizeControls @randomize="randomize" />
+  <div class="bg-linear-to-b from-zinc-200/60 to-neutral-50 to-30% px-4 pt-4">
+    <div class="mb-4 flex justify-between">
+      <div class="flex gap-8">
+        <ManualEntry
+          :currentHarmonicIndex
+          :currentHarmonicValue
+          @updateRowValue="updateRowValueFromManual"
+        />
+        <RandomizeControls @randomize="randomize" />
+      </div>
 
-      <!-- <TimeScaleControls
-        v-show="grid === 0"
-        @updateTimeScale="updateTimeScale"
-      /> -->
-      <input
-        type="text"
-        class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
-        v-model="timeScaleSeconds"
-      />
-
-      <input
-        type="text"
-        class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
-        v-model="rowPixelHeight"
-      />
+      <div class="flex gap-3">
+        <div class="flex gap-2">
+          <div class="self-center text-sm">Time Scale (s)</div>
+          <input
+            type="text"
+            class="w-9 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+            v-model="timeScaleSeconds"
+          />
+        </div>
+        <div class="flex gap-2">
+          <div class="self-center text-sm">Row Height (px)</div>
+          <input
+            type="text"
+            class="w-9 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+            v-model="rowPixelHeight"
+          />
+        </div>
+      </div>
     </div>
 
     <TopMargin :timeScaleSeconds="parseInt(timeScaleSeconds)" :grid :bars />
 
-    <div class="mb-3 flex w-full flex-col-reverse">
+    <div class="mb-3 flex w-full flex-col-reverse bg-white">
       <EnvelopeHarmonicRow
         v-for="(item, index) in activeHarmonics[activeHarmonics.length - 1]"
         :key="index"

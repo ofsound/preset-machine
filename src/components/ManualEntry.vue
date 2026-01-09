@@ -30,7 +30,7 @@ watch(
 </script>
 
 <template>
-  <div class="mb-2 flex gap-2 bg-gray-100">
+  <div class="flex gap-2">
     <input
       type="text"
       id="harmonicIndex"

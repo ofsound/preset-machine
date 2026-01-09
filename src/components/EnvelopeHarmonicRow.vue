@@ -205,7 +205,7 @@ onMounted(() => {
           v-for="n in (16 * bars) / grid"
           :key="n"
           class="h-full flex-1 border-l border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
-          :class="{ 'border-zinc-400!': n % ((4 * bars) / grid) === 0 }"
+          :class="{ 'border-zinc-400/50!': n % ((4 * bars) / grid) === 0 }"
         ></div>
       </template>
       <div
@@ -215,7 +215,7 @@ onMounted(() => {
       ></div>
     </div>
 
-    <div ref="resetElement" class="h-2 w-6 bg-neutral-50"></div>
+    <div ref="resetElement" class="h-full w-6"></div>
     <div
       ref="positiveGridElement"
       class="flex h-full flex-1 hover:[&>*:last-child]:brightness-110"
@@ -232,7 +232,7 @@ onMounted(() => {
           v-for="n in (16 * bars) / grid"
           :key="n"
           class="h-full flex-1 border-r border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
-          :class="{ 'border-zinc-400!': n % ((4 * bars) / grid) === 0 }"
+          :class="{ 'border-zinc-400/50!': n % ((4 * bars) / grid) === 0 }"
         ></div>
       </template>
       <div
