@@ -23,12 +23,13 @@ const handleNewValue = () => {
 
 <template>
   <div class="flex gap-4 rounded-sm p-4">
-    <div>
+    <div class="w-36 font-bold">Tempo Sync</div>
+    <div class="text-sm font-semibold">
       Grid:
       <select
         name="hold-length"
         id="hold-length"
-        class="bg-gray-3 rounded-sm bg-gray-300 p-1 text-black"
+        class="w-20 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
         v-model="grid"
         @change="handleNewValue"
       >
@@ -41,24 +42,24 @@ const handleNewValue = () => {
         </option>
       </select>
     </div>
-    <div v-show="grid !== 0">
+    <div v-show="grid !== 0" class="text-sm font-semibold">
       Bars:
       <input
         name="bars"
         id="bars"
-        class="max-w-14 rounded-sm bg-gray-300 p-1"
-        type="number"
+        class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+        type="text"
         v-model="bars"
         @input="handleNewValue"
       />
     </div>
-    <div v-show="grid !== 0" class="ml-auto">
+    <div v-show="grid !== 0" class="text-sm font-semibold">
       Tempo:
       <input
         name="tempo"
         id="tempo"
-        class="max-w-14 rounded-sm bg-gray-300 p-1"
-        type="number"
+        class="w-14 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+        type="text"
         v-model="tempo"
         @input="handleNewValue"
       />

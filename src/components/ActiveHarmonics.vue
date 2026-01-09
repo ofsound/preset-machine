@@ -81,8 +81,9 @@ watch(activeHarmonics, (newValue) => {
 <template>
   <div class="p-4">
     <div class="flex gap-4">
-      <div>
-        Partial Range: min
+      <div class="w-36 font-semibold">Active Harmonics</div>
+      <div class="text-sm font-semibold">
+        Min:
         <input
           name="num-harmonics"
           id="num-harmonics"
@@ -91,8 +92,8 @@ watch(activeHarmonics, (newValue) => {
           v-model="lowestHarmonic"
         />
       </div>
-      <div>
-        Max
+      <div class="text-sm font-semibold">
+        Max:
         <input
           name="num-harmonics"
           id="num-harmonics"
@@ -101,9 +102,14 @@ watch(activeHarmonics, (newValue) => {
           v-model="highestHarmonic"
         />
       </div>
-      <div>
+      <div class="text-sm font-semibold">
         <label for="my-select">Filter: </label>
-        <select id="my-select" v-model="selected" title="boo">
+        <select
+          id="my-select"
+          v-model="selected"
+          class="w-32 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold tabular-nums"
+          :title="activeHarmonics.join(', ')"
+        >
           <option
             v-for="option in activeHarmonicsMode"
             :value="option.label"
@@ -122,8 +128,5 @@ watch(activeHarmonics, (newValue) => {
       class="w-full bg-gray-200 p-2"
       v-show="selected === 'List'"
     ></textarea>
-    <div class="mt-2 bg-slate-200 px-2 py-1 text-sm">
-      {{ activeHarmonics.join(', ') }}
-    </div>
   </div>
 </template>

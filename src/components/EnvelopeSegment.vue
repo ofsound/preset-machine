@@ -24,7 +24,7 @@ const store = useStore()
 const maxSeconds = ref<number>(5)
 const numDivisions = ref<number>(5)
 
-const rowPixelHeight = ref('1')
+const rowPixelHeight = ref('6')
 
 const currentHarmonicIndex = ref(0)
 const currentHarmonicValue = ref(0)
