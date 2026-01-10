@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import { v4 as uuidv4 } from 'uuid'
+
 const emit = defineEmits(['updateTempoGridSetting'])
 
 const toolOptions = ref([
@@ -36,8 +38,8 @@ const handleNewValue = () => {
     <div class="text-sm font-semibold text-neutral-700">
       Grid:&nbsp;&nbsp;
       <select
-        name="hold-length"
-        id="hold-length"
+        name="grid"
+        :id="`grid${uuidv4()}`"
         class="w-18 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
         v-model="grid"
         @change="handleNewValue"
@@ -58,7 +60,7 @@ const handleNewValue = () => {
       Bars:&nbsp;&nbsp;
       <input
         name="bars"
-        id="bars"
+        :id="`bars${uuidv4()}`"
         class="w-9 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
         type="text"
         v-model="bars"
@@ -72,7 +74,7 @@ const handleNewValue = () => {
       Tempo:&nbsp;&nbsp;
       <input
         name="tempo"
-        id="tempo"
+        :id="`tempo${uuidv4()}`"
         class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
         type="text"
         v-model="tempo"

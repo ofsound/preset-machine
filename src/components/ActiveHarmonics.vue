@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 
 import { v4 as uuidv4 } from 'uuid'
 
@@ -25,7 +25,7 @@ const activeHarmonicsMode: Array<{ label: string }> = [
 ]
 
 const lowestHarmonic = ref<number>(1)
-const highestHarmonic = ref<number>(30)
+const highestHarmonic = ref<number>(36)
 
 const activeHarmonics = computed(() => {
   const checks = {
@@ -78,6 +78,10 @@ const customList = computed({
 watch(activeHarmonics, (newValue) => {
   emit('update:activeHarmonics', newValue)
 })
+
+onMounted(() => {
+  emit('update:activeHarmonics', activeHarmonics.value)
+})
 </script>
 
 <template>
@@ -129,7 +133,7 @@ watch(activeHarmonics, (newValue) => {
     </div>
     <textarea
       name="list"
-      id="list"
+      :id="`list${uuidv4()}`"
       v-model="customList"
       placeholder="Copy and Paste a list of comma separated numbers here."
       class="w-full bg-gray-200 p-2"

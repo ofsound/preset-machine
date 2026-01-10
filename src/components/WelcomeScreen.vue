@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import JsonDrop from './JsonDrop.vue'
+import JsonDrop from '@/components/JsonDrop.vue'
 
 defineEmits(['closeWelcome'])
 </script>

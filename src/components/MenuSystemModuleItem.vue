@@ -40,9 +40,9 @@ const deleteModule = () => {
     </button>
     <button
       @click="deleteModule"
-      class="absolute -top-2.5 -left-2.5 block aspect-square h-5 w-5 cursor-pointer rounded-full border border-black bg-white text-sm font-black"
+      class="absolute -top-2 -left-2 block aspect-square h-4 w-4 cursor-pointer rounded-full border border-black bg-white text-sm font-black"
     >
-      <div class="relative -top-[1.5px]">×</div>
+      <div class="relative -top-[3.5px]">×</div>
     </button>
     <div class="relative top-1 mr-1.5 ml-2.5 text-xl text-slate-600">➡︎</div>
   </div>
