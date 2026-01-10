@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 
 const props = defineProps<{
   index: number
+  timeScaleSeconds: number
   color: string
 }>()
 
@@ -12,7 +13,13 @@ const { finalPreset } = usePreset()
 
 const rowElement = ref<HTMLElement | null>(null)
 
-const scaleFactor = ref(100)
+const scaleFactor = computed(() => {
+  if (rowElement.value === null) {
+    return 20
+  } else {
+    return rowElement.value!.clientWidth / props.timeScaleSeconds
+  }
+})
 
 const offsetWidth = computed(() => {
   return finalPreset.value.offsets[props.index]! * scaleFactor.value + 'px'
@@ -40,23 +47,21 @@ const attackBackgroundString =
 const releaseBackgroundString =
   'linear-gradient(to right,' + props.color + ',' + '#000' + ' 100%'
 
-onMounted(() => {
-  scaleFactor.value = rowElement.value!.clientWidth / 20
-})
+// onMounted(() => {
+//   scaleFactor.value =
+// })
 </script>
 
 <template>
   <div ref="rowElement" class="mb-px flex">
     <div
       :style="{
-        height: '5px',
         width: offsetWidth,
         backgroundColor: '#000',
       }"
     ></div>
     <div
       :style="{
-        height: '5px',
         width: attackWidth,
         background: attackBackgroundString,
         borderRight: '1px solid #FFF',
@@ -64,7 +69,6 @@ onMounted(() => {
     ></div>
     <div
       :style="{
-        height: '5px',
         width: decayWidth,
         backgroundColor: color,
         borderLeft: '1px solid #333',
@@ -73,7 +77,6 @@ onMounted(() => {
     ></div>
     <div
       :style="{
-        height: '5px',
         width: holdWidth,
         backgroundColor: color,
         borderLeft: '1px solid #333',
@@ -82,7 +85,6 @@ onMounted(() => {
     ></div>
     <div
       :style="{
-        height: '5px',
         width: releaseWidth,
         background: releaseBackgroundString,
         borderLeft: '1px solid #333',

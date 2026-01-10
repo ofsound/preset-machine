@@ -1,21 +1,49 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
+import PageTwoControls from './PageTwoControls.vue'
 import PageTwoRow from '@/components/PageTwoRow.vue'
 
 import { useStore } from '@/stores/store'
 
 const store = useStore()
+
+const numHarmonics = ref(36)
+const rowPixelHeight = ref(4)
+const timeScaleSeconds = ref(20)
+
+const updatePageTwoSettings = (
+  newNumHarmonics: number,
+  newRowPixelHeight: number,
+  newTimeScaleSeconds: number,
+) => {
+  numHarmonics.value = newNumHarmonics
+  rowPixelHeight.value = newRowPixelHeight
+  timeScaleSeconds.value = newTimeScaleSeconds
+}
 </script>
 
 <template>
-  <div class="flex flex-col-reverse bg-black">
-    <PageTwoRow
-      v-for="index in 34"
-      :key="index"
-      :index="index - 1"
-      :color="store.harmonicRowColors[index - 1]!"
-    />
-  </div>
-  <div class="flex justify-between py-1 text-xs font-semibold">
-    <div v-for="index in 20" :key="index">{{ index - 1 }}</div>
+  <div class="relative bg-black">
+    <PageTwoControls @updatePageTwoSettings="updatePageTwoSettings" />
+    <div class="flex flex-col-reverse bg-black">
+      <PageTwoRow
+        v-for="index in numHarmonics"
+        :key="index"
+        :index="index - 1"
+        :timeScaleSeconds
+        :color="store.harmonicRowColors[index - 1]!"
+        :style="{ height: `${rowPixelHeight}px` }"
+      />
+    </div>
+    <div class="flex h-4 justify-between bg-slate-400 text-xs font-semibold">
+      <div
+        v-for="index in timeScaleSeconds + 1"
+        :key="index"
+        class="relative first:opacity-0 last:opacity-0"
+      >
+        {{ index - 1 }}
+      </div>
+    </div>
   </div>
 </template>
