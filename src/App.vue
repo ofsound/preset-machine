@@ -45,11 +45,11 @@ const toggleInspector = () => {
         <PresetInspector />
       </div>
 
-      <div v-show="!isInspector">
+      <div v-show="!isInspector" class="flex min-h-0 flex-1 flex-col">
         <PageTwo />
         <MenuSystem :componentObjects="componentObjects" />
 
-        <div class="flex-1 bg-slate-800 p-5">
+        <div class="min-h-0 flex-1 bg-slate-800 p-5">
           <component
             v-show="store.visibleModuleID === item.id"
             v-for="item in store.modules"

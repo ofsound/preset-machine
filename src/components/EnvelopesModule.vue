@@ -65,7 +65,7 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
 </script>
 
 <template>
-  <div class="h-full overflow-hidden rounded-lg bg-neutral-50">
+  <div class="flex h-full flex-col overflow-hidden rounded-lg bg-neutral-50">
     <TempoGridControls
       v-show="true"
       @updateTempoGridSetting="updateTempoGridSetting"

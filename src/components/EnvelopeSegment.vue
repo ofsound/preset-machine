@@ -69,7 +69,9 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
 </script>
 
 <template>
-  <div class="bg-linear-to-b from-zinc-200/60 to-neutral-50 to-30% px-4 pt-4">
+  <div
+    class="flex h-full min-h-0 flex-1 flex-col bg-linear-to-b from-zinc-200/60 to-neutral-50 to-30% px-4 pt-4"
+  >
     <div class="mb-4 flex justify-between">
       <div class="flex gap-8">
         <ManualEntry
@@ -102,22 +104,25 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
 
     <TopMargin :timeScaleSeconds="parseInt(timeScaleSeconds)" :grid :bars />
 
-    <div class="flex w-full flex-col-reverse bg-white">
-      <EnvelopeHarmonicRow
-        v-for="(item, index) in activeHarmonics[activeHarmonics.length - 1]"
-        :key="index"
-        :ref="
-          (el) => setRefs(el as InstanceType<typeof EnvelopeHarmonicRow>, index)
-        "
-        :isActive="activeHarmonics.includes(index)"
-        :color="store.harmonicRowColors[index]!"
-        :rowPixelHeight
-        :timeScaleSeconds="parseInt(timeScaleSeconds)"
-        :grid
-        :bars
-        :tempo
-        @updateRowValue="handleUpdateRowValue(index, $event)"
-      />
+    <div class="min-h-0 flex-1 overflow-scroll">
+      <div class="flex w-full flex-col-reverse overflow-auto bg-white">
+        <EnvelopeHarmonicRow
+          v-for="(item, index) in activeHarmonics[activeHarmonics.length - 1]"
+          :key="index"
+          :ref="
+            (el) =>
+              setRefs(el as InstanceType<typeof EnvelopeHarmonicRow>, index)
+          "
+          :isActive="activeHarmonics.includes(index)"
+          :color="store.harmonicRowColors[index]!"
+          :rowPixelHeight
+          :timeScaleSeconds="parseInt(timeScaleSeconds)"
+          :grid
+          :bars
+          :tempo
+          @updateRowValue="handleUpdateRowValue(index, $event)"
+        />
+      </div>
     </div>
   </div>
 </template>
