@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 
+import { v4 as uuidv4 } from 'uuid'
+
 import { isPrime, isFibonacci } from '@/utils/math'
 
 const emit = defineEmits(['update:activeHarmonics'])
@@ -89,8 +91,8 @@ watch(activeHarmonics, (newValue) => {
       <div class="text-sm font-semibold text-neutral-700">
         Min:&nbsp;&nbsp;
         <input
-          name="num-harmonics"
-          id="num-harmonics"
+          name="min-harmonics"
+          :id="`min-harmonics${uuidv4()}`"
           class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
           type="text"
           v-model="lowestHarmonic"
@@ -99,17 +101,18 @@ watch(activeHarmonics, (newValue) => {
       <div class="text-sm font-semibold text-neutral-700">
         Max:&nbsp;&nbsp;
         <input
-          name="num-harmonics"
-          id="num-harmonics"
+          name="max-harmonics"
+          :id="`max-harmonics${uuidv4()}`"
           class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
           type="text"
           v-model="highestHarmonic"
         />
       </div>
       <div class="text-sm font-semibold text-neutral-700">
-        <label for="my-select">Filter:&nbsp;&nbsp;</label>
+        Filter:&nbsp;&nbsp;
         <select
-          id="my-select"
+          name="my-select"
+          :id="`my-select${uuidv4()}`"
           v-model="selected"
           class="w-32 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
           :title="activeHarmonics.join(', ')"

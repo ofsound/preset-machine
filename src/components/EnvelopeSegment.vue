@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import { v4 as uuidv4 } from 'uuid'
+
 import RandomizeControls from '@/components/RandomizeControls.vue'
 import TopMargin from '@/components/TopMargin.vue'
 import ManualEntry from '@/components/ManualEntry.vue'
@@ -74,18 +76,20 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
   >
     <div class="mb-4 flex justify-between">
       <div class="flex gap-8">
+        <RandomizeControls @randomize="randomize" />
         <ManualEntry
           :currentHarmonicIndex
           :currentHarmonicValue
           @updateRowValue="updateRowValueFromManual"
         />
-        <RandomizeControls @randomize="randomize" />
       </div>
 
       <div class="flex gap-4">
         <div v-show="grid === 0" class="flex gap-2">
           <div class="self-center text-xs">Time Scale (s)</div>
           <input
+            :id="`time-scale${uuidv4()}`"
+            name="time-scale"
             type="text"
             class="w-9 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
             v-model="timeScaleSeconds"
@@ -94,6 +98,8 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
         <div class="flex gap-2">
           <div class="self-center text-xs">Row Height (px)</div>
           <input
+            :id="`row-height${uuidv4()}`"
+            name="row-height"
             type="text"
             class="w-9 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
             v-model="rowPixelHeight"

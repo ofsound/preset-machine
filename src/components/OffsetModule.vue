@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import { v4 as uuidv4 } from 'uuid'
+
 import OffsetDecayRow from '@/components/OffsetDecayRow.vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
@@ -36,7 +38,7 @@ const updateEnvelopeDecay = (index: number, decay: number) => {
         Harmonics:
         <input
           name="num-harmonics"
-          id="num-harmonics"
+          :id="`num-harmonics${uuidv4()}`"
           class="max-w-14 rounded-sm bg-gray-300 p-1"
           type="number"
           v-model="numHarmonics"
@@ -46,7 +48,7 @@ const updateEnvelopeDecay = (index: number, decay: number) => {
         Tempo:
         <input
           name="tempo"
-          id="tempo"
+          :id="`tempo${uuidv4()}`"
           class="max-w-14 rounded-sm bg-gray-300 p-1"
           type="number"
           v-model="tempo"
@@ -56,7 +58,7 @@ const updateEnvelopeDecay = (index: number, decay: number) => {
         Hold Length:&nbsp;&nbsp;
         <select
           name="hold-length"
-          id="hold-length"
+          :id="`hold-length${uuidv4()}`"
           class="bg-gray-3 rounded-sm bg-gray-300 p-1 text-black"
           v-model="toolOptionValue"
         >

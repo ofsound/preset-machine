@@ -13,11 +13,16 @@ const toolOptions = ref([
 ])
 
 const grid = ref<number>(0)
-const bars = ref<number>(4)
-const tempo = ref<number>(120)
+const bars = ref<string>('4')
+const tempo = ref<string>('120')
 
 const handleNewValue = () => {
-  emit('updateTempoGridSetting', grid.value, bars.value, tempo.value)
+  emit(
+    'updateTempoGridSetting',
+    grid.value,
+    Number(bars.value),
+    Number(tempo.value),
+  )
 }
 </script>
 

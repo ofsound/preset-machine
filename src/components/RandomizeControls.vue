@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import { v4 as uuidv4 } from 'uuid'
+
 const emit = defineEmits(['randomize'])
 
 const lowerLimit = ref('0')
@@ -12,7 +14,7 @@ const upperLimit = ref('0')
     <input
       class="w-14 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
       type="text"
-      :id="'lower-limit'"
+      :id="`lower-limit${uuidv4()}`"
       :name="'lower-limit'"
       v-model="lowerLimit"
     />
@@ -20,7 +22,7 @@ const upperLimit = ref('0')
     <input
       class="w-14 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
       type="text"
-      :id="'upper-limit'"
+      :id="`upper-limit${uuidv4()}`"
       :name="'upper-limit'"
       v-model="upperLimit"
     />
