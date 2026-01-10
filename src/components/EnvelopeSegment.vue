@@ -22,8 +22,10 @@ const emit = defineEmits(['updateEnvelopeSegmentValues'])
 
 const store = useStore()
 
-const rowPixelHeight = ref('6')
-const timeScaleSeconds = ref('5')
+const rowPixelHeight = defineModel<string>('rowPixelHeight', { required: true })
+const timeScaleSeconds = defineModel<string>('timeScaleSeconds', {
+  required: true,
+})
 
 const currentHarmonicIndex = ref(0)
 const currentHarmonicValue = ref(0)

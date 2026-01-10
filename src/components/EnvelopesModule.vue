@@ -33,6 +33,9 @@ const grid = ref(0)
 const bars = ref(1)
 const tempo = ref(120)
 
+const rowPixelHeight = ref('6')
+const timeScaleSeconds = ref('5')
+
 const updateTempoGridSetting = (
   newGrid: number,
   newBars: number,
@@ -86,6 +89,8 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
     <EnvelopeSegment
       v-for="(item, index) in envelopeSegments"
       v-show="lastMenuButtonClickedLabel === item.label"
+      v-model:rowPixelHeight="rowPixelHeight"
+      v-model:timeScaleSeconds="timeScaleSeconds"
       :key="index"
       :grid
       :bars
