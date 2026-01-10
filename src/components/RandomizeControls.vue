@@ -7,15 +7,21 @@ const emit = defineEmits(['randomize'])
 
 const lowerLimit = ref('0')
 const upperLimit = ref('0')
+
+const selectText = (e: PointerEvent) => {
+  const clickedInput = e.target as HTMLInputElement
+  clickedInput.select()
+}
 </script>
 
 <template>
-  <div class="flex justify-center gap-1">
+  <div class="flex w-1/3 gap-1">
     <input
       class="w-14 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
       type="text"
       :id="`lower-limit${uuidv4()}`"
       :name="'lower-limit'"
+      @click="selectText"
       v-model="lowerLimit"
     />
     <div class="text-lg font-bold">&harr;</div>
@@ -24,6 +30,7 @@ const upperLimit = ref('0')
       type="text"
       :id="`upper-limit${uuidv4()}`"
       :name="'upper-limit'"
+      @click="selectText"
       v-model="upperLimit"
     />
     <button

@@ -60,15 +60,15 @@ const randomize = (lowerLimit: number, upperLimit: number) => {
   })
 }
 
-// const updateTimeScale = (newMaxSeconds: number, newNumDivisions: number) => {
-//   maxSeconds.value = newMaxSeconds
-//   numDivisions.value = newNumDivisions
-// }
-
 const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
   envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
     if (index === rowIndex) childInstance.setManualValue(newRowValue)
   })
+}
+
+const selectText = (e: PointerEvent) => {
+  const clickedInput = e.target as HTMLInputElement
+  clickedInput.select()
 }
 </script>
 
@@ -77,34 +77,33 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
     class="flex h-full min-h-0 flex-1 flex-col bg-linear-to-b from-zinc-200/60 to-neutral-50 to-30% px-4 pt-4"
   >
     <div class="mb-4 flex justify-between">
-      <div class="flex gap-8">
-        <RandomizeControls @randomize="randomize" />
-        <ManualEntry
-          :currentHarmonicIndex
-          :currentHarmonicValue
-          @updateRowValue="updateRowValueFromManual"
-        />
-      </div>
-
-      <div class="flex gap-4">
+      <RandomizeControls @randomize="randomize" />
+      <ManualEntry
+        :currentHarmonicIndex
+        :currentHarmonicValue
+        @updateRowValue="updateRowValueFromManual"
+      />
+      <div class="flex w-1/3 justify-end gap-4">
         <div v-show="grid === 0" class="flex gap-2">
           <div class="self-center text-xs">Time Scale (s)</div>
           <input
+            type="text"
             :id="`time-scale${uuidv4()}`"
             name="time-scale"
-            type="text"
-            class="w-9 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
             v-model="timeScaleSeconds"
+            @click="selectText"
+            class="w-9 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
           />
         </div>
         <div class="flex gap-2">
           <div class="self-center text-xs">Row Height (px)</div>
           <input
+            type="text"
             :id="`row-height${uuidv4()}`"
             name="row-height"
-            type="text"
-            class="w-9 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
             v-model="rowPixelHeight"
+            @click="selectText"
+            class="w-9 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
           />
         </div>
       </div>

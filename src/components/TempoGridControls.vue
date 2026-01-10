@@ -26,6 +26,11 @@ const handleNewValue = () => {
     Number(tempo.value),
   )
 }
+
+const selectText = (e: PointerEvent) => {
+  const clickedInput = e.target as HTMLInputElement
+  clickedInput.select()
+}
 </script>
 
 <template>
@@ -59,12 +64,13 @@ const handleNewValue = () => {
     >
       Bars:&nbsp;&nbsp;
       <input
+        type="text"
         name="bars"
         :id="`bars${uuidv4()}`"
-        class="w-9 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
-        type="text"
         v-model="bars"
         @input="handleNewValue"
+        @click="selectText"
+        class="w-9 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
       />
     </div>
     <div
@@ -73,12 +79,13 @@ const handleNewValue = () => {
     >
       Tempo:&nbsp;&nbsp;
       <input
+        type="text"
         name="tempo"
         :id="`tempo${uuidv4()}`"
-        class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
-        type="text"
         v-model="tempo"
         @input="handleNewValue"
+        @click="selectText"
+        class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
       />
     </div>
   </div>

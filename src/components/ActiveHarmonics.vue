@@ -75,6 +75,11 @@ const customList = computed({
   },
 })
 
+const selectText = (e: PointerEvent) => {
+  const clickedInput = e.target as HTMLInputElement
+  clickedInput.select()
+}
+
 watch(activeHarmonics, (newValue) => {
   emit('update:activeHarmonics', newValue)
 })
@@ -95,21 +100,23 @@ onMounted(() => {
       <div class="text-sm font-semibold text-neutral-700">
         Min:&nbsp;&nbsp;
         <input
+          type="text"
           name="min-harmonics"
           :id="`min-harmonics${uuidv4()}`"
-          class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
-          type="text"
+          @click="selectText"
           v-model="lowestHarmonic"
+          class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
         />
       </div>
       <div class="text-sm font-semibold text-neutral-700">
         Max:&nbsp;&nbsp;
         <input
+          type="text"
           name="max-harmonics"
           :id="`max-harmonics${uuidv4()}`"
-          class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
-          type="text"
           v-model="highestHarmonic"
+          @click="selectText"
+          class="w-11 rounded-sm border border-neutral-300 bg-neutral-100 p-1 px-2 text-right text-sm font-semibold text-black tabular-nums"
         />
       </div>
       <div class="text-sm font-semibold text-neutral-700">
