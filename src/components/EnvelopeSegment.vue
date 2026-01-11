@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import RandomizeControls from '@/components/RandomizeControls.vue'
 import TopMargin from '@/components/TopMargin.vue'
 import ManualEntry from '@/components/ManualEntry.vue'
+import MouseLayer from '@/components/MouseLayer.vue'
 import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
 import EnvelopeHarmonicColumn from '@/components/EnvelopeHarmonicColumn.vue'
 
@@ -148,8 +149,9 @@ const selectText = (e: PointerEvent) => {
     <div class="min-h-0 flex-1 overflow-scroll">
       <div
         v-if="!isMagnitude"
-        class="flex w-full flex-col-reverse overflow-auto bg-white"
+        class="relative flex w-full flex-col-reverse overflow-auto bg-white"
       >
+        <MouseLayer :rowPixelHeight :numRows="36" />
         <EnvelopeHarmonicRow
           v-for="(item, index) in 511"
           v-show="index <= activeHarmonics[activeHarmonics.length - 1]!"
