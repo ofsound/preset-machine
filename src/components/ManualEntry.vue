@@ -8,13 +8,13 @@ const props = defineProps<{
   currentHarmonicValue: number
 }>()
 
-const harmonicIndex = ref(props.currentHarmonicIndex)
+const harmonicIndex = ref(props.currentHarmonicIndex + 1)
 const harmonicValue = ref(props.currentHarmonicValue)
 
 const emit = defineEmits(['updateRowValue'])
 
 const handleUserInput = () => {
-  emit('updateRowValue', harmonicIndex.value, harmonicValue.value)
+  emit('updateRowValue', harmonicIndex.value - 1, harmonicValue.value)
 }
 
 const selectText = (e: PointerEvent) => {
@@ -25,7 +25,7 @@ const selectText = (e: PointerEvent) => {
 watch(
   () => props.currentHarmonicIndex,
   (newValue) => {
-    harmonicIndex.value = newValue
+    harmonicIndex.value = newValue + 1
   },
 )
 watch(
@@ -50,7 +50,7 @@ watch(
       type="text"
       :id="`harmonic-value${uuidv4()}`"
       name="harmonic-value"
-      :value="currentHarmonicValue"
+      v-model="harmonicValue"
       @keyup.enter="handleUserInput"
       @click="selectText"
       class="w-16 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"

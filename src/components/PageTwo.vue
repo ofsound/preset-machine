@@ -28,11 +28,11 @@ const updatePageTwoSettings = (
     <PageTwoControls @updatePageTwoSettings="updatePageTwoSettings" />
     <div class="flex flex-col-reverse bg-black">
       <PageTwoRow
-        v-for="index in numHarmonics"
+        v-for="(n, index) in numHarmonics"
         :key="index"
-        :index="index - 1"
+        :index="index"
         :timeScaleSeconds
-        :color="store.harmonicRowColors[index - 1]!"
+        :color="store.harmonicRowColors[index]!"
         :style="{ height: `${rowPixelHeight}px` }"
       />
     </div>

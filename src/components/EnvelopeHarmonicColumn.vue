@@ -45,7 +45,7 @@ const updateRowValue = (pixelValue: number) => {
       (pixelValue * 1) / positiveGridElement.value!.clientHeight
 
     if (props.isGain) {
-      scaledColumnValue *= 1 / props.index
+      scaledColumnValue *= 1 / (props.index + 1)
     }
 
     emit('updateRowValue', scaledColumnValue)

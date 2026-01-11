@@ -51,13 +51,15 @@ const activeHarmonics = computed(() => {
     List: (n) => customListArray.value.includes(n),
   }
 
-  return Array.from({ length: 511 }, (_, i) => i + 1).filter((n) => {
-    const filterStrategy = filterStrategies[selected.value]!
-    const matchesType = filterStrategy(n)
-    const inRange = n >= lowestHarmonic.value && n <= highestHarmonic.value
+  return Array.from({ length: 511 }, (_, i) => i + 1)
+    .filter((n) => {
+      const filterStrategy = filterStrategies[selected.value]!
+      const matchesType = filterStrategy(n)
+      const inRange = n >= lowestHarmonic.value && n <= highestHarmonic.value
 
-    return matchesType && inRange
-  })
+      return matchesType && inRange
+    })
+    .map((n) => n - 1)
 })
 
 const customListArray = ref<number[]>([])

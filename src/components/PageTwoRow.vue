@@ -9,6 +9,8 @@ const props = defineProps<{
   color: string
 }>()
 
+const harmonicNumber = props.index + 1
+
 const { finalPreset } = usePreset()
 
 const rowElement = ref<HTMLElement | null>(null)
@@ -22,7 +24,7 @@ const scaleFactor = computed(() => {
 })
 
 const gainOpacity = computed(() => {
-  return finalPreset.value.gains[props.index]! / (1 / props.index)
+  return finalPreset.value.gains[props.index]! / (1 / harmonicNumber)
 })
 
 const offsetWidth = computed(() => {
@@ -50,10 +52,6 @@ const attackBackgroundString =
 
 const releaseBackgroundString =
   'linear-gradient(to right,' + props.color + ',' + '#000' + ' 100%'
-
-// onMounted(() => {
-//   scaleFactor.value =
-// })
 </script>
 
 <template>

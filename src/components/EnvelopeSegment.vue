@@ -151,7 +151,8 @@ const selectText = (e: PointerEvent) => {
         class="flex w-full flex-col-reverse overflow-auto bg-white"
       >
         <EnvelopeHarmonicRow
-          v-for="(item, index) in activeHarmonics[activeHarmonics.length - 1]"
+          v-for="(item, index) in 511"
+          v-show="index <= activeHarmonics[activeHarmonics.length - 1]!"
           :key="index"
           :ref="
             (el) =>
@@ -169,7 +170,8 @@ const selectText = (e: PointerEvent) => {
       </div>
       <div v-else class="flex h-full overflow-auto bg-white">
         <EnvelopeHarmonicColumn
-          v-for="(item, index) in activeHarmonics[activeHarmonics.length - 1]"
+          v-for="(item, index) in 511"
+          v-show="index <= activeHarmonics[activeHarmonics.length - 1]!"
           :key="index"
           :ref="
             (el) =>
