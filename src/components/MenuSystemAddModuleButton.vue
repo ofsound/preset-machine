@@ -26,6 +26,8 @@ const addComponentToModules = () => {
 
   const presetModLayer: PresetModLayer = {
     moduleID: idForNewComponent,
+    gains: Array(511).fill(0),
+    sustains: Array(511).fill(0),
     offsets: Array(511).fill(0),
     attacks: Array(511).fill(0),
     decays: Array(511).fill(0),

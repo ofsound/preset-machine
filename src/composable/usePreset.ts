@@ -186,6 +186,8 @@ const finalPreset = computed<Preset>(() => {
     const presetModLayer = presetModLayers[index]!
 
     for (let i = 0; i < computedPreset.attacks.length; i++) {
+      computedPreset.gains[i]! += presetModLayer.gains[i]!
+      computedPreset.sustains[i]! += presetModLayer.sustains[i]!
       computedPreset.attacks[i]! += presetModLayer.attacks[i]!
       computedPreset.holds[i]! += presetModLayer.holds[i]!
       computedPreset.decays[i]! += presetModLayer.decays[i]!

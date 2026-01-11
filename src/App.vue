@@ -13,14 +13,10 @@ import AppHeader from '@/components/AppHeader.vue'
 import PageTwo from '@/components/PageTwo.vue'
 import MenuSystem from '@/components/MenuSystem.vue'
 
-import GainsModule from '@/components/GainsModule.vue'
-// import OffsetModule from '@/components/OffsetModule.vue'
 import EnvelopesModule from '@/components/EnvelopesModule.vue'
 import PresetInspector from '@/components/PresetInspector.vue'
 
 const componentObjects: ComponentObject[] = [
-  { component: GainsModule, label: 'Gains' },
-  // { component: OffsetModule, label: 'Offset' },
   { component: EnvelopesModule, label: 'Envelopes' },
 ]
 const isWelcome = ref(true)

@@ -191,6 +191,8 @@ export interface Preset {
 
 export interface PresetModLayer {
   moduleID: string
+  "gains": number[]
+  "sustains": number[]
   "offsets": number[]
   "attacks": number[]
   "decays": number[]

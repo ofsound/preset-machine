@@ -7,6 +7,7 @@ import RandomizeControls from '@/components/RandomizeControls.vue'
 import TopMargin from '@/components/TopMargin.vue'
 import ManualEntry from '@/components/ManualEntry.vue'
 import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
+import EnvelopeHarmonicColumn from '@/components/EnvelopeHarmonicColumn.vue'
 
 import { useStore } from '@/stores/store'
 
@@ -16,6 +17,7 @@ const props = defineProps<{
   tempo: number
   activeHarmonics: number[]
   envelopeSegmentValues: number[]
+  isMagnitude: boolean
 }>()
 
 const emit = defineEmits(['updateEnvelopeSegmentValues'])
@@ -36,12 +38,25 @@ const envelopeHarmonicRowRefs = ref<InstanceType<typeof EnvelopeHarmonicRow>[]>(
   [],
 )
 
-const setRefs = (
+const envelopeHarmonicColumnRefs = ref<
+  InstanceType<typeof EnvelopeHarmonicColumn>[]
+>([])
+
+const setRefsRows = (
   el: InstanceType<typeof EnvelopeHarmonicRow> | null,
   index: number,
 ) => {
   if (el) {
     envelopeHarmonicRowRefs.value[index] = el
+  }
+}
+
+const setRefsColumns = (
+  el: InstanceType<typeof EnvelopeHarmonicColumn> | null,
+  index: number,
+) => {
+  if (el) {
+    envelopeHarmonicColumnRefs.value[index] = el
   }
 }
 
@@ -54,16 +69,29 @@ const handleUpdateRowValue = (index: number, rowValue: number) => {
 }
 
 const randomize = (lowerLimit: number, upperLimit: number) => {
-  envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
-    if (props.activeHarmonics.includes(index))
-      childInstance.setRandomValueInRange(lowerLimit, upperLimit)
-  })
+  if (!props.isMagnitude) {
+    envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
+      if (props.activeHarmonics.includes(index))
+        childInstance.setRandomValueInRange(lowerLimit, upperLimit)
+    })
+  } else {
+    envelopeHarmonicColumnRefs.value.forEach((childInstance, index) => {
+      if (props.activeHarmonics.includes(index))
+        childInstance.setRandomValueInRange(lowerLimit, upperLimit)
+    })
+  }
 }
 
 const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
-  envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
-    if (index === rowIndex) childInstance.setManualValue(newRowValue)
-  })
+  if (!props.isMagnitude) {
+    envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
+      if (index === rowIndex) childInstance.setManualValue(newRowValue)
+    })
+  } else {
+    envelopeHarmonicColumnRefs.value.forEach((childInstance, index) => {
+      if (index === rowIndex) childInstance.setManualValue(newRowValue)
+    })
+  }
 }
 
 const selectText = (e: PointerEvent) => {
@@ -109,16 +137,45 @@ const selectText = (e: PointerEvent) => {
       </div>
     </div>
 
-    <TopMargin :timeScaleSeconds="parseInt(timeScaleSeconds)" :grid :bars />
+    <TopMargin
+      v-if="!isMagnitude"
+      :timeScaleSeconds="parseInt(timeScaleSeconds)"
+      :grid
+      :bars
+    />
 
     <div class="min-h-0 flex-1 overflow-scroll">
-      <div class="flex w-full flex-col-reverse overflow-auto bg-white">
+      <div
+        v-if="!isMagnitude"
+        class="flex w-full flex-col-reverse overflow-auto bg-white"
+      >
         <EnvelopeHarmonicRow
           v-for="(item, index) in activeHarmonics[activeHarmonics.length - 1]"
           :key="index"
           :ref="
             (el) =>
-              setRefs(el as InstanceType<typeof EnvelopeHarmonicRow>, index)
+              setRefsRows(el as InstanceType<typeof EnvelopeHarmonicRow>, index)
+          "
+          :isActive="activeHarmonics.includes(index)"
+          :color="store.harmonicRowColors[index]!"
+          :rowPixelHeight
+          :timeScaleSeconds="parseInt(timeScaleSeconds)"
+          :grid
+          :bars
+          :tempo
+          @updateRowValue="handleUpdateRowValue(index, $event)"
+        />
+      </div>
+      <div v-else class="flex h-full overflow-auto bg-white">
+        <EnvelopeHarmonicColumn
+          v-for="(item, index) in activeHarmonics[activeHarmonics.length - 1]"
+          :key="index"
+          :ref="
+            (el) =>
+              setRefsColumns(
+                el as InstanceType<typeof EnvelopeHarmonicColumn>,
+                index,
+              )
           "
           :isActive="activeHarmonics.includes(index)"
           :color="store.harmonicRowColors[index]!"
