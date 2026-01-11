@@ -21,6 +21,10 @@ const scaleFactor = computed(() => {
   }
 })
 
+const gainOpacity = computed(() => {
+  return finalPreset.value.gains[props.index]! / (1 / props.index)
+})
+
 const offsetWidth = computed(() => {
   return finalPreset.value.offsets[props.index]! * scaleFactor.value + 'px'
 })
@@ -53,7 +57,7 @@ const releaseBackgroundString =
 </script>
 
 <template>
-  <div ref="rowElement" class="mb-px flex">
+  <div ref="rowElement" class="mb-px flex" :style="{ opacity: gainOpacity }">
     <div
       :style="{
         width: offsetWidth,
@@ -71,7 +75,7 @@ const releaseBackgroundString =
       :style="{
         width: decayWidth,
         backgroundColor: color,
-        borderLeft: '1px solid #333',
+        borderLeft: '1px solid #666',
         borderRight: '1px solid #FFF',
       }"
     ></div>
@@ -79,7 +83,7 @@ const releaseBackgroundString =
       :style="{
         width: holdWidth,
         backgroundColor: color,
-        borderLeft: '1px solid #333',
+        borderLeft: '1px solid #666',
         borderRight: '1px solid #FFF',
       }"
     ></div>
@@ -87,7 +91,7 @@ const releaseBackgroundString =
       :style="{
         width: releaseWidth,
         background: releaseBackgroundString,
-        borderLeft: '1px solid #333',
+        borderLeft: '1px solid #666',
       }"
     ></div>
   </div>

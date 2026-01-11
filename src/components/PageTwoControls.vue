@@ -25,7 +25,9 @@ watch([numHarmonics, rowPixelHeight, timeScaleSeconds], () => {
 </script>
 
 <template>
-  <div class="absolute right-0 mt-2 flex h-6 gap-3 rounded-bl pl-2 text-white">
+  <div
+    class="absolute right-0 z-10 mt-2 flex h-6 gap-3 rounded-bl pl-2 text-white"
+  >
     <div class="flex gap-2">
       <div class="self-center text-xs">Time Scale (s)</div>
       <input
