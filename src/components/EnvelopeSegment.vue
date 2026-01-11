@@ -96,6 +96,15 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
   }
 }
 
+const handleNewValueFromMouseLayer = (
+  rowIndex: number,
+  newRowValue: number,
+) => {
+  envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
+    if (index === rowIndex) childInstance.setRatioValue(newRowValue)
+  })
+}
+
 const selectText = (e: PointerEvent) => {
   const clickedInput = e.target as HTMLInputElement
   clickedInput.select()
@@ -151,7 +160,11 @@ const selectText = (e: PointerEvent) => {
         v-if="!isMagnitude"
         class="relative flex w-full flex-col-reverse overflow-auto bg-white"
       >
-        <MouseLayer :rowPixelHeight :numRows="36" />
+        <MouseLayer
+          :rowPixelHeight
+          :numRows="400"
+          @newValueFromMouseLayer="handleNewValueFromMouseLayer"
+        />
         <EnvelopeHarmonicRow
           v-for="(item, index) in 511"
           v-show="index <= activeHarmonics[activeHarmonics.length - 1]!"
