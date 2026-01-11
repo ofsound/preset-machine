@@ -99,6 +99,7 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
       :tempo
       :activeHarmonics
       :isMagnitude="item.label === 'Gain' || item.label === 'Sustain'"
+      :isGain="item.label === 'Gain'"
       :envelopeSegmentValues="item.envelopeSegmentValues"
       @updateEnvelopeSegmentValues="updateEnvelopeSegmentArray(index, $event)"
     />

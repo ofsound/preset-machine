@@ -18,6 +18,7 @@ const props = defineProps<{
   activeHarmonics: number[]
   envelopeSegmentValues: number[]
   isMagnitude: boolean
+  isGain: boolean
 }>()
 
 const emit = defineEmits(['updateEnvelopeSegmentValues'])
@@ -111,7 +112,7 @@ const selectText = (e: PointerEvent) => {
         :currentHarmonicValue
         @updateRowValue="updateRowValueFromManual"
       />
-      <div class="flex w-1/3 justify-end gap-4">
+      <div v-if="!isMagnitude" class="flex w-1/3 justify-end gap-4">
         <div v-show="grid === 0" class="flex gap-2">
           <div class="self-center text-xs">Time Scale (s)</div>
           <input
@@ -179,11 +180,12 @@ const selectText = (e: PointerEvent) => {
           "
           :isActive="activeHarmonics.includes(index)"
           :color="store.harmonicRowColors[index]!"
-          :rowPixelHeight
           :timeScaleSeconds="parseInt(timeScaleSeconds)"
           :grid
           :bars
           :tempo
+          :isGain
+          :index
           @updateRowValue="handleUpdateRowValue(index, $event)"
         />
       </div>

@@ -4,17 +4,18 @@ import { ref, onMounted, computed, watch } from 'vue'
 const props = defineProps<{
   isActive: boolean
   color: string
-  rowPixelHeight: string
   timeScaleSeconds: number
   grid: number
   bars: number
   tempo: number
+  isGain: boolean
+  index: number
 }>()
 
 const emit = defineEmits(['updateRowValue'])
 
 const isPositive = ref(true)
-const rowHeight = ref(0)
+const columnHeight = ref(0)
 
 const positiveGridElement = ref<HTMLElement | null>(null)
 const resetElement = ref<HTMLElement | null>(null)
@@ -40,10 +41,14 @@ const updateRowValue = (pixelValue: number) => {
 
     emit('updateRowValue', snappedRowValue)
   } else {
-    const scaledRowValue =
-      (pixelValue * props.timeScaleSeconds) /
-      positiveGridElement.value!.clientHeight
-    emit('updateRowValue', scaledRowValue)
+    let scaledColumnValue =
+      (pixelValue * 1) / positiveGridElement.value!.clientHeight
+
+    if (props.isGain) {
+      scaledColumnValue *= 1 / props.index
+    }
+
+    emit('updateRowValue', scaledColumnValue)
   }
 }
 
@@ -52,15 +57,15 @@ const updateRowPixelHeight = (pixelValue: number) => {
     const roundAmount =
       positiveGridElement.value!.clientHeight / ((16 * props.bars) / props.grid)
 
-    rowHeight.value = Math.ceil(pixelValue / roundAmount) * roundAmount
+    columnHeight.value = Math.ceil(pixelValue / roundAmount) * roundAmount
   } else {
-    rowHeight.value = pixelValue
+    columnHeight.value = pixelValue
   }
 }
 
 const valueStyle = computed(() => {
   return {
-    height: `${rowHeight.value}px`,
+    height: `${columnHeight.value}px`,
     backgroundColor: props.color,
   }
 })
@@ -81,8 +86,7 @@ const setRandomValueInRange = (maxValue: number, minValue: number) => {
   const randomValueWithinRange = randomDeltaWithinRange + minValue
 
   const scaledHeight =
-    randomValueWithinRange *
-    (positiveGridElement.value!.clientHeight / props.timeScaleSeconds)
+    randomValueWithinRange * (positiveGridElement.value!.clientHeight / 1)
 
   updateRowPixelHeight(Math.abs(scaledHeight))
 
@@ -96,9 +100,7 @@ const setRandomValueInRange = (maxValue: number, minValue: number) => {
 }
 
 const setManualValue = (newValue: number) => {
-  const scaledHeight =
-    newValue *
-    (positiveGridElement.value!.clientHeight / props.timeScaleSeconds)
+  const scaledHeight = newValue * (positiveGridElement.value!.clientHeight / 1)
 
   updateRowPixelHeight(Math.abs(scaledHeight))
 
@@ -140,7 +142,7 @@ const handleMouseNegative = (event: MouseEvent) => {
 
       const parentTop = negativeGridElement.value.getBoundingClientRect().top
 
-      const mouseYRelativeToParent = event.clientY - parentTop
+      const mouseYRelativeToParent = parentTop - event.clientY
 
       updateRowPixelHeight(Math.abs(mouseYRelativeToParent))
 
@@ -151,15 +153,15 @@ const handleMouseNegative = (event: MouseEvent) => {
 
 const handleResetMouse = () => {
   if (isMouseDown.value) {
-    rowHeight.value = 0
+    columnHeight.value = 0
     emit('updateRowValue', 0)
   }
 }
 
 watch(
-  () => props.timeScaleSeconds,
+  () => 1,
   (newValue, oldValue) => {
-    rowHeight.value *= oldValue / newValue
+    columnHeight.value *= oldValue / newValue
   },
 )
 
@@ -193,8 +195,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="relative flex h-full cursor-pointer flex-col-reverse select-none"
-    :style="{ width: `${rowPixelHeight}px` }"
+    class="relative flex h-full flex-1 cursor-pointer flex-col-reverse select-none"
   >
     <div
       ref="negativeGridElement"
