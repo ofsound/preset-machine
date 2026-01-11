@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 
 const props = defineProps<{
-  rowPixelHeight: number
+  rowPixelHeight: string
   numRows: number
 }>()
 
@@ -26,7 +26,7 @@ const whichRow = (yValue: number) => {
   let biggestBin = 0
 
   for (let i = 0; i < props.numRows; i++) {
-    if (yValue > props.rowPixelHeight * i) {
+    if (yValue > Number(props.rowPixelHeight) * i) {
       biggestBin = i
     }
   }
