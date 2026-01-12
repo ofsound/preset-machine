@@ -4,9 +4,9 @@ import { ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 
 import RandomizeControls from '@/components/RandomizeControls.vue'
-import TopMargin from '@/components/TopMargin.vue'
+import TopRuler from '@/components/TopRuler.vue'
 import ManualEntry from '@/components/ManualEntry.vue'
-import MouseLayer from '@/components/MouseLayer.vue'
+import MouseStage from '@/components/MouseStage.vue'
 import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
 import EnvelopeHarmonicColumn from '@/components/EnvelopeHarmonicColumn.vue'
 
@@ -96,13 +96,15 @@ const updateRowValueFromManual = (rowIndex: number, newRowValue: number) => {
   }
 }
 
-const handleNewValueFromMouseLayer = (
+const handleNewValueFromMouseStage = (
   rowIndex: number,
   newRowValue: number,
 ) => {
-  envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
-    if (index === rowIndex) childInstance.setRatioValue(newRowValue)
-  })
+  if (props.activeHarmonics.includes(rowIndex) || newRowValue === 0) {
+    envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
+      if (index === rowIndex) childInstance.setRatioValue(newRowValue)
+    })
+  }
 }
 
 const selectText = (e: PointerEvent) => {
@@ -148,7 +150,7 @@ const selectText = (e: PointerEvent) => {
       </div>
     </div>
 
-    <TopMargin
+    <TopRuler
       v-if="!isMagnitude"
       :timeScaleSeconds="parseInt(timeScaleSeconds)"
       :grid
@@ -160,10 +162,10 @@ const selectText = (e: PointerEvent) => {
         v-if="!isMagnitude"
         class="relative flex w-full flex-col-reverse overflow-auto bg-white"
       >
-        <MouseLayer
+        <MouseStage
           :rowPixelHeight
           :numRows="400"
-          @newValueFromMouseLayer="handleNewValueFromMouseLayer"
+          @newValueFromMouseStage="handleNewValueFromMouseStage"
         />
         <EnvelopeHarmonicRow
           v-for="(item, index) in 511"

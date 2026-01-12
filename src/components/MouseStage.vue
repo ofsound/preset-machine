@@ -8,7 +8,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['newValueFromMouseLayer'])
 
-const mouseLayerRef = ref<HTMLElement | null>(null)
+const stageRef = ref<HTMLElement | null>(null)
 
 const animationFrameId = ref(0)
 
@@ -22,20 +22,22 @@ const handleMouseDown = () => {
   animationFrameId.value = requestAnimationFrame(captureMousePosition)
 }
 
-const whichRow = (yValue: number) => {
-  let biggestBin = 0
+const handleMouseUp = () => {
+  cancelAnimationFrame(animationFrameId.value)
+}
 
-  for (let i = 0; i < props.numRows; i++) {
-    if (yValue > Number(props.rowPixelHeight) * i) {
-      biggestBin = i
-    }
-  }
-  return biggestBin
+const handleMouseMove = (event: MouseEvent) => {
+  mouseX = event.clientX
+  mouseY = event.clientY
+}
+
+const whichRow = (mouseYRelativeToStage: number): number => {
+  return Math.floor(mouseYRelativeToStage / Number(props.rowPixelHeight))
 }
 
 function captureMousePosition() {
-  const stageBottom = mouseLayerRef.value!.getBoundingClientRect().bottom
-  const stageLeft = mouseLayerRef.value!.getBoundingClientRect().left
+  const stageBottom = stageRef.value!.getBoundingClientRect().bottom
+  const stageLeft = stageRef.value!.getBoundingClientRect().left
 
   const mouseXRelativeToStage = mouseX - stageLeft
   const mouseYRelativeToStage = stageBottom - mouseY
@@ -43,7 +45,7 @@ function captureMousePosition() {
   const thisRow = whichRow(mouseYRelativeToStage)
 
   if (thisRow !== prevRow) {
-    const zoneWidth = (mouseLayerRef.value!.clientWidth - 24) / 2
+    const zoneWidth = (stageRef.value!.clientWidth - 24) / 2
 
     const leftBoundary = zoneWidth
     const rightBoundary = 24 + zoneWidth
@@ -71,31 +73,20 @@ function captureMousePosition() {
       }
     }
 
-    prevRowRatio = thisRowRatio
-
     prevRow = whichRow(mouseYRelativeToStage)
+    prevRowRatio = thisRowRatio
   }
 
   animationFrameId.value = requestAnimationFrame(captureMousePosition)
 }
 
-const handleMouseUp = () => {
-  cancelAnimationFrame(animationFrameId.value)
-}
-
 onMounted(() => {
   document.addEventListener('mousedown', handleMouseDown)
   document.addEventListener('mouseup', handleMouseUp)
-  document.addEventListener('mousemove', (event) => {
-    mouseX = event.clientX
-    mouseY = event.clientY
-  })
+  document.addEventListener('mousemove', handleMouseMove)
 })
 </script>
 
 <template>
-  <div
-    ref="mouseLayerRef"
-    class="absolute z-10 h-full w-full bg-violet-200/20"
-  ></div>
+  <div ref="stageRef" class="absolute z-10 h-full w-full"></div>
 </template>
