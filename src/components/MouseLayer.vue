@@ -8,15 +8,15 @@ const props = defineProps<{
 
 const emit = defineEmits(['newValueFromMouseLayer'])
 
-const animationFrameId = ref(0)
-
 const mouseLayerRef = ref<HTMLElement | null>(null)
+
+const animationFrameId = ref(0)
 
 let mouseX: number
 let mouseY: number
 
 let prevRow: number
-let prevRowX: number
+let prevRowRatio: number
 
 const handleMouseDown = () => {
   animationFrameId.value = requestAnimationFrame(captureMousePosition)
@@ -34,57 +34,46 @@ const whichRow = (yValue: number) => {
 }
 
 function captureMousePosition() {
-  const parentBottom = mouseLayerRef.value!.getBoundingClientRect().bottom
-  const parentLeft = mouseLayerRef.value!.getBoundingClientRect().left
+  const stageBottom = mouseLayerRef.value!.getBoundingClientRect().bottom
+  const stageLeft = mouseLayerRef.value!.getBoundingClientRect().left
 
-  const mouseXRelativeToParent = mouseX - parentLeft
-  const mouseYRelativeToParent = parentBottom - mouseY
+  const mouseXRelativeToStage = mouseX - stageLeft
+  const mouseYRelativeToStage = stageBottom - mouseY
 
-  const thisRow = whichRow(mouseYRelativeToParent)
+  const thisRow = whichRow(mouseYRelativeToStage)
 
   if (thisRow !== prevRow) {
     const zoneWidth = (mouseLayerRef.value!.clientWidth - 24) / 2
 
-    let thisRowRatio: number
+    const leftBoundary = zoneWidth
+    const rightBoundary = 24 + zoneWidth
 
-    if (mouseXRelativeToParent < zoneWidth) {
-      const negativeRatio = (zoneWidth - mouseXRelativeToParent) / zoneWidth
-      thisRowRatio = negativeRatio
-      emit('newValueFromMouseLayer', thisRow, -negativeRatio)
-    } else if (mouseXRelativeToParent > 24 + zoneWidth) {
-      const positiveRatio =
-        (mouseXRelativeToParent - (24 + zoneWidth)) / zoneWidth
-      thisRowRatio = positiveRatio
-      emit('newValueFromMouseLayer', thisRow, positiveRatio)
-    } else {
-      thisRowRatio = 0
-      emit('newValueFromMouseLayer', thisRow, 0)
-    }
+    const thisRowRatio =
+      (Math.min(0, mouseXRelativeToStage - leftBoundary) +
+        Math.max(0, mouseXRelativeToStage - rightBoundary)) /
+      zoneWidth
 
-    if (thisRow - prevRow > 1) {
-      const numRowsSkipped = thisRow - prevRow
+    emit('newValueFromMouseLayer', thisRow, thisRowRatio)
+
+    const rowDiff = thisRow - prevRow
+    const numRowsSkipped = Math.abs(rowDiff)
+
+    if (numRowsSkipped > 1) {
+      const diffPerStep = (thisRowRatio - prevRowRatio) / numRowsSkipped
+      const direction = Math.sign(rowDiff)
+
       for (let i = 1; i < numRowsSkipped; i++) {
-        const diff = thisRowRatio - prevRowX
-        const diffPerStep = diff / numRowsSkipped
-
-        emit('newValueFromMouseLayer', prevRow + i, prevRowX + i * diffPerStep)
+        emit(
+          'newValueFromMouseLayer',
+          prevRow + i * direction,
+          prevRowRatio + i * diffPerStep,
+        )
       }
     }
 
-    if (prevRow - thisRow > 1) {
-      const numRowsSkipped = prevRow - thisRow
-      for (let i = 1; i < numRowsSkipped; i++) {
-        const diff = thisRowRatio - prevRowX
-        const diffPerStep = diff / numRowsSkipped
+    prevRowRatio = thisRowRatio
 
-        console.log('skipped:' + (prevRow - i))
-        emit('newValueFromMouseLayer', prevRow - i, prevRowX + i * diffPerStep)
-      }
-    }
-
-    prevRowX = thisRowRatio
-
-    prevRow = whichRow(mouseYRelativeToParent)
+    prevRow = whichRow(mouseYRelativeToStage)
   }
 
   animationFrameId.value = requestAnimationFrame(captureMousePosition)
