@@ -20,13 +20,13 @@ const presetModLayer = presetModLayers.find(
 )!
 
 const envelopeSegments: EnvelopeLabelAndSegment[] = [
-  // { label: 'Gain', envelopeSegmentValues: presetModLayer.gains },
+  { label: 'Gain', envelopeSegmentValues: presetModLayer.gains },
   { label: 'Offset', envelopeSegmentValues: presetModLayer.offsets },
-  // { label: 'Attack', envelopeSegmentValues: presetModLayer.attacks },
-  // { label: 'Decay', envelopeSegmentValues: presetModLayer.decays },
-  // { label: 'Sustain', envelopeSegmentValues: presetModLayer.sustains },
-  // { label: 'Hold', envelopeSegmentValues: presetModLayer.holds },
-  // { label: 'Release', envelopeSegmentValues: presetModLayer.releases },
+  { label: 'Attack', envelopeSegmentValues: presetModLayer.attacks },
+  { label: 'Decay', envelopeSegmentValues: presetModLayer.decays },
+  { label: 'Sustain', envelopeSegmentValues: presetModLayer.sustains },
+  { label: 'Hold', envelopeSegmentValues: presetModLayer.holds },
+  { label: 'Release', envelopeSegmentValues: presetModLayer.releases },
 ]
 
 const lastMenuButtonClickedLabel = ref('Offset')

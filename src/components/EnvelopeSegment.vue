@@ -6,7 +6,8 @@ import { v4 as uuidv4 } from 'uuid'
 import RandomizeControls from '@/components/RandomizeControls.vue'
 import TopRuler from '@/components/TopRuler.vue'
 import ManualEntry from '@/components/ManualEntry.vue'
-import MouseStage from '@/components/MouseStage.vue'
+import MouseStageRows from '@/components/MouseStageRows.vue'
+import MouseStageColumns from '@/components/MouseStageColumns.vue'
 import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
 import EnvelopeHarmonicColumn from '@/components/EnvelopeHarmonicColumn.vue'
 
@@ -105,6 +106,11 @@ const handleNewValueFromMouseStage = (
       if (index === rowIndex) childInstance.setRatioValue(newRowValue)
     })
   }
+  if (props.activeHarmonics.includes(rowIndex) || newRowValue === 0) {
+    envelopeHarmonicColumnRefs.value.forEach((childInstance, index) => {
+      if (index === rowIndex) childInstance.setRatioValue(newRowValue)
+    })
+  }
 }
 
 const selectText = (e: PointerEvent) => {
@@ -162,9 +168,8 @@ const selectText = (e: PointerEvent) => {
         v-if="!isMagnitude"
         class="relative flex w-full flex-col-reverse overflow-auto bg-white"
       >
-        <MouseStage
+        <MouseStageRows
           :rowPixelHeight
-          :numRows="400"
           @newValueFromMouseStage="handleNewValueFromMouseStage"
         />
         <EnvelopeHarmonicRow
@@ -185,7 +190,12 @@ const selectText = (e: PointerEvent) => {
           @updateRowValue="handleUpdateRowValue(index, $event)"
         />
       </div>
-      <div v-else class="flex h-full overflow-auto bg-white">
+      <div v-else class="relative flex h-full overflow-auto bg-white">
+        <MouseStageColumns
+          :numHarmonics="activeHarmonics[activeHarmonics.length - 1]!"
+          @newValueFromMouseStage="handleNewValueFromMouseStage"
+        />
+
         <EnvelopeHarmonicColumn
           v-for="(item, index) in 511"
           v-show="index <= activeHarmonics[activeHarmonics.length - 1]!"

@@ -3,14 +3,15 @@ import { ref, onMounted } from 'vue'
 
 const props = defineProps<{
   rowPixelHeight: string
-  numRows: number
 }>()
 
-const emit = defineEmits(['newValueFromMouseLayer'])
+const emit = defineEmits(['newValueFromMouseStage'])
 
 const stageRef = ref<HTMLElement | null>(null)
 
 const animationFrameId = ref(0)
+
+let firstClick = true
 
 let mouseX: number
 let mouseY: number
@@ -24,6 +25,7 @@ const handleMouseDown = () => {
 
 const handleMouseUp = () => {
   cancelAnimationFrame(animationFrameId.value)
+  firstClick = true
 }
 
 const handleMouseMove = (event: MouseEvent) => {
@@ -55,27 +57,31 @@ function captureMousePosition() {
         Math.max(0, mouseXRelativeToStage - rightBoundary)) /
       zoneWidth
 
-    emit('newValueFromMouseLayer', thisRow, thisRowRatio)
+    emit('newValueFromMouseStage', thisRow, thisRowRatio)
 
-    const rowDiff = thisRow - prevRow
-    const numRowsSkipped = Math.abs(rowDiff)
+    if (!firstClick) {
+      const rowDiff = thisRow - prevRow
+      const numRowsSkipped = Math.abs(rowDiff)
 
-    if (numRowsSkipped > 1) {
-      const diffPerStep = (thisRowRatio - prevRowRatio) / numRowsSkipped
-      const direction = Math.sign(rowDiff)
+      if (numRowsSkipped > 1) {
+        const diffPerStep = (thisRowRatio - prevRowRatio) / numRowsSkipped
+        const direction = Math.sign(rowDiff)
 
-      for (let i = 1; i < numRowsSkipped; i++) {
-        emit(
-          'newValueFromMouseLayer',
-          prevRow + i * direction,
-          prevRowRatio + i * diffPerStep,
-        )
+        for (let i = 1; i < numRowsSkipped; i++) {
+          emit(
+            'newValueFromMouseStage',
+            prevRow + i * direction,
+            prevRowRatio + i * diffPerStep,
+          )
+        }
       }
     }
 
     prevRow = whichRow(mouseYRelativeToStage)
     prevRowRatio = thisRowRatio
   }
+
+  firstClick = false
 
   animationFrameId.value = requestAnimationFrame(captureMousePosition)
 }

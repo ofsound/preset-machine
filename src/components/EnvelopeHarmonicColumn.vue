@@ -113,9 +113,24 @@ const setManualValue = (newValue: number) => {
   updateRowValue(scaledHeight)
 }
 
+const setRatioValue = (newValue: number) => {
+  const scaledWidth = newValue * positiveGridElement.value!.clientHeight
+
+  updateRowPixelHeight(Math.abs(scaledWidth))
+
+  if (newValue > 0) {
+    isPositive.value = true
+  } else {
+    isPositive.value = false
+  }
+
+  updateRowValue(scaledWidth)
+}
+
 defineExpose({
   setRandomValueInRange,
   setManualValue,
+  setRatioValue,
 })
 
 const handleMousePositive = (event: MouseEvent) => {
