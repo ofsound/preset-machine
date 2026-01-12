@@ -2,6 +2,11 @@
 import { ref, computed } from 'vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
+
+import jsonSchema from '@/assets/schema.json' // Use @/ for the src directory alias
+
+console.log(jsonSchema.parameters)
+
 import type { Preset } from '@/types.ts'
 
 const { corePreset } = usePreset()
@@ -221,7 +226,20 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', corePreset)
               class="w-full bg-slate-100 p-2"
             />
             <div class="mt-1 px-2 text-sm text-neutral-500 italic">
-              description, range, etc.
+              <span v-if="jsonSchema.parameters && jsonSchema.parameters[key]">
+                <div>{{ jsonSchema.parameters[key].type }}</div>
+                <div>
+                  {{
+                    jsonSchema.parameters[key].minimum
+                  }}&nbsp;&nbsp;&ndash;&nbsp;&nbsp;
+                  {{ jsonSchema.parameters[key].maximum }}
+                </div>
+                <div></div>
+                <div>{{ jsonSchema.parameters[key].options }}</div>
+                <div>{{ jsonSchema.parameters[key].default }}</div>
+                <div>{{ jsonSchema.parameters[key].description }}</div>
+              </span>
+              <span v-else> No description available. </span>
             </div>
           </div>
         </label>

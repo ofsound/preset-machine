@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps<{
   numHarmonics: number
@@ -19,8 +19,34 @@ let mouseY: number
 let prevColumn: number
 let prevColumnRatio: number
 
-const handleMouseDown = () => {
-  animationFrameId.value = requestAnimationFrame(captureMousePosition)
+function isClickWithinBoundingBox(
+  event: MouseEvent,
+  element: HTMLElement,
+  padding: number = 20,
+): boolean {
+  const rect = element.getBoundingClientRect()
+
+  const paddedLeft = rect.left - padding
+  const paddedRight = rect.right + padding
+  const paddedTop = rect.top - padding
+  const paddedBottom = rect.bottom + padding
+
+  if (
+    event.clientX >= paddedLeft &&
+    event.clientX <= paddedRight &&
+    event.clientY >= paddedTop &&
+    event.clientY <= paddedBottom
+  ) {
+    return true
+  } else {
+    return false
+  }
+}
+
+const handleMouseDown = (event: MouseEvent) => {
+  if (isClickWithinBoundingBox(event, stageRef.value!)) {
+    animationFrameId.value = requestAnimationFrame(captureMousePosition)
+  }
 }
 
 const handleMouseUp = () => {
@@ -48,19 +74,17 @@ function captureMousePosition() {
 
   const thisColumn = whichColumn(mouseXRelativeToStage)
 
+  const zoneHeight = (stageRef.value!.clientHeight - 24) / 2
+
+  const topBoundary = zoneHeight
+  const bottomBoundary = 24 + zoneHeight
+
+  const thisColumnRatio =
+    (Math.min(0, mouseYRelativeToStage - topBoundary) +
+      Math.max(0, mouseYRelativeToStage - bottomBoundary)) /
+    zoneHeight
+
   if (thisColumn !== prevColumn) {
-    const zoneHeight = (stageRef.value!.clientHeight - 24) / 2
-
-    const topBoundary = zoneHeight
-    const bottomBoundary = 24 + zoneHeight
-
-    const thisColumnRatio =
-      (Math.min(0, mouseYRelativeToStage - topBoundary) +
-        Math.max(0, mouseYRelativeToStage - bottomBoundary)) /
-      zoneHeight
-
-    emit('newValueFromMouseStage', thisColumn, thisColumnRatio)
-
     if (!firstClick) {
       const columnDiff = thisColumn - prevColumn
       const numColumnsSkipped = Math.abs(columnDiff)
@@ -74,7 +98,7 @@ function captureMousePosition() {
           emit(
             'newValueFromMouseStage',
             prevColumn + i * direction,
-            prevColumnRatio + i * diffPerStep,
+            Math.max(Math.min(prevColumnRatio + i * diffPerStep, 1), -1),
           )
         }
       }
@@ -83,6 +107,12 @@ function captureMousePosition() {
     prevColumn = whichColumn(mouseXRelativeToStage)
     prevColumnRatio = thisColumnRatio
   }
+
+  emit(
+    'newValueFromMouseStage',
+    thisColumn,
+    Math.max(Math.min(thisColumnRatio, 1), -1),
+  )
 
   firstClick = false
 
@@ -93,6 +123,12 @@ onMounted(() => {
   document.addEventListener('mousedown', handleMouseDown)
   document.addEventListener('mouseup', handleMouseUp)
   document.addEventListener('mousemove', handleMouseMove)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('mousedown', handleMouseDown)
+  document.removeEventListener('mouseup', handleMouseUp)
+  document.removeEventListener('mousemove', handleMouseMove)
 })
 </script>
 

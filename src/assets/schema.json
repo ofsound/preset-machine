@@ -1,0 +1,915 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sine Machine Preset Schema",
+  "description": "Schema for Sine Machine presets. Parameters object contains automatable values. Root-level arrays contain per-harmonic baked data.",
+
+  "presetMetadata": {
+    "uuid": { "type": "string", "description": "Unique identifier for this preset" },
+    "name": { "type": "string", "description": "Display name of the preset" },
+    "author": { "type": "string", "description": "Preset creator" },
+    "description": { "type": "string", "description": "Preset description" },
+    "version": { "type": "string", "description": "Plugin version that created this preset" },
+    "derivedFrom": { "type": "string", "description": "UUID of parent preset (if any)" }
+  },
+
+  "parameters": {
+    "_note": "All values stored as numbers. Choice parameters use 0-based index. Booleans use 0.0/1.0.",
+
+    "volume": {
+      "type": "number",
+      "minimum": -64,
+      "maximum": 20,
+      "default": 0,
+      "unit": "dB",
+      "description": "Master output volume"
+    },
+    "width": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "unit": "0-1",
+      "description": "Stereo width"
+    },
+    "Velocity Sensitivity": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "unit": "0-1",
+      "description": "How much MIDI velocity affects volume"
+    },
+    "One Shot": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 0,
+      "description": "Boolean. When 1, notes play full envelope without sustain"
+    },
+    "relativeMode": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 0,
+      "description": "Boolean. When 1, curve changes add/subtract rather than overwrite"
+    },
+    "Mono Mode": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 0,
+      "description": "Boolean. When 1, only one note plays at a time"
+    },
+    "Max Voices": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 20,
+      "default": 20,
+      "description": "Maximum polyphony"
+    },
+    "Max Harmonics": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 511,
+      "default": 511,
+      "description": "Maximum harmonics rendered per voice"
+    },
+    "Envelope Split": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 128,
+      "default": 10,
+      "description": "Harmonics sharing same envelope timing"
+    },
+    "Envelope Timing": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 511,
+      "default": 128,
+      "description": "Reference harmonic for envelope timing"
+    },
+    "Slop": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "unit": "0-1",
+      "description": "Random per-voice envelope timing variation"
+    },
+    "Randomize Phase": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 0,
+      "description": "Boolean. Randomize oscillator phase on note-on"
+    },
+
+    "Filter Type": {
+      "type": "number",
+      "options": { "0": "Lowpass", "1": "Bandpass" },
+      "default": 0,
+      "description": "Additive filter type"
+    },
+    "Filter Cutoff": {
+      "type": "number",
+      "minimum": 20,
+      "maximum": 20000,
+      "default": 5000,
+      "unit": "Hz",
+      "description": "Filter cutoff frequency"
+    },
+    "Filter Slope": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 64,
+      "default": 3,
+      "unit": "dB/octave",
+      "description": "Filter slope"
+    },
+
+    "Saturation": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "unit": "0-1",
+      "description": "Saturation/distortion amount"
+    },
+    "Reverb Mix": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "unit": "0-1",
+      "description": "Additive reverb wet/dry mix"
+    },
+    "Reverb Time": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 15,
+      "default": 0.5,
+      "unit": "seconds",
+      "description": "Reverb decay time"
+    },
+    "Reverb Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics feed reverb"
+    },
+    "Reverb X (Distribution)": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic reverb distribution"
+    },
+    "Reverb Y (Curve)": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic reverb curve"
+    },
+
+    "Fine Tuning": {
+      "type": "number",
+      "minimum": 415,
+      "maximum": 466,
+      "default": 440,
+      "unit": "Hz",
+      "description": "Concert pitch (A4)"
+    },
+    "Transpose": {
+      "type": "number",
+      "minimum": -24,
+      "maximum": 12,
+      "default": 0,
+      "unit": "semitones",
+      "description": "Global transposition"
+    },
+
+    "Unison Voices": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "default": 1,
+      "description": "Number of unison voices"
+    },
+    "Unison Spread": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.3,
+      "unit": "0-1",
+      "description": "Pitch spread between unison voices"
+    },
+    "Unison Stereo": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.3,
+      "unit": "0-1",
+      "description": "Stereo spread of unison voices"
+    },
+
+    "Pitch Bend Range": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 24,
+      "default": 2,
+      "unit": "semitones",
+      "description": "MIDI pitch bend range"
+    },
+    "Glide Time": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5,
+      "default": 0,
+      "unit": "seconds",
+      "description": "Portamento time"
+    },
+    "Glide Mode": {
+      "type": "number",
+      "options": { "0": "Last Note", "1": "Relative", "2": "Absolute" },
+      "default": 0,
+      "description": "Glide mode"
+    },
+    "Glide Time Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics glide applies to"
+    },
+    "Glide Time Distribution": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic glide time distribution"
+    },
+    "Glide Time Curve": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic glide time curve"
+    },
+    "Glide Semitones": {
+      "type": "number",
+      "minimum": -24,
+      "maximum": 24,
+      "default": 1,
+      "unit": "semitones",
+      "description": "Fixed interval for Relative mode"
+    },
+    "Glide Frequency": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 20000,
+      "default": 2000,
+      "unit": "Hz",
+      "description": "Target frequency for Absolute mode"
+    },
+
+    "Harmonic Slew Ms": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 200,
+      "default": 10,
+      "unit": "ms",
+      "description": "Smoothing for harmonic gain changes"
+    },
+    "Attack Overshoot": {
+      "type": "number",
+      "minimum": 0.0001,
+      "maximum": 0.5,
+      "default": 0.3,
+      "description": "Attack curve overshoot"
+    },
+    "Decay and Release Undershoot": {
+      "type": "number",
+      "minimum": 0.00001,
+      "maximum": 0.1,
+      "default": 0.0001,
+      "description": "Decay/release curve undershoot"
+    },
+    "Keyboard->ENV": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1,
+      "default": 0,
+      "unit": "-1 to 1",
+      "description": "Keyboard tracking to envelope time"
+    },
+
+    "gain01": { "type": "number", "minimum": -100, "maximum": 0, "default": 0, "unit": "dB", "description": "Harmonic 1 volume (max 0 dB)" },
+    "gain02": { "type": "number", "minimum": -100, "maximum": -6.02, "default": -6.02, "unit": "dB", "description": "Harmonic 2 volume (max -6 dB)" },
+    "gain03": { "type": "number", "minimum": -100, "maximum": -9.54, "default": -9.54, "unit": "dB", "description": "Harmonic 3 volume (max -9.5 dB)" },
+    "gain04": { "type": "number", "minimum": -100, "maximum": -12.04, "default": -12.04, "unit": "dB", "description": "Harmonic 4 volume (max -12 dB)" },
+    "gain05": { "type": "number", "minimum": -100, "maximum": -13.98, "default": -13.98, "unit": "dB", "description": "Harmonic 5 volume (max -14 dB)" },
+    "gain06": { "type": "number", "minimum": -100, "maximum": -15.56, "default": -15.56, "unit": "dB", "description": "Harmonic 6 volume (max -15.6 dB)" },
+    "gain07": { "type": "number", "minimum": -100, "maximum": -16.90, "default": -16.90, "unit": "dB", "description": "Harmonic 7 volume (max -16.9 dB)" },
+    "gain08": { "type": "number", "minimum": -100, "maximum": -18.06, "default": -18.06, "unit": "dB", "description": "Harmonic 8 volume (max -18.1 dB)" },
+    "gain09": { "type": "number", "minimum": -100, "maximum": -19.08, "default": -19.08, "unit": "dB", "description": "Harmonic 9 volume (max -19.1 dB)" },
+    "gain10": { "type": "number", "minimum": -100, "maximum": -20.00, "default": -20.00, "unit": "dB", "description": "Harmonic 10 volume (max -20 dB)" },
+    "gain11": { "type": "number", "minimum": -100, "maximum": -20.83, "default": -20.83, "unit": "dB", "description": "Harmonic 11 volume (max -20.8 dB)" },
+    "gain12": { "type": "number", "minimum": -100, "maximum": -21.58, "default": -21.58, "unit": "dB", "description": "Harmonic 12 volume (max -21.6 dB)" },
+    "gain13": { "type": "number", "minimum": -100, "maximum": -22.28, "default": -22.28, "unit": "dB", "description": "Harmonic 13 volume (max -22.3 dB)" },
+    "gain14": { "type": "number", "minimum": -100, "maximum": -22.92, "default": -22.92, "unit": "dB", "description": "Harmonic 14 volume (max -22.9 dB)" },
+    "gain15": { "type": "number", "minimum": -100, "maximum": -23.52, "default": -23.52, "unit": "dB", "description": "Harmonic 15 volume (max -23.5 dB)" },
+    "gain16": { "type": "number", "minimum": -100, "maximum": -24.08, "default": -24.08, "unit": "dB", "description": "Harmonic 16 volume (max -24.1 dB)" },
+    "gain17": { "type": "number", "minimum": -100, "maximum": -24.61, "default": -24.61, "unit": "dB", "description": "Harmonic 17 volume (max -24.6 dB)" },
+    "gain18": { "type": "number", "minimum": -100, "maximum": -25.11, "default": -25.11, "unit": "dB", "description": "Harmonic 18 volume (max -25.1 dB)" },
+    "gain19": { "type": "number", "minimum": -100, "maximum": -25.58, "default": -25.58, "unit": "dB", "description": "Harmonic 19 volume (max -25.6 dB)" },
+    "gain20": { "type": "number", "minimum": -100, "maximum": -26.02, "default": -26.02, "unit": "dB", "description": "Harmonic 20 volume (max -26 dB)" },
+    "gain21": { "type": "number", "minimum": -100, "maximum": -26.44, "default": -26.44, "unit": "dB", "description": "Harmonic 21 volume (max -26.4 dB)" },
+    "gain22": { "type": "number", "minimum": -100, "maximum": -26.85, "default": -26.85, "unit": "dB", "description": "Harmonic 22 volume (max -26.8 dB)" },
+    "gain23": { "type": "number", "minimum": -100, "maximum": -27.23, "default": -27.23, "unit": "dB", "description": "Harmonic 23 volume (max -27.2 dB)" },
+    "gain24": { "type": "number", "minimum": -100, "maximum": -27.60, "default": -27.60, "unit": "dB", "description": "Harmonic 24 volume (max -27.6 dB)" },
+    "gain25": { "type": "number", "minimum": -100, "maximum": -27.96, "default": -27.96, "unit": "dB", "description": "Harmonic 25 volume (max -28 dB)" },
+    "gain26": { "type": "number", "minimum": -100, "maximum": -28.30, "default": -28.30, "unit": "dB", "description": "Harmonic 26 volume (max -28.3 dB)" },
+    "gain27": { "type": "number", "minimum": -100, "maximum": -28.63, "default": -28.63, "unit": "dB", "description": "Harmonic 27 volume (max -28.6 dB)" },
+    "gain28": { "type": "number", "minimum": -100, "maximum": -28.94, "default": -28.94, "unit": "dB", "description": "Harmonic 28 volume (max -28.9 dB)" },
+    "gain29": { "type": "number", "minimum": -100, "maximum": -29.25, "default": -29.25, "unit": "dB", "description": "Harmonic 29 volume (max -29.2 dB)" },
+    "gain30": { "type": "number", "minimum": -100, "maximum": -29.54, "default": -29.54, "unit": "dB", "description": "Harmonic 30 volume (max -29.5 dB)" },
+    "gain31": { "type": "number", "minimum": -100, "maximum": -29.83, "default": -29.83, "unit": "dB", "description": "Harmonic 31 volume (max -29.8 dB)" },
+    "gain32": { "type": "number", "minimum": -100, "maximum": -30.10, "default": -30.10, "unit": "dB", "description": "Harmonic 32 volume (max -30.1 dB)" },
+    "gain33": { "type": "number", "minimum": -100, "maximum": -30.37, "default": -30.37, "unit": "dB", "description": "Harmonic 33 volume (max -30.4 dB)" },
+    "gain34": { "type": "number", "minimum": -100, "maximum": -30.63, "default": -30.63, "unit": "dB", "description": "Harmonic 34 volume (max -30.6 dB)" },
+    "gain35": { "type": "number", "minimum": -100, "maximum": -30.88, "default": -30.88, "unit": "dB", "description": "Harmonic 35 volume (max -30.9 dB)" },
+    "gain36": { "type": "number", "minimum": -100, "maximum": -31.13, "default": -31.13, "unit": "dB", "description": "Harmonic 36 volume (max -31.1 dB)" },
+
+    "Offset": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "default": 0,
+      "unit": "seconds",
+      "description": "Delay before harmonics turn on"
+    },
+    "Offset Shape": {
+      "type": "number",
+      "options": { "0": "All", "1": "Low to High", "2": "High to Low", "3": "Inside Out", "4": "Outside In" },
+      "default": 1,
+      "description": "How offset distributes across harmonics"
+    },
+    "Offset Curve": {
+      "type": "number",
+      "minimum": -8,
+      "maximum": 8,
+      "default": 0,
+      "description": "Curve exponent (0=linear, +exp, -log)"
+    },
+    "Offset Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics offset applies to"
+    },
+
+    "Attack": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "default": 0,
+      "unit": "seconds",
+      "description": "Time to reach full volume"
+    },
+    "Attack Shape": {
+      "type": "number",
+      "options": { "0": "All", "1": "Low to High", "2": "High to Low", "3": "Inside Out", "4": "Outside In" },
+      "default": 1,
+      "description": "How attack distributes across harmonics"
+    },
+    "Attack Curve": {
+      "type": "number",
+      "minimum": -8,
+      "maximum": 8,
+      "default": -4,
+      "description": "Curve exponent"
+    },
+    "Attack Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics attack applies to"
+    },
+
+    "Decay": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "default": 0,
+      "unit": "seconds",
+      "description": "Time to fall to sustain"
+    },
+    "Decay Shape": {
+      "type": "number",
+      "options": { "0": "All", "1": "Low to High", "2": "High to Low", "3": "Inside Out", "4": "Outside In" },
+      "default": 1,
+      "description": "How decay distributes across harmonics"
+    },
+    "Decay Curve": {
+      "type": "number",
+      "minimum": -8,
+      "maximum": 8,
+      "default": 4,
+      "description": "Curve exponent"
+    },
+    "Decay Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics decay applies to"
+    },
+
+    "Sustain": {
+      "type": "number",
+      "minimum": -64,
+      "maximum": 0,
+      "default": 0,
+      "unit": "dB",
+      "description": "Volume while note held (0=full, -64=off)"
+    },
+    "Sustain Shape": {
+      "type": "number",
+      "options": { "0": "All", "1": "Low to High", "2": "High to Low", "3": "Inside Out", "4": "Outside In" },
+      "default": 0,
+      "description": "How sustain distributes across harmonics"
+    },
+    "Sustain Curve": {
+      "type": "number",
+      "minimum": -8,
+      "maximum": 8,
+      "default": 0,
+      "description": "Curve exponent"
+    },
+    "Sustain Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics sustain applies to"
+    },
+
+    "Hold": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "default": 0,
+      "unit": "seconds",
+      "description": "Time at sustain after note-off"
+    },
+    "Hold Shape": {
+      "type": "number",
+      "options": { "0": "All", "1": "Low to High", "2": "High to Low", "3": "Inside Out", "4": "Outside In" },
+      "default": 1,
+      "description": "How hold distributes across harmonics"
+    },
+    "Hold Curve": {
+      "type": "number",
+      "minimum": -8,
+      "maximum": 8,
+      "default": 4,
+      "description": "Curve exponent"
+    },
+    "Hold Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics hold applies to"
+    },
+
+    "Release": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 40,
+      "default": 0.5,
+      "unit": "seconds",
+      "description": "Fade out time after note-off"
+    },
+    "Release Shape": {
+      "type": "number",
+      "options": { "0": "All", "1": "Low to High", "2": "High to Low", "3": "Inside Out", "4": "Outside In" },
+      "default": 1,
+      "description": "How release distributes across harmonics"
+    },
+    "Release Curve": {
+      "type": "number",
+      "minimum": -8,
+      "maximum": 8,
+      "default": 4,
+      "description": "Curve exponent"
+    },
+    "Release Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics release applies to"
+    },
+
+    "Trem Enable": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 0,
+      "description": "Boolean. Enable tremolo section"
+    },
+    "Env->Trem": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1,
+      "default": 0,
+      "unit": "-1 to 1",
+      "description": "Envelope to trem depth modulation"
+    },
+    "Trem Type": {
+      "type": "number",
+      "options": { "0": "Triangle", "1": "Ramp", "2": "Square" },
+      "default": 0,
+      "description": "LFO waveform"
+    },
+    "Trem Type Invert": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 0,
+      "description": "Boolean. Invert LFO"
+    },
+    "Trem Sharpness": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Higher = sharper sound with less on-time"
+    },
+    "Trem Amount": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 1,
+      "unit": "0-1",
+      "description": "Overall tremolo depth"
+    },
+    "Trem Amount Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics trem amount applies to"
+    },
+    "Trem Amount Distribution": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic depth distribution"
+    },
+    "Trem Amount Curve": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic depth curve"
+    },
+    "Trem Sync Type": {
+      "type": "number",
+      "options": { "0": "Free", "1": "BPM", "2": "BPM Abs" },
+      "default": 0,
+      "description": "Rate sync mode"
+    },
+    "Trem Rate Hz": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 200,
+      "default": 2,
+      "unit": "Hz",
+      "description": "Trem rate (Free mode)"
+    },
+    "Trem Rate Note": {
+      "type": "number",
+      "options": { "0": "4/1", "1": "3/1", "2": "2/1", "3": "1/1", "4": "1/2 D", "5": "1 T", "6": "1/2", "7": "1/4 D", "8": "1/2 T", "9": "1/4", "10": "1/8 D", "11": "1/4 T", "12": "1/8", "13": "1/16 D", "14": "1/8 T", "15": "1/16", "16": "1/32 D", "17": "1/16 T", "18": "1/32", "19": "1/64" },
+      "default": 9,
+      "description": "Trem rate note division (BPM mode)"
+    },
+    "Trem Rate Distribution": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic rate distribution"
+    },
+    "Trem Rate Curve": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic rate curve"
+    },
+    "Trem Offset": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "unit": "0-1",
+      "description": "Phase offset pattern amount"
+    },
+    "Trem Offset Shape": {
+      "type": "number",
+      "options": { "0": "All", "1": "Ramp", "2": "Triangle", "3": "Sine", "4": "Random" },
+      "default": 0,
+      "description": "Pattern shape across harmonics"
+    },
+    "Trem Offset Freq": {
+      "type": "number",
+      "minimum": 2,
+      "maximum": 512,
+      "default": 8,
+      "description": "Harmonics per pattern cycle"
+    },
+    "Trem Enable Attack": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 1,
+      "description": "Boolean. Trem during attack"
+    },
+    "Trem Enable Decay": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 1,
+      "description": "Boolean. Trem during decay"
+    },
+    "Trem Enable Sustain": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 1,
+      "description": "Boolean. Trem during sustain"
+    },
+    "Trem Enable Hold": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 1,
+      "description": "Boolean. Trem during hold"
+    },
+    "Trem Enable Release": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 1,
+      "description": "Boolean. Trem during release"
+    },
+
+    "Pitch Enable": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 0,
+      "description": "Boolean. Enable pitch modulation"
+    },
+    "Pitch LFO Shape": {
+      "type": "number",
+      "options": { "0": "Sine", "1": "Triangle", "2": "Ramp", "3": "Square" },
+      "default": 0,
+      "description": "Pitch LFO waveform"
+    },
+    "Pitch Invert": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 0,
+      "description": "Boolean. Invert pitch LFO"
+    },
+    "Env->Pitch": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1,
+      "default": 0,
+      "unit": "-1 to 1",
+      "description": "Envelope to pitch mod"
+    },
+    "Pitch Amount": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.15,
+      "unit": "0-1",
+      "description": "Pitch mod depth"
+    },
+    "Pitch Amount Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics pitch amount applies to"
+    },
+    "Pitch Amount Distribution": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "unit": "0-1",
+      "description": "Per-harmonic pitch amount distribution"
+    },
+    "Pitch Amount Curve": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic pitch amount curve"
+    },
+    "Pitch Range": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 24,
+      "default": 1,
+      "unit": "semitones",
+      "description": "Max pitch deviation"
+    },
+    "Pitch Sync Type": {
+      "type": "number",
+      "options": { "0": "Free", "1": "BPM", "2": "Trem" },
+      "default": 0,
+      "description": "Pitch rate sync mode"
+    },
+    "Pitch Rate Hz": {
+      "type": "number",
+      "minimum": 0.05,
+      "maximum": 500,
+      "default": 5,
+      "unit": "Hz",
+      "description": "Pitch mod rate (Free mode)"
+    },
+    "Pitch Rate Note": {
+      "type": "number",
+      "options": { "0": "4/1", "1": "3/1", "2": "2/1", "3": "1/1", "4": "1/2 D", "5": "1 T", "6": "1/2", "7": "1/4 D", "8": "1/2 T", "9": "1/4", "10": "1/8 D", "11": "1/4 T", "12": "1/8", "13": "1/16 D", "14": "1/8 T", "15": "1/16", "16": "1/32 D", "17": "1/16 T", "18": "1/32", "19": "1/64" },
+      "default": 9,
+      "description": "Pitch rate note division (BPM mode)"
+    },
+    "Pitch Rate Distribution": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "unit": "0-1",
+      "description": "Per-harmonic pitch rate distribution"
+    },
+    "Pitch Rate Curve": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic pitch rate curve"
+    },
+    "Pitch Noise Amount": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.01,
+      "unit": "0-1",
+      "description": "Random pitch variation"
+    },
+    "Pitch Noise Affects": {
+      "type": "number",
+      "options": { "0": "All", "1": "Odd", "2": "Even", "3": "Octave" },
+      "default": 0,
+      "description": "Which harmonics pitch noise applies to"
+    },
+    "Pitch Noise Distribution": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "unit": "0-1",
+      "description": "Per-harmonic noise distribution"
+    },
+    "Pitch Noise Curve": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5,
+      "unit": "0-1",
+      "description": "Per-harmonic noise curve"
+    },
+    "Pitch Noise Mode": {
+      "type": "number",
+      "options": { "0": "Fuzz", "1": "Swarm" },
+      "default": 0,
+      "description": "Noise mode"
+    },
+    "Pitch Stiffness": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "unit": "0-1",
+      "description": "Inharmonicity (higher harmonics sharper)"
+    },
+    "Retrigger Pitch LFOs": {
+      "type": "number",
+      "values": [0, 1],
+      "default": 1,
+      "description": "Boolean. Reset LFO on note-on"
+    }
+  },
+
+  "bakedDataArrays": {
+    "_note": "511-element arrays stored at preset root level. These contain per-harmonic rendered values.",
+
+    "gains": {
+      "length": 511,
+      "valueRange": [0, 1],
+      "unit": "linear gain",
+      "description": "Per-harmonic gain (linear 0-1). Max for harmonic n is 1/n."
+    },
+    "offsets": {
+      "length": 511,
+      "unit": "seconds",
+      "description": "Per-harmonic delay times"
+    },
+    "attacks": {
+      "length": 511,
+      "unit": "seconds",
+      "description": "Per-harmonic attack times"
+    },
+    "decays": {
+      "length": 511,
+      "unit": "seconds",
+      "description": "Per-harmonic decay times"
+    },
+    "sustains": {
+      "length": 511,
+      "valueRange": [0, 1],
+      "unit": "linear gain",
+      "description": "Per-harmonic sustain levels (linear)"
+    },
+    "holds": {
+      "length": 511,
+      "unit": "seconds",
+      "description": "Per-harmonic hold times"
+    },
+    "releases": {
+      "length": 511,
+      "unit": "seconds",
+      "description": "Per-harmonic release times"
+    },
+    "pitchMapping": {
+      "length": 511,
+      "description": "Frequency ratio per harmonic (1,2,3... for standard; any ratio for inharmonic/chords)"
+    },
+    "glideTimesInBlocks": {
+      "length": 511,
+      "unit": "blocks",
+      "description": "Per-harmonic glide times in audio blocks"
+    },
+    "filterTable": {
+      "length": 511,
+      "valueRange": [0, 1],
+      "description": "Per-harmonic filter multiplier"
+    },
+    "tremDepths": {
+      "length": 511,
+      "valueRange": [0, 1],
+      "description": "Per-harmonic trem depth"
+    },
+    "tremRatesSeconds": {
+      "length": 511,
+      "unit": "seconds",
+      "description": "Per-harmonic trem period (Free mode)"
+    },
+    "tremRatesBeats": {
+      "length": 511,
+      "unit": "beats",
+      "description": "Per-harmonic trem period (BPM mode)"
+    },
+    "tremOffsets": {
+      "length": 511,
+      "valueRange": [0, 1],
+      "description": "Per-harmonic trem phase offset"
+    },
+    "tremWavetable": {
+      "length": 512,
+      "valueRange": [0, 1],
+      "description": "Trem LFO wavetable (512 samples)"
+    },
+    "pitchDepths": {
+      "length": 511,
+      "valueRange": [0, 1],
+      "description": "Per-harmonic pitch mod depth"
+    },
+    "pitchRatesSeconds": {
+      "length": 511,
+      "unit": "Hz",
+      "description": "Per-harmonic pitch rate (Free mode)"
+    },
+    "pitchRatesBeats": {
+      "length": 511,
+      "unit": "beats",
+      "description": "Per-harmonic pitch rate (BPM mode)"
+    },
+    "pitchNoiseAmounts": {
+      "length": 511,
+      "valueRange": [0, 1],
+      "description": "Per-harmonic pitch noise amount"
+    }
+  }
+}

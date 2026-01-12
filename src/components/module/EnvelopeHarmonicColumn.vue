@@ -70,16 +70,6 @@ const valueStyle = computed(() => {
   }
 })
 
-// const isMouseDown = ref<boolean>(false)
-
-// const handleMouseDown = () => {
-//   isMouseDown.value = true
-// }
-
-// const handleMouseUp = () => {
-//   isMouseDown.value = false
-// }
-
 const setRandomValueInRange = (maxValue: number, minValue: number) => {
   const randomizeRange = maxValue - minValue
   const randomDeltaWithinRange = Math.random() * randomizeRange

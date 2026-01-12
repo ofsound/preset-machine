@@ -169,7 +169,7 @@ const handleNewValueFromMouseStage = (
         <MouseStageRows
           v-if="isVisible"
           :rowPixelHeight
-          :numHarmonics="activeHarmonics[activeHarmonics.length - 1]!"
+          :numHarmonics="activeHarmonics[activeHarmonics.length - 1]! + 1"
           @newValueFromMouseStage="handleNewValueFromMouseStage"
         />
         <EnvelopeHarmonicRow
@@ -193,7 +193,7 @@ const handleNewValueFromMouseStage = (
       <div v-else class="relative flex h-full bg-white">
         <MouseStageColumns
           v-if="isVisible"
-          :numHarmonics="activeHarmonics[activeHarmonics.length - 1]!"
+          :numHarmonics="activeHarmonics[activeHarmonics.length - 1]! + 1"
           @newValueFromMouseStage="handleNewValueFromMouseStage"
         />
 

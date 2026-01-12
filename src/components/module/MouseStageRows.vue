@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps<{
-  rowPixelHeight: string
   numHarmonics: number
 }>()
 
@@ -20,8 +19,34 @@ let mouseY: number
 let prevRow: number
 let prevRowRatio: number
 
-const handleMouseDown = () => {
-  animationFrameId.value = requestAnimationFrame(captureMousePosition)
+function isClickWithinBoundingBox(
+  event: MouseEvent,
+  element: HTMLElement,
+  padding: number = 20,
+): boolean {
+  const rect = element.getBoundingClientRect()
+
+  const paddedLeft = rect.left - padding
+  const paddedRight = rect.right + padding
+  const paddedTop = rect.top - padding
+  const paddedBottom = rect.bottom + padding
+
+  if (
+    event.clientX >= paddedLeft &&
+    event.clientX <= paddedRight &&
+    event.clientY >= paddedTop &&
+    event.clientY <= paddedBottom
+  ) {
+    return true
+  } else {
+    return false
+  }
+}
+
+const handleMouseDown = (event: MouseEvent) => {
+  if (isClickWithinBoundingBox(event, stageRef.value!)) {
+    animationFrameId.value = requestAnimationFrame(captureMousePosition)
+  }
 }
 
 const handleMouseUp = () => {
@@ -49,19 +74,17 @@ function captureMousePosition() {
 
   const thisRow = whichRow(mouseYRelativeToStage)
 
+  const zoneWidth = (stageRef.value!.clientWidth - 24) / 2
+
+  const leftBoundary = zoneWidth
+  const rightBoundary = 24 + zoneWidth
+
+  const thisRowRatio =
+    (Math.min(0, mouseXRelativeToStage - leftBoundary) +
+      Math.max(0, mouseXRelativeToStage - rightBoundary)) /
+    zoneWidth
+
   if (thisRow !== prevRow) {
-    const zoneWidth = (stageRef.value!.clientWidth - 24) / 2
-
-    const leftBoundary = zoneWidth
-    const rightBoundary = 24 + zoneWidth
-
-    const thisRowRatio =
-      (Math.min(0, mouseXRelativeToStage - leftBoundary) +
-        Math.max(0, mouseXRelativeToStage - rightBoundary)) /
-      zoneWidth
-
-    emit('newValueFromMouseStage', thisRow, thisRowRatio)
-
     if (!firstClick) {
       const rowDiff = thisRow - prevRow
       const numRowsSkipped = Math.abs(rowDiff)
@@ -74,7 +97,7 @@ function captureMousePosition() {
           emit(
             'newValueFromMouseStage',
             prevRow + i * direction,
-            prevRowRatio + i * diffPerStep,
+            Math.max(Math.min(prevRowRatio + i * diffPerStep, 1), -1),
           )
         }
       }
@@ -83,6 +106,12 @@ function captureMousePosition() {
     prevRow = whichRow(mouseYRelativeToStage)
     prevRowRatio = thisRowRatio
   }
+
+  emit(
+    'newValueFromMouseStage',
+    thisRow,
+    Math.max(Math.min(thisRowRatio, 1), -1),
+  )
 
   firstClick = false
 
@@ -93,6 +122,12 @@ onMounted(() => {
   document.addEventListener('mousedown', handleMouseDown)
   document.addEventListener('mouseup', handleMouseUp)
   document.addEventListener('mousemove', handleMouseMove)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('mousedown', handleMouseDown)
+  document.removeEventListener('mouseup', handleMouseUp)
+  document.removeEventListener('mousemove', handleMouseMove)
 })
 </script>
 
