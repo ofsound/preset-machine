@@ -140,7 +140,7 @@ const handleNewValueFromMouseStage = (
             class="w-9 rounded-sm border border-neutral-300 bg-white p-1 px-2 text-right text-sm font-semibold tabular-nums"
           />
         </div>
-        <div class="flex gap-2">
+        <div class="hidden gap-2">
           <div class="self-center text-xs">Row Height (px)</div>
           <input
             type="text"
@@ -161,10 +161,10 @@ const handleNewValueFromMouseStage = (
       :bars
     />
 
-    <div class="min-h-0 flex-1 overflow-scroll bg-amber-300">
+    <div class="min-h-0 flex-1">
       <div
         v-if="!isMagnitude"
-        class="relative flex h-full w-full flex-col-reverse overflow-auto bg-white"
+        class="relative flex h-full w-full flex-col-reverse bg-white"
       >
         <MouseStageRows
           v-if="isVisible"
@@ -190,7 +190,7 @@ const handleNewValueFromMouseStage = (
           @updateRowValue="handleUpdateRowValue(index, $event)"
         />
       </div>
-      <div v-else class="relative flex h-full overflow-auto bg-white">
+      <div v-else class="relative flex h-full bg-white">
         <MouseStageColumns
           v-if="isVisible"
           :numHarmonics="activeHarmonics[activeHarmonics.length - 1]!"

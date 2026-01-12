@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const props = defineProps<{
   isActive: boolean
@@ -65,15 +65,15 @@ const valueStyle = computed(() => {
   }
 })
 
-const isMouseDown = ref<boolean>(false)
+// const isMouseDown = ref<boolean>(false)
 
-const handleMouseDown = () => {
-  isMouseDown.value = true
-}
+// const handleMouseDown = () => {
+//   isMouseDown.value = true
+// }
 
-const handleMouseUp = () => {
-  isMouseDown.value = false
-}
+// const handleMouseUp = () => {
+//   isMouseDown.value = false
+// }
 
 const setRandomValueInRange = (maxValue: number, minValue: number) => {
   const randomizeRange = maxValue - minValue
@@ -130,88 +130,19 @@ defineExpose({
   setRatioValue,
 })
 
-const handleMousePositive = (event: MouseEvent) => {
-  if (positiveGridElement.value?.clientWidth && props.isActive) {
-    if (isMouseDown.value || event.type === 'mousedown') {
-      isPositive.value = true
-
-      const parentLeft = positiveGridElement.value.getBoundingClientRect().left
-
-      const mouseXRelativeToParent = event.clientX - parentLeft
-
-      updateRowPixelWidth(mouseXRelativeToParent)
-
-      updateRowValue(mouseXRelativeToParent)
-    }
-  }
-}
-
-const handleMouseNegative = (event: MouseEvent) => {
-  if (negativeGridElement.value?.clientWidth && props.isActive) {
-    if (isMouseDown.value || event.type === 'mousedown') {
-      isPositive.value = false
-
-      const parentRight =
-        negativeGridElement.value.getBoundingClientRect().right
-
-      const mouseXRelativeToParent = event.clientX - parentRight
-
-      updateRowPixelWidth(Math.abs(mouseXRelativeToParent))
-
-      updateRowValue(mouseXRelativeToParent)
-    }
-  }
-}
-
-const handleResetMouse = () => {
-  if (isMouseDown.value) {
-    rowWidth.value = 0
-    emit('updateRowValue', 0)
-  }
-}
-
 watch(
   () => props.timeScaleSeconds,
   (newValue, oldValue) => {
     rowWidth.value *= oldValue / newValue
   },
 )
-
-onMounted(() => {
-  window.addEventListener('mousedown', handleMouseDown)
-  window.addEventListener('mouseup', handleMouseUp)
-
-  const gridEvents = ['mousedown', 'mousemove']
-
-  gridEvents.forEach((eventType) => {
-    positiveGridElement.value!.addEventListener(
-      eventType,
-      handleMousePositive as EventListener,
-    )
-    negativeGridElement.value!.addEventListener(
-      eventType,
-      handleMouseNegative as EventListener,
-    )
-  })
-
-  const resetEvents = ['mousedown', 'mousemove']
-
-  resetEvents.forEach((eventType) => {
-    resetElement.value!.addEventListener(
-      eventType,
-      handleResetMouse as EventListener,
-    )
-  })
-})
 </script>
 
 <template>
-  <div
-    class="relative flex min-h-0 flex-1 cursor-pointer bg-blue-200 select-none"
-  >
+  <div class="relative flex min-h-0 flex-1 cursor-pointer select-none">
     <div
       ref="negativeGridElement"
-      class="relative flex h-full flex-1 flex-row-reverse bg-blue-400 hover:[&>*:last-child]:brightness-110"
+      class="relative flex h-full flex-1 flex-row-reverse hover:[&>*:last-child]:brightness-110"
     >
       <template v-if="grid === 0">
         <div
