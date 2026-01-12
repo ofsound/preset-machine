@@ -16,6 +16,7 @@ import EnvelopeHarmonicColumn from '@/components/module/EnvelopeHarmonicColumn.v
 import { useStore } from '@/stores/store'
 
 const props = defineProps<{
+  isVisible: boolean
   grid: number
   bars: number
   tempo: number
@@ -160,13 +161,15 @@ const handleNewValueFromMouseStage = (
       :bars
     />
 
-    <div class="min-h-0 flex-1 overflow-scroll">
+    <div class="min-h-0 flex-1 overflow-scroll bg-amber-300">
       <div
         v-if="!isMagnitude"
-        class="relative flex w-full flex-col-reverse overflow-auto bg-white"
+        class="relative flex h-full w-full flex-col-reverse overflow-auto bg-white"
       >
         <MouseStageRows
+          v-if="isVisible"
           :rowPixelHeight
+          :numHarmonics="activeHarmonics[activeHarmonics.length - 1]!"
           @newValueFromMouseStage="handleNewValueFromMouseStage"
         />
         <EnvelopeHarmonicRow
@@ -189,6 +192,7 @@ const handleNewValueFromMouseStage = (
       </div>
       <div v-else class="relative flex h-full overflow-auto bg-white">
         <MouseStageColumns
+          v-if="isVisible"
           :numHarmonics="activeHarmonics[activeHarmonics.length - 1]!"
           @newValueFromMouseStage="handleNewValueFromMouseStage"
         />

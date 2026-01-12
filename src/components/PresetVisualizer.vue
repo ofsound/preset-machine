@@ -1,39 +1,40 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import PageTwoControls from './PageTwoControls.vue'
-import PageTwoRow from '@/components/PageTwoRow.vue'
+import PresetVisualizerControls from './PresetVisualizerControls.vue'
+import PresetVisualizerRow from '@/components/PresetVisualizerRow.vue'
 
 import { useStore } from '@/stores/store'
 
 const store = useStore()
 
 const numHarmonics = ref(36)
-const rowPixelHeight = ref(4)
+// const rowPixelHeight = ref(4)
 const timeScaleSeconds = ref(20)
 
-const updatePageTwoSettings = (
+const updatePresetVisualizerSettings = (
   newNumHarmonics: number,
-  newRowPixelHeight: number,
+  // newRowPixelHeight: number,
   newTimeScaleSeconds: number,
 ) => {
   numHarmonics.value = newNumHarmonics
-  rowPixelHeight.value = newRowPixelHeight
+  // rowPixelHeight.value = newRowPixelHeight
   timeScaleSeconds.value = newTimeScaleSeconds
 }
 </script>
 
 <template>
-  <div class="relative bg-black">
-    <PageTwoControls @updatePageTwoSettings="updatePageTwoSettings" />
-    <div class="flex flex-col-reverse bg-black">
-      <PageTwoRow
+  <div class="relative flex h-80 flex-col bg-black">
+    <PresetVisualizerControls
+      @updatePresetVisualizerSettings="updatePresetVisualizerSettings"
+    />
+    <div class="flex flex-1 flex-col-reverse bg-black">
+      <PresetVisualizerRow
         v-for="(n, index) in numHarmonics"
         :key="index"
         :index="index"
         :timeScaleSeconds
         :color="store.harmonicRowColors[index]!"
-        :style="{ height: `${rowPixelHeight}px` }"
       />
     </div>
     <div class="flex h-4 justify-between bg-slate-400 text-xs font-semibold">

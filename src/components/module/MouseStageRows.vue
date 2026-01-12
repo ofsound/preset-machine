@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 
 const props = defineProps<{
   rowPixelHeight: string
+  numHarmonics: number
 }>()
 
 const emit = defineEmits(['newValueFromMouseStage'])
@@ -34,7 +35,9 @@ const handleMouseMove = (event: MouseEvent) => {
 }
 
 const whichRow = (mouseYRelativeToStage: number): number => {
-  return Math.floor(mouseYRelativeToStage / Number(props.rowPixelHeight))
+  return Math.floor(
+    mouseYRelativeToStage / (stageRef.value!.clientHeight / props.numHarmonics),
+  )
 }
 
 function captureMousePosition() {

@@ -207,12 +207,11 @@ onMounted(() => {
 
 <template>
   <div
-    class="relative flex h-3 cursor-pointer select-none"
-    :style="{ height: `${rowPixelHeight}px` }"
+    class="relative flex min-h-0 flex-1 cursor-pointer bg-blue-200 select-none"
   >
     <div
       ref="negativeGridElement"
-      class="relative flex h-full flex-1 flex-row-reverse hover:[&>*:last-child]:brightness-110"
+      class="relative flex h-full flex-1 flex-row-reverse bg-blue-400 hover:[&>*:last-child]:brightness-110"
     >
       <template v-if="grid === 0">
         <div

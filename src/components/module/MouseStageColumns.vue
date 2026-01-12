@@ -48,8 +48,6 @@ function captureMousePosition() {
 
   const thisColumn = whichColumn(mouseXRelativeToStage)
 
-  console.log(thisColumn)
-
   if (thisColumn !== prevColumn) {
     const zoneHeight = (stageRef.value!.clientHeight - 24) / 2
 
@@ -60,8 +58,6 @@ function captureMousePosition() {
       (Math.min(0, mouseYRelativeToStage - topBoundary) +
         Math.max(0, mouseYRelativeToStage - bottomBoundary)) /
       zoneHeight
-
-    console.log(thisColumnRatio)
 
     emit('newValueFromMouseStage', thisColumn, thisColumnRatio)
 

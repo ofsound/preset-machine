@@ -93,6 +93,7 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
       v-show="lastMenuButtonClickedLabel === item.label"
       v-model:rowPixelHeight="rowPixelHeight"
       v-model:timeScaleSeconds="timeScaleSeconds"
+      :isVisible="lastMenuButtonClickedLabel === item.label"
       :key="index"
       :grid
       :bars

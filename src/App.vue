@@ -10,14 +10,14 @@ import WelcomeScreen from '@/components/WelcomeScreen.vue'
 
 import AppHeader from '@/components/AppHeader.vue'
 
-import PageTwo from '@/components/PageTwo.vue'
+import PresetVisualizer from '@/components/PresetVisualizer.vue'
 import MenuSystem from '@/components/MenuSystem.vue'
 
 import EnvelopesModule from '@/components/module/EnvelopesModule.vue'
 import PresetInspector from '@/components/PresetInspector.vue'
 
 const componentObjects: ComponentObject[] = [
-  { component: EnvelopesModule, label: 'ModLayer' },
+  { component: EnvelopesModule, label: 'Layer' },
 ]
 const isWelcome = ref(true)
 const isInspector = ref(false)
@@ -42,7 +42,8 @@ const toggleInspector = () => {
       </div>
 
       <div v-show="!isInspector" class="flex min-h-0 flex-1 flex-col">
-        <PageTwo />
+        <PresetVisualizer />
+
         <MenuSystem :componentObjects="componentObjects" />
 
         <div class="min-h-0 flex-1 bg-slate-800 p-5">
@@ -57,8 +58,9 @@ const toggleInspector = () => {
     </template>
 
     <footer
-      class="mt-auto flex justify-between bg-neutral-100 p-3 text-right text-xs"
+      class="mt-auto flex justify-between bg-neutral-100 p-2 text-right text-xs"
     >
+      <div class="flex gap-2"></div>
       <div class="ml-auto font-semibold tracking-wide">preset machine v0.1</div>
     </footer>
   </div>
