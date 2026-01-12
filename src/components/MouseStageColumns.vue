@@ -101,8 +101,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    ref="stageRef"
-    class="absolute z-10 h-full w-full bg-violet-400/30"
-  ></div>
+  <div ref="stageRef" class="absolute z-10 h-full w-full"></div>
 </template>
