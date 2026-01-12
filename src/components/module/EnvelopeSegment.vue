@@ -5,13 +5,13 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { selectText } from '@/utils/helpers'
 
-import RandomizeControls from '@/components/RandomizeControls.vue'
-import TopRuler from '@/components/TopRuler.vue'
-import ManualEntry from '@/components/ManualEntry.vue'
-import MouseStageRows from '@/components/MouseStageRows.vue'
-import MouseStageColumns from '@/components/MouseStageColumns.vue'
-import EnvelopeHarmonicRow from '@/components/EnvelopeHarmonicRow.vue'
-import EnvelopeHarmonicColumn from '@/components/EnvelopeHarmonicColumn.vue'
+import RandomizeControls from '@/components/module/RandomizeControls.vue'
+import TopRuler from '@/components/module/TopRuler.vue'
+import ManualEntry from '@/components/module/ManualEntry.vue'
+import MouseStageRows from '@/components/module/MouseStageRows.vue'
+import MouseStageColumns from '@/components/module/MouseStageColumns.vue'
+import EnvelopeHarmonicRow from '@/components/module/EnvelopeHarmonicRow.vue'
+import EnvelopeHarmonicColumn from '@/components/module/EnvelopeHarmonicColumn.vue'
 
 import { useStore } from '@/stores/store'
 

@@ -7,7 +7,7 @@ import { isPrime, isFibonacci } from '@/utils/math'
 
 import { selectText } from '@/utils/helpers'
 
-const emit = defineEmits(['update:activeHarmonics'])
+const emit = defineEmits(['updateActiveHarmonics'])
 
 const selected = ref('All')
 
@@ -80,11 +80,11 @@ const customList = computed({
 })
 
 watch(activeHarmonics, (newValue) => {
-  emit('update:activeHarmonics', newValue)
+  emit('updateActiveHarmonics', newValue)
 })
 
 onMounted(() => {
-  emit('update:activeHarmonics', activeHarmonics.value)
+  emit('updateActiveHarmonics', activeHarmonics.value)
 })
 </script>
 

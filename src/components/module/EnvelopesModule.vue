@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import TempoGridControls from '@/components//TempoGridControls.vue'
-import ActiveHarmonics from '@/components/ActiveHarmonics.vue'
-import EnvelopeSegmentMenu from '@/components/EnvelopeSegmentMenu.vue'
-import EnvelopeSegment from '@/components/EnvelopeSegment.vue'
+import TempoGridControls from '@/components/module/TempoGridControls.vue'
+import ActiveHarmonics from '@/components/module/ActiveHarmonics.vue'
+import EnvelopeSegmentMenu from '@/components/module/EnvelopeSegmentMenu.vue'
+import EnvelopeSegment from '@/components/module/EnvelopeSegment.vue'
 
 import { usePreset } from '@/composable/usePreset.ts'
 import { useStore } from '@/stores/store'
@@ -78,7 +78,7 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
 
     <hr class="border-gray-200" />
 
-    <ActiveHarmonics @update:active-harmonics="handleActiveHarmonicsUpdate" />
+    <ActiveHarmonics @updateActiveHarmonics="handleActiveHarmonicsUpdate" />
 
     <hr class="border-gray-200" />
 

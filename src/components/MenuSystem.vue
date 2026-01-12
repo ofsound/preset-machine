@@ -28,22 +28,22 @@ function getLabel(component: Component): string {
 </script>
 
 <template>
-  <div class="border-y bg-linear-to-t from-slate-300 to-stone-200 pt-2 pb-3">
-    <div class="mb-2 flex justify-center gap-2">
+  <div class="border-y bg-linear-to-t from-slate-300 to-stone-200 pt-4 pb-3.5">
+    <div class="flex">
+      <div
+        class="crosshatch-background mr-2 ml-4 flex min-h-14 flex-1 justify-center gap-4 rounded-full border border-gray-400 bg-slate-100 pt-4 pb-3"
+      >
+        <MenuSystemModuleItem
+          v-for="item in store.modules"
+          :key="item.id"
+          :id="item.id"
+          :label="getLabel(item.component)"
+        />
+      </div>
       <MenuSystemAddModuleButton
         v-for="(item, index) in componentObjects"
         :componentObject="item"
         :key="index"
-      />
-    </div>
-    <div
-      class="crosshatch-background mx-4 flex min-h-14 justify-center gap-4 rounded-full border border-gray-400 bg-slate-100 pt-4 pb-3"
-    >
-      <MenuSystemModuleItem
-        v-for="item in store.modules"
-        :key="item.id"
-        :id="item.id"
-        :label="getLabel(item.component)"
       />
     </div>
   </div>

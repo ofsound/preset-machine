@@ -13,11 +13,11 @@ import AppHeader from '@/components/AppHeader.vue'
 import PageTwo from '@/components/PageTwo.vue'
 import MenuSystem from '@/components/MenuSystem.vue'
 
-import EnvelopesModule from '@/components/EnvelopesModule.vue'
+import EnvelopesModule from '@/components/module/EnvelopesModule.vue'
 import PresetInspector from '@/components/PresetInspector.vue'
 
 const componentObjects: ComponentObject[] = [
-  { component: EnvelopesModule, label: 'Envelopes' },
+  { component: EnvelopesModule, label: 'ModLayer' },
 ]
 const isWelcome = ref(true)
 const isInspector = ref(false)

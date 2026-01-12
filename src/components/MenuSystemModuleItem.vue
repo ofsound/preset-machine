@@ -44,6 +44,6 @@ const deleteModule = () => {
     >
       <div class="relative -top-[3.5px]">×</div>
     </button>
-    <div class="relative top-1 mr-1.5 ml-2.5 text-xl text-slate-600">➡︎</div>
+    <div class="relative mr-1.5 ml-2.5 text-xl text-slate-600">➡︎</div>
   </div>
 </template>
