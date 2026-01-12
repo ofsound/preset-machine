@@ -3,6 +3,8 @@ import { ref } from 'vue'
 
 import { v4 as uuidv4 } from 'uuid'
 
+import { selectText } from '@/utils/helpers'
+
 const emit = defineEmits(['updateTempoGridSetting'])
 
 const toolOptions = ref([
@@ -25,11 +27,6 @@ const handleNewValue = () => {
     Number(bars.value),
     Number(tempo.value),
   )
-}
-
-const selectText = (e: PointerEvent) => {
-  const clickedInput = e.target as HTMLInputElement
-  clickedInput.select()
 }
 </script>
 

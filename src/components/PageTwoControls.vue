@@ -3,16 +3,13 @@ import { ref, watch } from 'vue'
 
 import { v4 as uuidv4 } from 'uuid'
 
+import { selectText } from '@/utils/helpers'
+
 const emit = defineEmits(['updatePageTwoSettings'])
 
 const numHarmonics = ref('36')
 const rowPixelHeight = ref('4')
 const timeScaleSeconds = ref('20')
-
-const selectText = (e: PointerEvent) => {
-  const clickedInput = e.target as HTMLInputElement
-  clickedInput.select()
-}
 
 watch([numHarmonics, rowPixelHeight, timeScaleSeconds], () => {
   emit(

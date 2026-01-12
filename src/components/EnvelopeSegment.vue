@@ -3,6 +3,8 @@ import { ref } from 'vue'
 
 import { v4 as uuidv4 } from 'uuid'
 
+import { selectText } from '@/utils/helpers'
+
 import RandomizeControls from '@/components/RandomizeControls.vue'
 import TopRuler from '@/components/TopRuler.vue'
 import ManualEntry from '@/components/ManualEntry.vue'
@@ -111,11 +113,6 @@ const handleNewValueFromMouseStage = (
       if (index === rowIndex) childInstance.setRatioValue(newRowValue)
     })
   }
-}
-
-const selectText = (e: PointerEvent) => {
-  const clickedInput = e.target as HTMLInputElement
-  clickedInput.select()
 }
 </script>
 

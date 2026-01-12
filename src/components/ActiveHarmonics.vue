@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { isPrime, isFibonacci } from '@/utils/math'
 
+import { selectText } from '@/utils/helpers'
+
 const emit = defineEmits(['update:activeHarmonics'])
 
 const selected = ref('All')
@@ -76,11 +78,6 @@ const customList = computed({
       .map(Number)
   },
 })
-
-const selectText = (e: PointerEvent) => {
-  const clickedInput = e.target as HTMLInputElement
-  clickedInput.select()
-}
 
 watch(activeHarmonics, (newValue) => {
   emit('update:activeHarmonics', newValue)

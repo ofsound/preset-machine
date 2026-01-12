@@ -3,15 +3,12 @@ import { ref } from 'vue'
 
 import { v4 as uuidv4 } from 'uuid'
 
+import { selectText } from '@/utils/helpers'
+
 const emit = defineEmits(['randomize'])
 
 const lowerLimit = ref('0')
 const upperLimit = ref('0')
-
-const selectText = (e: PointerEvent) => {
-  const clickedInput = e.target as HTMLInputElement
-  clickedInput.select()
-}
 </script>
 
 <template>

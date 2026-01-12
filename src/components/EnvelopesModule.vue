@@ -29,7 +29,7 @@ const envelopeSegments: EnvelopeLabelAndSegment[] = [
   { label: 'Release', envelopeSegmentValues: presetModLayer.releases },
 ]
 
-const lastMenuButtonClickedLabel = ref('Offset')
+const lastMenuButtonClickedLabel = ref('Gain')
 
 const grid = ref(0)
 const bars = ref(1)

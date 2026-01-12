@@ -3,6 +3,8 @@ import { ref, watch } from 'vue'
 
 import { v4 as uuidv4 } from 'uuid'
 
+import { selectText } from '@/utils/helpers'
+
 const props = defineProps<{
   currentHarmonicIndex: number
   currentHarmonicValue: number
@@ -15,11 +17,6 @@ const emit = defineEmits(['updateRowValue'])
 
 const handleUserInput = () => {
   emit('updateRowValue', harmonicIndex.value - 1, harmonicValue.value)
-}
-
-const selectText = (e: PointerEvent) => {
-  const clickedInput = e.target as HTMLInputElement
-  clickedInput.select()
 }
 
 watch(
