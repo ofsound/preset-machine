@@ -226,20 +226,53 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', corePreset)
               class="w-full bg-slate-100 p-2"
             />
             <div class="mt-1 px-2 text-sm text-neutral-500 italic">
-              <span v-if="jsonSchema.parameters && jsonSchema.parameters[key]">
-                <div>{{ jsonSchema.parameters[key].type }}</div>
-                <div>
-                  {{
-                    jsonSchema.parameters[key].minimum
-                  }}&nbsp;&nbsp;&ndash;&nbsp;&nbsp;
-                  {{ jsonSchema.parameters[key].maximum }}
+              <div v-if="jsonSchema.parameters && jsonSchema.parameters[key]">
+                <div class="mb-.5 text-neutral-800">
+                  {{ jsonSchema.parameters[key].description }}
                 </div>
-                <div></div>
-                <div>{{ jsonSchema.parameters[key].options }}</div>
-                <div>{{ jsonSchema.parameters[key].default }}</div>
-                <div>{{ jsonSchema.parameters[key].description }}</div>
-              </span>
-              <span v-else> No description available. </span>
+                <div class="flex hidden gap-2">
+                  <div>type:</div>
+                  <div>{{ jsonSchema.parameters[key].type }}</div>
+                </div>
+                <div
+                  v-if="
+                    (jsonSchema.parameters[key] as { minimum: unknown })
+                      .minimum ||
+                    (jsonSchema.parameters[key] as { maximum: unknown }).maximum
+                  "
+                  class="flex gap-2"
+                >
+                  <div class="w-13">range:</div>
+                  <div>
+                    {{
+                      (jsonSchema.parameters[key] as { minimum: number })
+                        .minimum
+                    }}&nbsp;&nbsp;to&nbsp;
+                    {{
+                      (jsonSchema.parameters[key] as { maximum: number })
+                        .maximum
+                    }}
+                  </div>
+                </div>
+                <div
+                  v-if="
+                    (jsonSchema.parameters[key] as { options: unknown }).options
+                  "
+                  class="flex gap-2"
+                >
+                  <div class="w-13">options:</div>
+                  <div>
+                    {{
+                      (jsonSchema.parameters[key] as { options: unknown })
+                        .options
+                    }}
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <div class="w-13">default:</div>
+                  <div>{{ jsonSchema.parameters[key].default }}</div>
+                </div>
+              </div>
             </div>
           </div>
         </label>

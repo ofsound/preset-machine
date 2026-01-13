@@ -24,7 +24,7 @@ const handleNewValue = () => {
   emit(
     'updateTempoGridSetting',
     grid.value,
-    Number(bars.value),
+    Math.min(Number(bars.value), 1),
     Number(tempo.value),
   )
 }

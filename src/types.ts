@@ -62,7 +62,6 @@ export interface Preset {
     "Glide Time": number
     "Glide Time Curve": number
     "Glide Time Distribution": number
-    "Global Tuning": number
     "Harmonic Slew Ms": number
     "Hold": number
     "Hold Affects": number

@@ -146,7 +146,7 @@ watch(
           v-for="n in (16 * bars) / grid"
           :key="n"
           class="h-full flex-1 border-l border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
-          :class="{ 'border-zinc-400/50!': n % ((4 * bars) / grid) === 0 }"
+          :class="{ 'border-zinc-400/50!': n % (16 / grid) === 0 }"
         ></div>
       </template>
       <div
@@ -173,7 +173,7 @@ watch(
           v-for="n in (16 * bars) / grid"
           :key="n"
           class="h-full flex-1 border-r border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
-          :class="{ 'border-zinc-400/50!': n % ((4 * bars) / grid) === 0 }"
+          :class="{ 'border-zinc-400/50!': n % (16 / grid) === 0 }"
         ></div>
       </template>
       <div

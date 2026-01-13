@@ -22,45 +22,18 @@ const resetElement = ref<HTMLElement | null>(null)
 const negativeGridElement = ref<HTMLElement | null>(null)
 
 const updateRowValue = (pixelValue: number) => {
-  if (props.grid > 0) {
-    const height = positiveGridElement.value!.clientHeight
+  let scaledColumnValue =
+    (pixelValue * 1) / positiveGridElement.value!.clientHeight
 
-    const totalSteps = (16 * props.bars) / props.grid
-
-    let currentStep
-
-    if (isPositive.value) {
-      currentStep = Math.ceil((pixelValue / height) * totalSteps)
-    } else {
-      currentStep = Math.floor((pixelValue / height) * totalSteps)
-    }
-
-    const stepDuration = (props.grid / 4) * (60 / props.tempo)
-
-    const snappedRowValue = currentStep * stepDuration
-
-    emit('updateRowValue', snappedRowValue)
-  } else {
-    let scaledColumnValue =
-      (pixelValue * 1) / positiveGridElement.value!.clientHeight
-
-    if (props.isGain) {
-      scaledColumnValue *= 1 / (props.index + 1)
-    }
-
-    emit('updateRowValue', scaledColumnValue)
+  if (props.isGain) {
+    scaledColumnValue *= 1 / (props.index + 1)
   }
+
+  emit('updateRowValue', scaledColumnValue)
 }
 
 const updateRowPixelHeight = (pixelValue: number) => {
-  if (props.grid > 0) {
-    const roundAmount =
-      positiveGridElement.value!.clientHeight / ((16 * props.bars) / props.grid)
-
-    columnHeight.value = Math.ceil(pixelValue / roundAmount) * roundAmount
-  } else {
-    columnHeight.value = pixelValue
-  }
+  columnHeight.value = pixelValue
 }
 
 const valueStyle = computed(() => {
@@ -148,10 +121,9 @@ watch(
       </template>
       <template v-if="grid !== 0">
         <div
-          v-for="n in (16 * bars) / grid"
+          v-for="n in 16"
           :key="n"
           class="h-full flex-1 border-l border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
-          :class="{ 'border-zinc-400/50!': n % ((4 * bars) / grid) === 0 }"
         ></div>
       </template>
       <div
@@ -174,10 +146,9 @@ watch(
       </template>
       <template v-if="grid !== 0">
         <div
-          v-for="n in (16 * bars) / grid"
+          v-for="n in 16"
           :key="n"
           class="h-full flex-1 border-r border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
-          :class="{ 'border-zinc-400/50!': n % ((4 * bars) / grid) === 0 }"
         ></div>
       </template>
       <div

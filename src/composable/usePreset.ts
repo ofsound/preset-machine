@@ -49,7 +49,6 @@ const corePreset = reactive<Preset>({
     "Glide Time": 0.0,
     "Glide Time Curve": 0.5,
     "Glide Time Distribution": 0.5,
-    "Global Tuning": 440.0,
     "Harmonic Slew Ms": 10.0,
     "Hold": 0.0,
     "Hold Affects": 0.0,
@@ -195,6 +194,17 @@ const finalPreset = computed<Preset>(() => {
       computedPreset.offsets[i]! += presetModLayer.offsets[i]!
     }
   }
+
+  for (let i = 0; i < computedPreset.attacks.length; i++) {
+    computedPreset.gains[i]! = Math.max(computedPreset.gains[i]!, 0)
+    computedPreset.sustains[i]! = Math.max(computedPreset.sustains[i]!, 0)
+    computedPreset.attacks[i]! = Math.max(computedPreset.attacks[i]!, 0)
+    computedPreset.holds[i]! = Math.max(computedPreset.holds[i]!, 0)
+    computedPreset.decays[i]! = Math.max(computedPreset.decays[i]!, 0)
+    computedPreset.releases[i]! = Math.max(computedPreset.releases[i]!, 0)
+    computedPreset.offsets[i]! = Math.max(computedPreset.offsets[i]!, 0)
+  }
+
 
   return {
     ...computedPreset

@@ -13,17 +13,17 @@ defineProps<{
     >
       <template v-if="grid !== 0">
         <div
-          v-for="n in (16 * bars) / grid"
+          v-for="n in (16 / grid) * bars"
           :key="n"
           class="relative h-full flex-1 text-xs font-semibold last:opacity-0"
         >
           <div
-            class="hidden text-center"
+            class="absolute -right-3 hidden w-6 text-center"
             :class="{
-              'absolute -left-3 block! w-6': n % ((4 * bars) / grid) === 0,
+              'block!': n % (16 / grid) === 0,
             }"
           >
-            {{ n % ((4 * bars) / grid) === 0 ? n / ((4 * bars) / grid) : '' }}
+            {{ (n * grid) / 16 }}
           </div>
         </div>
       </template>
@@ -45,17 +45,17 @@ defineProps<{
     >
       <template v-if="grid !== 0">
         <div
-          v-for="n in (16 * bars) / grid"
+          v-for="n in (16 / grid) * bars"
           :key="n"
           class="relative h-full flex-1 text-xs font-semibold last:opacity-0"
         >
           <div
-            class="hidden text-center"
+            class="absolute -right-3 hidden w-6 text-center"
             :class="{
-              'absolute -right-3 block! w-6': n % ((4 * bars) / grid) === 0,
+              'block!': n % (16 / grid) === 0,
             }"
           >
-            {{ n % ((4 * bars) / grid) === 0 ? n / ((4 * bars) / grid) : '' }}
+            {{ (n * grid) / 16 }}
           </div>
         </div>
       </template>
