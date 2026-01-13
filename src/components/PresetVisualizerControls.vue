@@ -14,7 +14,8 @@ const timeScaleSeconds = ref('20')
 watch([numHarmonics, timeScaleSeconds], () => {
   emit(
     'updatePresetVisualizerSettings',
-    Number(numHarmonics.value),
+    // Number(numHarmonics.value),
+    Math.min(Number(numHarmonics.value), 511),
     // Number(rowPixelHeight.value),
     Number(timeScaleSeconds.value),
   )

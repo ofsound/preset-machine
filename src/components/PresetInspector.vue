@@ -5,8 +5,6 @@ import { usePreset } from '@/composable/usePreset.ts'
 
 import jsonSchema from '@/assets/schema.json' // Use @/ for the src directory alias
 
-console.log(jsonSchema.parameters)
-
 import type { Preset } from '@/types.ts'
 
 const { corePreset } = usePreset()

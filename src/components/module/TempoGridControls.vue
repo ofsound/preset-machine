@@ -11,7 +11,6 @@ const toolOptions = ref([
   { text: 'none', value: 0 },
   { text: '1/2', value: 8 },
   { text: '1/4', value: 4 },
-  { text: '1/8D', value: 3 },
   { text: '1/8', value: 2 },
   { text: '1/16', value: 1 },
 ])
@@ -24,7 +23,7 @@ const handleNewValue = () => {
   emit(
     'updateTempoGridSetting',
     grid.value,
-    Math.min(Number(bars.value), 1),
+    Math.max(Number(bars.value), 1),
     Number(tempo.value),
   )
 }

@@ -24,7 +24,7 @@ const updatePresetVisualizerSettings = (
 </script>
 
 <template>
-  <div class="relative flex h-80 flex-col bg-black">
+  <div class="relative flex min-h-80 flex-col bg-black">
     <PresetVisualizerControls
       @updatePresetVisualizerSettings="updatePresetVisualizerSettings"
     />

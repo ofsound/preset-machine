@@ -55,11 +55,7 @@ const releaseBackgroundString =
 </script>
 
 <template>
-  <div
-    ref="rowElement"
-    class="mb-px flex flex-1"
-    :style="{ opacity: gainOpacity }"
-  >
+  <div ref="rowElement" class="flex flex-1" :style="{ opacity: gainOpacity }">
     <div
       :style="{
         width: offsetWidth,

@@ -61,7 +61,7 @@ const toggleInspector = () => {
       class="mt-auto flex justify-between bg-neutral-100 p-2 text-right text-xs"
     >
       <div class="flex gap-2"></div>
-      <div class="ml-auto font-semibold tracking-wide">preset machine v0.1</div>
+      <div class="ml-auto font-semibold tracking-wide">preset machine v1.0</div>
     </footer>
   </div>
 </template>

@@ -71,14 +71,14 @@ const updateEnvelopeSegmentArray = (index: number, updatedArray: number[]) => {
 
 <template>
   <div class="flex h-full flex-col overflow-hidden rounded-lg bg-neutral-50">
+    <ActiveHarmonics @updateActiveHarmonics="handleActiveHarmonicsUpdate" />
+
+    <hr class="border-gray-200" />
+
     <TempoGridControls
       v-show="true"
       @updateTempoGridSetting="updateTempoGridSetting"
     />
-
-    <hr class="border-gray-200" />
-
-    <ActiveHarmonics @updateActiveHarmonics="handleActiveHarmonicsUpdate" />
 
     <hr class="border-gray-200" />
 

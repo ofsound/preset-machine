@@ -45,6 +45,7 @@ function isClickWithinBoundingBox(
 
 const handleMouseDown = (event: MouseEvent) => {
   if (isClickWithinBoundingBox(event, stageRef.value!)) {
+    event.preventDefault()
     animationFrameId.value = requestAnimationFrame(captureMousePosition)
   }
 }
@@ -133,5 +134,5 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="stageRef" class="absolute z-10 h-full w-full"></div>
+  <div ref="stageRef" class="absolute z-10 h-full w-full select-none"></div>
 </template>
