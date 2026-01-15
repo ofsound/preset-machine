@@ -225,13 +225,18 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', corePreset)
             />
             <div class="mt-1 px-2 text-sm text-neutral-500 italic">
               <div v-if="jsonSchema.parameters && jsonSchema.parameters[key]">
-                <div class="mb-.5 text-neutral-800">
+                <div class="mb-1 text-neutral-800">
                   {{ jsonSchema.parameters[key].description }}
                 </div>
                 <div v-if="false" class="flex gap-2">
                   <div>type:</div>
                   <div>{{ jsonSchema.parameters[key].type }}</div>
                 </div>
+                <div class="flex gap-2">
+                  <div class="w-13">default:</div>
+                  <div>{{ jsonSchema.parameters[key].default }}</div>
+                </div>
+
                 <div
                   v-if="
                     (jsonSchema.parameters[key] as { minimum: unknown })
@@ -265,10 +270,6 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', corePreset)
                         .options
                     }}
                   </div>
-                </div>
-                <div class="flex gap-2">
-                  <div class="w-13">default:</div>
-                  <div>{{ jsonSchema.parameters[key].default }}</div>
                 </div>
               </div>
             </div>
