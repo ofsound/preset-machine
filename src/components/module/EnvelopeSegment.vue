@@ -187,6 +187,7 @@ const handleNewValueFromMouseStage = (
           :grid
           :bars
           :tempo
+          :startingValue="envelopeSegmentValues[index]!"
           @updateRowValue="handleUpdateRowValue(index, $event)"
         />
       </div>
@@ -216,6 +217,7 @@ const handleNewValueFromMouseStage = (
           :tempo
           :isGain
           :index
+          :startingValue="envelopeSegmentValues[index]!"
           @updateRowValue="handleUpdateRowValue(index, $event)"
         />
       </div>

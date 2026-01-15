@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import { v4 as uuidv4 } from 'uuid'
+
+import EnvelopesModule from '@/components/module/EnvelopesModule.vue'
+
+import { useStore } from '@/stores/store'
+
 import { usePreset } from '@/composable/usePreset.ts'
+
+import type { PresetModLayer } from '@/types.ts'
+
+const store = useStore()
 
 const emit = defineEmits(['jsonLoaded'])
 
-const { corePreset } = usePreset()
+const { corePreset, presetModLayers } = usePreset()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 
@@ -39,6 +49,37 @@ const handleImportedJSON = (file: File) => {
         if (e.target) {
           if (typeof e.target.result === 'string') {
             Object.assign(corePreset, JSON.parse(e.target.result))
+
+            const idForNewComponent = uuidv4()
+
+            store.modules.push({
+              component: EnvelopesModule,
+              id: idForNewComponent,
+            })
+            store.visibleModuleID = idForNewComponent
+
+            const presetModLayer: PresetModLayer = {
+              moduleID: idForNewComponent,
+
+              gains: [...corePreset.gains],
+              sustains: [...corePreset.sustains],
+              offsets: [...corePreset.offsets],
+              attacks: [...corePreset.attacks],
+              decays: [...corePreset.decays],
+              holds: [...corePreset.holds],
+              releases: [...corePreset.releases],
+            }
+
+            corePreset.gains = Array(511).fill(0)
+            corePreset.sustains = Array(511).fill(0)
+            corePreset.offsets = Array(511).fill(0)
+            corePreset.attacks = Array(511).fill(0)
+            corePreset.decays = Array(511).fill(0)
+            corePreset.holds = Array(511).fill(0)
+            corePreset.releases = Array(511).fill(0)
+
+            presetModLayers.push(presetModLayer)
+
             emit('jsonLoaded')
           }
         }

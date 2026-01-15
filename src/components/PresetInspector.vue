@@ -228,7 +228,7 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', corePreset)
                 <div class="mb-.5 text-neutral-800">
                   {{ jsonSchema.parameters[key].description }}
                 </div>
-                <div class="flex hidden gap-2">
+                <div v-if="false" class="flex gap-2">
                   <div>type:</div>
                   <div>{{ jsonSchema.parameters[key].type }}</div>
                 </div>

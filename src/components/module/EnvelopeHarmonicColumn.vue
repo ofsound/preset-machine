@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 
 const props = defineProps<{
   isActive: boolean
@@ -10,6 +10,7 @@ const props = defineProps<{
   tempo: number
   isGain: boolean
   index: number
+  startingValue: number
 }>()
 
 const emit = defineEmits(['updateRowValue'])
@@ -102,6 +103,34 @@ watch(
     columnHeight.value *= oldValue / newValue
   },
 )
+
+onMounted(() => {
+  if (positiveGridElement.value) {
+    resizeObserver = new ResizeObserver(handleResize)
+    resizeObserver.observe(positiveGridElement.value)
+  }
+})
+
+let resizeObserver: ResizeObserver | null = null
+
+const handleResize = () => {
+  if (positiveGridElement.value) {
+    const height = positiveGridElement.value.clientHeight
+
+    if (height > 0) {
+      const scaledHeight =
+        props.startingValue * positiveGridElement.value!.clientHeight
+
+      columnHeight.value = Math.abs(scaledHeight)
+
+      if (props.isGain) {
+        columnHeight.value /= 1 / (props.index + 1)
+      }
+
+      resizeObserver!.disconnect()
+    }
+  }
+}
 </script>
 
 <template>

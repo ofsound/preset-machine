@@ -18,7 +18,7 @@ defineProps<{
           class="relative h-full flex-1 text-xs font-semibold last:opacity-0"
         >
           <div
-            class="absolute -right-3 hidden w-6 text-center"
+            class="absolute -left-3 hidden w-6 text-center"
             :class="{
               'block!': n % (16 / grid) === 0,
             }"
