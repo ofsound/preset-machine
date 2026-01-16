@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePreset } from '@/composable/usePreset.ts'
 
-const { finalPreset } = usePreset()
+const { corePreset, finalPreset } = usePreset()
 
 const downloadJson = () => {
   const jsonString = JSON.stringify(finalPreset.value, null, 2)
@@ -12,7 +12,7 @@ const downloadJson = () => {
 
   const link = document.createElement('a')
   link.href = url
-  link.download = finalPreset.value.name + '.json'
+  link.download = corePreset.name + '.json'
 
   document.body.appendChild(link)
   link.click()

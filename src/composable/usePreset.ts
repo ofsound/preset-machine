@@ -5,8 +5,8 @@ import type { Preset, PresetModLayer } from '@/types.ts';
 
 const corePreset = reactive<Preset>({
   "uuid": uuidv4(),
-  "name": 'New Preset',
-  "author": 'BJM',
+  "name": 'Name',
+  "author": 'Author',
   "description": '',
   "version": '',
   "derivedFrom": "128887b1-0788-4144-8748-c5242b4b9aeb",
@@ -204,6 +204,33 @@ const finalPreset = computed<Preset>(() => {
     computedPreset.releases[i]! = Math.max(computedPreset.releases[i]!, 0)
     computedPreset.offsets[i]! = Math.max(computedPreset.offsets[i]!, 0)
   }
+
+
+  computedPreset.name = corePreset.name
+  computedPreset.author = corePreset.author
+  computedPreset.description = corePreset.description
+
+
+  computedPreset.parameters = corePreset.parameters
+
+
+  computedPreset.pitchMapping = corePreset.pitchMapping
+  computedPreset.glideTimesInBlocks = corePreset.glideTimesInBlocks
+  computedPreset.filterTable = corePreset.filterTable
+  computedPreset.tremDepths = corePreset.tremDepths
+  computedPreset.tremRatesSeconds = corePreset.tremRatesSeconds
+  computedPreset.tremRatesBeats = corePreset.tremRatesBeats
+  computedPreset.tremOffsets = corePreset.tremOffsets
+  computedPreset.tremWavetable = corePreset.tremWavetable
+  computedPreset.pitchDepths = corePreset.pitchDepths
+  computedPreset.pitchRatesSeconds = corePreset.pitchRatesSeconds
+  computedPreset.pitchRatesBeats = corePreset.pitchRatesBeats
+  computedPreset.pitchNoiseAmounts = corePreset.pitchNoiseAmounts
+
+
+
+
+
 
 
   return {

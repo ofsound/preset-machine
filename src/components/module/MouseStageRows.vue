@@ -108,6 +108,8 @@ function captureMousePosition() {
     prevRowRatio = thisRowRatio
   }
 
+  console.log(thisRow)
+
   emit(
     'newValueFromMouseStage',
     thisRow,

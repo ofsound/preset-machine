@@ -22,13 +22,13 @@ const handleClick = (event: MouseEvent) => {
 
 const buttonObjects = ref([
   'Meta',
-  `Gains (${corePreset.gains.length})`,
-  `Offsets (${corePreset.offsets.length})`,
-  `Attacks (${corePreset.attacks.length})`,
-  `Decays (${corePreset.decays.length})`,
-  `Sustains (${corePreset.sustains.length})`,
-  `Holds (${corePreset.holds.length})`,
-  `Releases (${corePreset.releases.length})`,
+  // `Gains (${corePreset.gains.length})`,
+  // `Offsets (${corePreset.offsets.length})`,
+  // `Attacks (${corePreset.attacks.length})`,
+  // `Decays (${corePreset.decays.length})`,
+  // `Sustains (${corePreset.sustains.length})`,
+  // `Holds (${corePreset.holds.length})`,
+  // `Releases (${corePreset.releases.length})`,
   'Parameters',
   `pitchMapping (${corePreset.pitchMapping.length})`,
   `glideTimesInBlocks (${corePreset.glideTimesInBlocks.length})`,
@@ -241,7 +241,8 @@ const pitchNoiseAmounts = createComputed('pitchNoiseAmounts', corePreset)
                   v-if="
                     (jsonSchema.parameters[key] as { minimum: unknown })
                       .minimum ||
-                    (jsonSchema.parameters[key] as { maximum: unknown }).maximum
+                    !(jsonSchema.parameters[key] as { maximum: unknown })
+                      .maximum
                   "
                   class="flex gap-2"
                 >

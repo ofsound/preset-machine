@@ -104,15 +104,17 @@ const handleNewValueFromMouseStage = (
   rowIndex: number,
   newRowValue: number,
 ) => {
-  if (props.activeHarmonics.includes(rowIndex) || newRowValue === 0) {
-    envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
-      if (index === rowIndex) childInstance.setRatioValue(newRowValue)
-    })
-  }
-  if (props.activeHarmonics.includes(rowIndex) || newRowValue === 0) {
-    envelopeHarmonicColumnRefs.value.forEach((childInstance, index) => {
-      if (index === rowIndex) childInstance.setRatioValue(newRowValue)
-    })
+  if (rowIndex < props.activeHarmonics[props.activeHarmonics.length - 1]! + 1) {
+    if (props.activeHarmonics.includes(rowIndex) || newRowValue === 0) {
+      envelopeHarmonicRowRefs.value.forEach((childInstance, index) => {
+        if (index === rowIndex) childInstance.setRatioValue(newRowValue)
+      })
+    }
+    if (props.activeHarmonics.includes(rowIndex) || newRowValue === 0) {
+      envelopeHarmonicColumnRefs.value.forEach((childInstance, index) => {
+        if (index === rowIndex) childInstance.setRatioValue(newRowValue)
+      })
+    }
   }
 }
 </script>
