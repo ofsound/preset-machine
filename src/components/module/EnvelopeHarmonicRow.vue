@@ -185,15 +185,17 @@ const handleResize = () => {
         <div
           v-for="n in timeScaleSeconds"
           :key="n"
-          class="h-full flex-1 border-r border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
+          class="h-full flex-1 border-r border-b border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
         ></div>
       </template>
       <template v-if="grid !== 0">
         <div
           v-for="n in (16 * bars) / grid"
           :key="n"
-          class="h-full flex-1 border-l border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
-          :class="{ 'border-zinc-400/50!': n % (16 / grid) === 0 }"
+          class="h-full flex-1 border-b border-l border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
+          :class="{
+            'border-zinc-400/50! border-b-neutral-200!': n % (16 / grid) === 0,
+          }"
         ></div>
       </template>
       <div
@@ -212,15 +214,17 @@ const handleResize = () => {
         <div
           v-for="n in timeScaleSeconds"
           :key="n"
-          class="h-full flex-1 border-r border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
+          class="h-full flex-1 border-r border-b border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
         ></div>
       </template>
       <template v-if="grid !== 0">
         <div
           v-for="n in (16 * bars) / grid"
           :key="n"
-          class="h-full flex-1 border-r border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
-          :class="{ 'border-zinc-400/50!': n % (16 / grid) === 0 }"
+          class="h-full flex-1 border-r border-b border-neutral-200 bg-neutral-50 odd:bg-zinc-100"
+          :class="{
+            'border-zinc-400/50! border-b-neutral-200!': n % (16 / grid) === 0,
+          }"
         ></div>
       </template>
       <div
